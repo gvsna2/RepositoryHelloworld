@@ -1,0 +1,27 @@
+hr{
+    border-top: 1px solid #707070;
+    margin-top: 0px;
+}
+
+.draftCount{
+    background-color: #5596E6;
+    padding: 2px 7px;
+    border-radius: 50%;
+    color: #ffffff;
+}
+.activeCount{
+    background-color: #40BF37;
+    padding: 2px 7px;
+    border-radius: 50%;
+    color: #ffffff;
+}
+.compltdCount{
+    background-color: #FA7070;
+    padding: 2px 7px;
+    border-radius: 50%;
+    color: #ffffff;
+}   
+.tbl_hdng{
+    color: #ffffff;
+    background-color: #425db5;
+}

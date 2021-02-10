@@ -1,0 +1,717 @@
+<block-ui>
+
+</block-ui>
+<div class="reports_sec pt-4 pb-4 pl-4 pr-4">
+    <div *ngIf="localInstance">
+        <div class="row">
+            <div class="col-sm-8 report_txt">
+                <h4 class="p-0">
+                    <p>List of Test Instances</p>
+                </h4>
+                
+            </div>
+
+            <div class="col-sm-4 text-right">
+                <span *ngIf="!isRecruiter">{{tenantName | titlecase}}</span>
+                <span *ngIf="isRecruiter">My Instances</span>
+
+                <mat-slide-toggle class="example-margin pl-3 pr-3" [checked]="!localInstance" [color]="color" (change)="toggleInstance($event)">
+                </mat-slide-toggle>
+                <span *ngIf="!isRecruiter">Global</span>
+                <span *ngIf="isRecruiter">Global Instances</span>
+            </div>
+            <div class="col-sm-12">
+                <hr class="m-0">
+                
+            </div>
+        </div>
+        <div class="row" style="margin:0.5rem;background: white;border-radius: 5px;">
+                 
+            <tag-input style="width: 100%" [(ngModel)]="selectedTags"
+           [onlyFromAutocomplete]="true"
+           [secondaryPlaceholder]="'Search Using Tags'"
+           (onAdd)="itemAdded($event);"
+           (onRemove)="itemRemoved($event);"
+           #input
+           >
+
+           <ng-template  item-template let-item="item" let-index="index" >
+            <span>
+               {{ item.display }}
+            </span>
+            <span *ngIf="item.removable" (click)="input.removeItem(item, index)" class="ng2-tag__remove-button">
+                x
+            </span>
+           
+        </ng-template>
+    <tag-input-dropdown 
+    [autocompleteItems]="localTagList"
+    [keepOpen]="false"
+    [showDropdownIfEmpty]="true"
+    [dynamicUpdate]="false" >
+
+    
+    </tag-input-dropdown>
+</tag-input>  
+                               
+            <!-- <input type="text" placeholder="Please Search Tags" class="form-control" [matAutocomplete]="auto1" [(ngModel)]="searchTag1"
+              [ngModelOptions]="{standalone: true}">
+        <mat-autocomplete #auto1="matAutocomplete" (optionSelected)='getInstancesByTags($event.option.value)'>
+            <mat-option *ngFor="let option of localTagList" [value]="option.instanceModelTagName">
+                {{option.instanceModelTagName}}
+            </mat-option>
+        </mat-autocomplete> -->
+        </div>
+        <div class=" filter_tbl boxShadow  ml-1 mr-1" *ngIf="testSetups && testSetups['listOfTestInstances'] && testSetups['listOfTestInstances'].length">
+            
+            <table class="table mb-0" *ngIf="selectedTags.length==0" style="text-align: center;">
+                <tr style="color: #ffffff;background-color: #425db5;" class="cursor_initial">
+                    <th>S.No</th>
+                    <th></th>
+                    <th style="text-align: left;">Instance Title</th>
+                    <th>Tags</th>
+                    <th *ngIf="!isRecruiter" >Test Owner</th>
+
+                    <th>Question Count</th>
+                    <th>Rating</th>
+                    <th></th>
+                    
+                <!-- <ngx-loading   id="1" [show]="true"  [config]="{ backdropBorderRadius: '3px',fullScreenBackdrop:false }"></ngx-loading>     -->
+
+                    
+                    
+                </tr>
+
+                <tr *ngFor="let test of testSetups['listOfTestInstances'] | paginate: { itemsPerPage: 10, currentPage: p_local_1,id: local_page_1,totalItems: localInstanceCount};let i=index" 
+                (click)="stopProp($event);showInstance(test)">
+
+                
+                    
+                
+                    <td style="text-align: right">
+                        <span *ngIf="localPageNo==1" class=" pr-3">{{(i+1)}}.</span>
+                        <span *ngIf="localPageNo!=1" class=" pr-3">{{(i+1)+((localPageNo-1)*10) }}.</span>
+
+                    </td>
+                    <td style="text-align: center">
+                        <span class="upward_arrow" *ngIf="test.isGlobalInstance == '1'" [popoverOnHover]="true" [popover]="exported">
+                            <i class="material-icons">
+                                arrow_upward
+                            </i>
+                        </span>
+                        <span class="downward_arrow" *ngIf="test.isGlobalInstance == '2'"  [popoverOnHover]="true" [popover]="imported">
+                            <i class="material-icons">
+                                arrow_downward
+                            </i>
+                        </span>
+                        <popover-content #exported 
+                            title=""
+                            placement="right"
+                            [animation]="true" 
+                                style="box-shadow: 10px 10px 5px #aaaaaa;">
+                            <span style="color: #646363;">Exported Instance</span>  
+                            
+                            </popover-content>
+                            <popover-content #imported 
+                            title=""
+                            placement="right"
+                            [animation]="true" 
+                                style="box-shadow: 10px 10px 5px #aaaaaa;">
+                            <span style="color: #646363;">Imported Instance</span>  
+                            
+                            </popover-content>
+                    </td>
+                    <td  style="text-align: left;width: 22%;">
+
+                        {{test.instanceTitle}}
+                    </td>
+           
+                            <td *ngIf="test.processing" style="text-align: left" class="col-12" colspan="4">
+                                    <span style="color: #28a745;
+                                    font-size: small;
+                                    font-weight: 900;
+                                    letter-spacing: 2px;">
+                                    Exporting
+                                    <span class="saving" style="letter-spacing: 5px;
+                                    color: #001454;
+                                    font-size: 17px;
+                                    font-size: x-large;">.<span>.</span><span>.</span><span>.</span></span>
+                                </span>
+                                    
+                                    <ngx-loading   id="1" [show]="true"  [config]="{ primaryColour: '#425db5',secondaryColour:'#2ECC71 ',tertiaryColour:'rgba(255,0,0,0.3)',backdropBackgroundColour:'#90909000', backdropBorderRadius: '3px'}" ></ngx-loading>    
+                                 
+                    
+                    </td>
+                    <td *ngIf="!test.processing" style="text-align:center" >
+                        <span *ngIf="test.instanceModelTags && test.instanceModelTags !='null'">
+                            <!-- {{test.instanceModelTags.split(',').length}}  -->
+                            <p *ngIf="test.instanceModelTags.split(',').length<=2">  <span  class="badge badge-success" style="margin:2px" *ngFor="let tag of test.instanceModelTags.split(',') | slice:0:2;">
+                                <span *ngIf="tag.length>11">{{tag | slice:0:10}}..</span>
+                                <span *ngIf="tag.length<=11" >{{tag}}</span>
+                                
+                                
+                            </span>  </p>
+                            <p *ngIf="test.instanceModelTags.split(',').length>2" title={{test.instanceModelTags}} ><span class="badge badge-success" style="margin:2px" *ngFor="let tag of test.instanceModelTags.split(',') | slice:0:2;" >
+                                    <span *ngIf="tag.length>11" title={{tag}}>{{tag | slice:0:10}}..</span>
+                                    <span *ngIf="tag.length<=11" >{{tag}}</span>
+                            </span>..</p>  
+                        </span>
+                        
+                    </td>
+                    <td *ngIf="!isRecruiter && !test.processing">{{test.testOwner}}</td>
+
+                    <td *ngIf="!test.processing" >{{test.instanceQuestionCount }}</td>
+                    <td *ngIf="!test.processing"><star-rating [starType]="'svg'"   [getHalfStarVisible]="getHalfStarVisible" [showHalfStars]="true" [readOnly]="true" [rating]="test.avgOverallRating"></star-rating> <span title="No. of Ratings " class="badge badge-success" style="position: absolute;margin-top: -21px;margin-left: 60px;font-size: 11px;border-radius: 1.25rem;background-color: #ffe10ab8;color: #7708da;"> {{test.ratingCount}}</span></td>
+                    <td *ngIf="!test.processing" class="text-center">
+                         
+                        <!-- <span class="test_inst_tag">
+                            <span (click)="stopProp($event)" [ngClass]="{'not_allowed': !test.instanceModelTags || test.instanceModelTags == 'null'}">
+                                <i class="material-icons">
+                                    local_offer
+                                </i>
+                            </span>
+                            <span class="boxShadow" [ngClass]="{'tags_view_tbl': test.instanceModelTags && test.instanceModelTags != 'null'}" *ngIf="test.instanceModelTags && test.instanceModelTags !='null'">
+                                <span *ngFor="let test of test.instanceModelTags.split(',')">
+                                    <span *ngIf="test != 'null'">{{test}}</span>
+                                </span>
+                            </span>
+                        </span> -->
+
+                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" (click)="stopProp($event)"
+                            class="vert_Btn">
+                            <span class="">
+                                <i class="material-icons">
+                                    more_vert
+                                </i>
+                            </span>
+                        </button>
+                        <mat-menu #menu="matMenu" class="instance-menu">
+                            <button mat-menu-item (click)="exportInstance(test)" [disabled]="test.isGlobalInstance != '0' || test.isOwner != '1'">
+                                <span>Export</span>
+                            </button>
+                            
+                            <button mat-menu-item (click)="goToLink(test.encryptedInstanceId)" >
+                               <span>Share</span> 
+                            </button>
+                            <button mat-menu-item [disabled]="test.instanceQuestionCount == '0'" [routerLink]="['/test-config/',test.instanceId,'create']">
+                                <span>Administer</span>
+                            </button>
+                        </mat-menu>
+
+                    </td>
+                </tr>
+            </table>
+            <table class="table mb-0" *ngIf="selectedTags.length!=0" style="text-align: center;">
+                <tr style="color: #ffffff;background-color: #425db5;" class="cursor_initial">
+                    <th>S.No</th>
+                    <th></th>
+                    <th style="text-align: left;">Instance Title</th>
+                    <th>Tags</th>
+                    <th *ngIf="!isRecruiter" >Test Owner</th>
+
+                    <th>Question Count</th>
+                    <th>Rating</th>
+                    <th></th>
+                    
+                <!-- <ngx-loading   id="1" [show]="true"  [config]="{ backdropBorderRadius: '3px',fullScreenBackdrop:false }"></ngx-loading>     -->
+
+                    
+                    
+                </tr>
+
+                <tr *ngFor="let test of testSetups['listOfTestInstances']  | search:'instanceModelTags':query;let i=index" 
+                (click)="stopProp($event);showInstance(test)">
+
+                
+                    
+                
+                    <td style="text-align: right">
+                        <span *ngIf="localPageNo==1" class=" pr-3">{{(i+1)}}.</span>
+                        <span *ngIf="localPageNo!=1" class=" pr-3">{{(i+1)+((localPageNo-1)*10) }}.</span>
+
+                    </td>
+                    <td style="text-align: center">
+                        <span class="upward_arrow" *ngIf="test.isGlobalInstance == '1'" [popoverOnHover]="true" [popover]="exported">
+                            <i class="material-icons">
+                                arrow_upward
+                            </i>
+                        </span>
+                        <span class="downward_arrow" *ngIf="test.isGlobalInstance == '2'"  [popoverOnHover]="true" [popover]="imported">
+                            <i class="material-icons">
+                                arrow_downward
+                            </i>
+                        </span>
+                        <popover-content #exported 
+                            title=""
+                            placement="right"
+                            [animation]="true" 
+                                style="box-shadow: 10px 10px 5px #aaaaaa;">
+                            <span style="color: #646363;">Exported Instance</span>  
+                            
+                            </popover-content>
+                            <popover-content #imported 
+                            title=""
+                            placement="right"
+                            [animation]="true" 
+                                style="box-shadow: 10px 10px 5px #aaaaaa;">
+                            <span style="color: #646363;">Imported Instance</span>  
+                            
+                            </popover-content>
+                    </td>
+                    <td  style="text-align: left;width: 22%;">
+
+                        {{test.instanceTitle}}
+                    </td>
+           
+                            <td *ngIf="test.processing" style="text-align: left" class="col-12" colspan="4">
+                                    <span style="color: #28a745;
+                                    font-size: small;
+                                    font-weight: 900;
+                                    letter-spacing: 2px;">
+                                    Exporting
+                                    <span class="saving" style="letter-spacing: 5px;
+                                    color: #001454;
+                                    font-size: 17px;
+                                    font-size: x-large;">.<span>.</span><span>.</span><span>.</span></span>
+                                </span>
+                                    
+                                    <ngx-loading   id="1" [show]="true"  [config]="{ primaryColour: '#425db5',secondaryColour:'#2ECC71 ',tertiaryColour:'rgba(255,0,0,0.3)',backdropBackgroundColour:'#90909000', backdropBorderRadius: '3px'}" ></ngx-loading>    
+                                 
+                    
+                    </td>
+                    <td *ngIf="!test.processing" style="text-align:center" >
+                        <span *ngIf="test.instanceModelTags && test.instanceModelTags !='null'">
+                            <!-- {{test.instanceModelTags.split(',').length}}  -->
+                            <p *ngIf="test.instanceModelTags.split(',').length<=2">  <span  class="badge badge-success" style="margin:2px" *ngFor="let tag of test.instanceModelTags.split(',') | slice:0:2;">
+                                <span *ngIf="tag.length>11">{{tag | slice:0:10}}..</span>
+                                <span *ngIf="tag.length<=11" >{{tag}}</span>
+                                
+                                
+                            </span>  </p>
+                            <p *ngIf="test.instanceModelTags.split(',').length>2" title={{test.instanceModelTags}} ><span class="badge badge-success" style="margin:2px" *ngFor="let tag of test.instanceModelTags.split(',') | slice:0:2;" >
+                                    <span *ngIf="tag.length>11" title={{tag}}>{{tag | slice:0:10}}..</span>
+                                    <span *ngIf="tag.length<=11" >{{tag}}</span>
+                            </span>..</p>  
+                        </span>
+                        
+                    </td>
+                    <td *ngIf="!isRecruiter && !test.processing">{{test.testOwner}}</td>
+
+                    <td *ngIf="!test.processing" >{{test.instanceQuestionCount }}</td>
+                    <td *ngIf="!test.processing"><star-rating [starType]="'svg'"   [getHalfStarVisible]="getHalfStarVisible" [showHalfStars]="true" [readOnly]="true" [rating]="test.avgOverallRating"></star-rating> <span title="No. of Ratings " class="badge badge-success" style="position: absolute;margin-top: -21px;margin-left: 60px;font-size: 11px;border-radius: 1.25rem;background-color: #ffe10ab8;color: #7708da;"> {{test.ratingCount}}</span></td>
+                    <td *ngIf="!test.processing" class="text-center">
+
+                        <!-- <span class="test_inst_tag">
+                            <span (click)="stopProp($event)" [ngClass]="{'not_allowed': !test.instanceModelTags || test.instanceModelTags == 'null'}">
+                                <i class="material-icons">
+                                    local_offer
+                                </i>
+                            </span>
+                            <span class="boxShadow" [ngClass]="{'tags_view_tbl': test.instanceModelTags && test.instanceModelTags != 'null'}" *ngIf="test.instanceModelTags && test.instanceModelTags !='null'">
+                                <span *ngFor="let test of test.instanceModelTags.split(',')">
+                                    <span *ngIf="test != 'null'">{{test}}</span>
+                                </span>
+                            </span>
+                        </span> -->
+
+                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" (click)="stopProp($event)"
+                            class="vert_Btn">
+                            <span class="">
+                                <i class="material-icons">
+                                    more_vert
+                                </i>
+                            </span>
+                        </button>
+                        <mat-menu #menu="matMenu" class="instance-menu">
+                            <button mat-menu-item (click)="exportInstance(test)" [disabled]="test.isGlobalInstance != '0' || test.isOwner != '1'">
+                                <span>Export</span>
+                            </button>
+                            <button mat-menu-item [disabled]="test.instanceQuestionCount == '0'" [routerLink]="['/test-config/',test.instanceId,'create']">
+                                <span>Administer</span>
+                            </button>
+                        </mat-menu>
+
+                    </td>
+                </tr>
+            </table>
+            <div *ngIf="selectedTags.length==0" class="ques_sec_div col-sm-12 text-center" style="padding: 1rem;">
+                <pagination-controls (pageChange)="p_local_1 = $event;onLocalPageChange($event)" previousLabel="<" nextLabel=">" [id]="local_page_1"></pagination-controls>
+            <!-- <jw-pagination [items]="items" (changePage)="onChangePage($event)"></jw-pagination> -->
+        </div>
+        </div>
+        <div class="row filter_tbl boxShadow" *ngIf="testSetups && testSetups['listOfTestInstances'] && !testSetups['listOfTestInstances'].length">
+            <table class="table mb-0">
+                <tr style="color: #ffffff;background-color: #425db5;" class="cursor_initial">
+                    <th>S.No</th>
+                    <th>Instance Title</th>
+                    <th>Test Owner</th>
+
+                    <th>Test Count</th>
+                    <th>Rating</th>
+                </tr>
+                <tr class="text-center no_filter_tr">
+                    <td class="errorTxt" colspan="4">{{testSetups.statusMessage}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div *ngIf="!localInstance">
+        <div class="row">
+            <div class="col-sm-9 report_txt">
+                <h4 class="p-0">
+                    <p>List of Test Instances</p>
+                </h4>
+            </div>
+            <div class="col-sm-3 text-right">
+                <span>{{tenantName | titlecase}}</span>
+                <mat-slide-toggle class="example-margin pl-3 pr-3" [checked]="!localInstance" [color]="color" (change)="toggleInstance($event)">
+                </mat-slide-toggle>
+                <span>Global</span>
+            </div>
+            <div class="col-sm-12">
+                <hr class="m-0">
+            </div>
+        </div>
+        <div class="row pt-4">
+            <div class="col-sm-12">
+                <form class="example-form">
+                       
+                    <input type="text" placeholder="Please Search Tags" class="form-control" [matAutocomplete]="auto" [(ngModel)]="searchTag"
+                        (input)="searchTags(searchTag)" [ngModelOptions]="{standalone: true}">
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)='getInstancesByTags($event.option.value)'>
+                        <mat-option *ngFor="let option of tagList" [value]="option.instanceModelTagName">
+                            {{option.instanceModelTagName}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </form>
+            </div>
+        </div>
+        <!-- <div class="boxShadow text-center not_fung_inst errorTxt" *ngIf="!globalTestSetup">
+            Test Instances Not Found. Please Select the tags ...
+        </div> -->
+        <div class="row filter_tbl boxShadow mt-4 ml-1 mr-1" *ngIf="globalTestSetup && globalTestSetup['listOfGlobalTestInstances']">
+            <table class="table mb-0 text-center">
+                   
+                <tr  style="color: #ffffff;background-color: #425db5;" class="cursor_initial">
+                    
+                    <th  >S.No</th>
+                    <th style="text-align:left" >Instance Title</th>
+                    <th style="text-align:left"> Tags</th>
+                    
+                    <th>Rating</th>
+                    <th>Question Count</th>
+                    <!-- <th>Test Count</th> -->
+                    <th></th>
+                    
+                </tr>
+                <tbody>
+                    <tr class='loading' *ngFor="let test of globalTestSetup['listOfGlobalTestInstances'] | paginate: { itemsPerPage: 10, currentPage: p_glob_1,id: glob_page_1,totalItems: globalInstanceCount};let i=index">
+                            
+                      
+                        <td  >
+                            <span *ngIf="pageNo==1" class=" pr-3">{{(i+1)}}.</span>
+                            <span *ngIf="pageNo!=1" class=" pr-3">{{(i+1)+((pageNo-1)*10) }}.</span>
+                        </td>
+                        <td style="text-align:left;width: 25%;" >{{test.instanceTitle}}
+                           
+                        </td>
+                        <td *ngIf="test.processing" style="text-align: left" class="col-12" colspan="4">
+                            <span style="color: #28a745;
+                            font-size: small;
+                            font-weight: 900;
+                            letter-spacing: 2px;">
+                            Importing
+                            <span class="saving" style="letter-spacing: 5px;
+                            color: #001454;
+                            font-size: 17px;
+                            font-size: x-large;">.<span>.</span><span>.</span><span>.</span></span>
+                        </span>
+                            
+                            <ngx-loading   id="1" [show]="true"  [config]="{ primaryColour: '#425db5',secondaryColour:'#2ECC71 ',tertiaryColour:'rgba(255,0,0,0.3)',backdropBackgroundColour:'#90909000', backdropBorderRadius: '3px'}" ></ngx-loading>    
+                        
+                        </td>
+                        <td *ngIf="!test.processing" style="text-align:left" >
+                            <p *ngIf="test.instanceTag.split(',').length<=2">  <span  class="badge badge-success" style="margin:2px" *ngFor="let tag of test.instanceTag.split(',') | slice:0:2;">{{tag}}</span>  </p>
+                            <p *ngIf="test.instanceTag.split(',').length>2" title={{test.instanceTag}} ><span class="badge badge-success" style="margin:2px" *ngFor="let tag of test.instanceTag.split(',') | slice:0:2;" >{{tag}}</span>..</p>  
+                            <!-- <span class="test_inst_tag">
+                                <span (click)="stopProp($event)" [ngClass]="{'not_allowed': !test.instanceTag || test.instanceTag == 'null'}">
+                                   
+                               
+                                    
+                                </span>
+                                <span class="tags_view_tbl boxShadow" [ngClass]="{'tags_view_tbl': test.instanceTag && test.instanceTag != 'null'}" *ngIf="test.instanceTag && test.instanceTag !='null'">
+                                    <span *ngFor="let tag of test.instanceTag.split(',')">{{tag}}</span>
+                                </span>
+                            </span> -->
+
+
+
+                            <!-- <span class="test_inst_view" (click)="stopProp($event);showInstance(test)">
+                                <i class="material-icons">
+                                    remove_red_eye
+                                </i>
+                            </span> -->
+                            
+                        </td>
+                        <td *ngIf="!test.processing" ><star-rating [starType]="'svg'"   [getHalfStarVisible]="getHalfStarVisible" [showHalfStars]="true" [readOnly]="true" [rating]="test.avgOverallRating"></star-rating>
+                        
+                        
+                        </td>
+                        <td *ngIf="!test.processing">{{test.totalQuestionCount}}
+
+                            
+                        
+                            
+
+                        </td>
+                        <td *ngIf="!test.processing">
+                            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" (click)="stopProp($event)"
+                                class="vert_Btn">
+                                <span class="">
+                                    <i class="material-icons">
+                                        more_vert
+                                    </i>
+                                </span>
+                            </button>
+                            <mat-menu #menu="matMenu" class="instance-menu">
+                                <button mat-menu-item (click)="importInstance(test)">
+                                    <span>Import</span>
+                                </button>
+                                <button mat-menu-item (click)="stopProp($event);showGlobInstance(test)">
+                                    <span>View</span>
+                                </button>
+                            </mat-menu>
+                        </td>
+                        
+                        <!-- <td>{{test.administeredTestCount }}</td> -->
+                         
+                    
+                    </tr>
+                    <tr class="no_filter_tr" *ngIf="globalTestSetup['listOfGlobalTestInstances'] && !globalTestSetup['listOfGlobalTestInstances'].length">
+                        <td colspan="4" class="errorTxt">
+                            Test Instances Not Found
+                        </td>
+
+                    </tr>
+                </tbody>
+
+            </table>
+
+            <div *ngIf=globPageFlag class="ques_sec_div col-sm-12 text-center" style="padding: 1rem;">
+                    <pagination-controls (pageChange)="p_glob_1 = $event;onPageChange($event)" previousLabel="<" nextLabel=">" [id]="glob_page_1"></pagination-controls>
+                <!-- <jw-pagination [items]="items" (changePage)="onChangePage($event)"></jw-pagination> -->
+            </div>
+        </div>
+        <!-- <div class="row filter_tbl boxShadow" *ngIf="globalTestSetup && globalTestSetup['listOfGlobalTestInstances'] && !globalTestSetup['listOfGlobalTestInstances'].length">
+            <table class="table mb-0">
+                <tr style="color: #ffffff;background-color: #425db5;">
+                    <th>S.No</th>
+                    <th>Instance Title</th>
+                    <th>Test Owner</th>
+
+                    <th>Test Count</th>
+                </tr>
+                <tr class="text-center">
+                    <td class="errorTxt">{{testSetups.statusMessage}}</td>
+                </tr>
+            </table>
+        </div> -->
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div id="instanceViewModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header b-0">
+                <!-- <h4 class="modal-title">Modal Header</h4> -->
+                <button type="button" class="close boxShadow" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body p-5" *ngIf="instanceView && instanceView['testInstanceDetails']">
+                <div class="row" *ngIf="testInstance" style="float: right;" >
+                        
+                        <!-- <star-rating testInstance [starType]="'svg'"   [getHalfStarVisible]="getHalfStarVisible" [showHalfStars]="true"  (hoverRatingChange)="ratingChanged($event)" [rating]="0"></star-rating> -->
+                </div>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p class="row">
+                            <span class="inst_title col-sm-4">Instance Title : </span>
+                            <span class="col-sm-6">{{instanceView['testInstanceDetails'].instanceTitle}}</span>
+                        </p>
+                        <p class="row">
+                            <span class="inst_title col-sm-4">Test Master : </span>
+                            <span class="col-sm-6">{{instanceView['testInstanceDetails'].testSetupTitle}}</span>
+                        </p>
+                        <p class="row">
+                            <span class="inst_title col-sm-4">Test Count : </span>
+                            <span class="col-sm-6">{{instanceView['testInstanceDetails'].administeredTestCount}}</span>
+                        </p>
+                        <p class="row">
+                            <span class="inst_title col-sm-4">Test Owner : </span>
+                            <span class="col-sm-6">{{instanceView['testInstanceDetails'].testOwner}}</span>
+                        </p>
+                        <p class="row">
+                            <span class="inst_title col-sm-4">Overall Test Rating : </span>
+                            <span class="col-sm-2"><star-rating   [starType]="'svg'"   [getHalfStarVisible]="getHalfStarVisible"   [showHalfStars]="true" [readOnly]="true" [rating]="testInstance.avgOverallRating">
+                                 
+                            </star-rating></span>
+                        </p>
+                        <p class="row">
+                            <span class="inst_title col-sm-4">Question Quality Rating : </span>
+                        
+                        <span class="col-sm-2">
+                            <star-rating   [starType]="'svg'"   [getHalfStarVisible]="getHalfStarVisible"   [showHalfStars]="true" [readOnly]="true"  [rating]="testInstance.avgQuestionQualityRating"></star-rating>
+                        </span>
+                        </p>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <!-- <button class="btn btn-default edit_inst_btn float-right">
+                            <span>
+                                <i class="material-icons">
+                                    edit
+                                </i>
+                            </span>
+                            Edit
+                        </button> -->
+                    </div>
+                </div>
+                <div class="row" *ngIf="instanceView['testInstanceDetails'].instanceModelTags && instanceView['testInstanceDetails'].instanceModelTags !='null'">
+                    <div class="col-sm-11">
+                        <p>
+                            <span class="inst_title">Tags : </span>
+                        </p>
+                        <div class="tags_view">
+                            <span *ngFor="let tag of instanceView['testInstanceDetails'].instanceModelTags.split(',')">{{tag}}</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <p class="col-sm-12 m-0 mt-5">
+                        <span class="inst_title">Sections : </span>
+                    </p>
+                </div>
+                <div class="row pt-5 sec-container pl-4" *ngIf="instanceView && instanceView['testInstanceDetails'] && instanceView['testInstanceDetails']['listOfInstanceSections'] && instanceView['testInstanceDetails']['listOfInstanceSections'].length">
+
+                    <div class="card col-md-4" style="border-bottom:3px solid #425db5" *ngFor="let i=index;let section of instanceView['testInstanceDetails']['listOfInstanceSections']">
+                        <div class="card-body">
+                            <h5 class="card-title">{{section.instanceConfigName}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">No. of Questions: {{section.numberOfQuestions}}</h6>
+                            <p class="card-text">Section Code:
+                                <span style="color:green">{{section.sectionCode}}</span>
+                            </p>
+
+                            <!-- <p class="card-text">Last modified: {{section.modifiedOn =='null' ? " " : section.modifiedOn | date }}</p> -->
+                            <p class="card-text mb-3" style="cursor: pointer" title={{section.instanceHeirarchy}} *ngIf="section.instanceHeirarchy && section.instanceHeirarchy.length>=40">{{section.instanceHeirarchy | slice:0:40}}..</p>
+                            <p class="card-text mb-3" *ngIf="section.instanceHeirarchy && section.instanceHeirarchy.length<40">{{section.instanceHeirarchy }}</p>
+                            <hr>
+
+                            <!-- <a href="#" class="card-link" style="float: right;" (click)="onSection($event,section.instanceConfigId);" data-toggle="modal" data-target="#exampleModalCenter">+ Add New Question</a> -->
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="instanceGlobalViewModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header b-0">
+                <!-- <h4 class="modal-title">Modal Header</h4> -->
+                <button type="button" class="close boxShadow" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body p-5" *ngIf="instanceGlobalView">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p class="row">
+                            <span class="inst_title col-sm-2">Instance Title : </span>
+                            <span class="col-sm-6">{{instanceGlobalView.instanceTitle}}</span>
+                        </p>
+                        <p class="row">
+                            <span class="inst_title col-sm-2">Alias Name : </span>
+                            <span class="col-sm-6">{{instanceGlobalView.instanceAliasTitle}}</span>
+                        </p>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <!-- <button class="btn btn-default edit_inst_btn float-right">
+                            <span>
+                                <i class="material-icons">
+                                    edit
+                                </i>
+                            </span>
+                            Edit
+                        </button> -->
+                    </div>
+                </div>
+                <div class="row" *ngIf="instanceGlobalView.instanceTag && instanceGlobalView.instanceTag !='null'">
+                    <div class="col-sm-11">
+                        <p>
+                            <span class="inst_title">Tags : </span>
+                        </p>
+                        <div class="tags_view">
+                            <span *ngFor="let tag of instanceGlobalView.instanceTag.split(',')">{{tag}}</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <p class="col-sm-12 m-0 mt-5">
+                        <span class="inst_title">Sections : </span>
+                    </p>
+                </div>
+                <div class="row pt-5 sec-container pl-4" *ngIf="instanceGlobalView && instanceGlobalView['sectionList'] && instanceGlobalView['sectionList'].length">
+
+                    <div class="card col-md-4" style="border-bottom:3px solid #41D6C3" *ngFor="let i=index;let section of instanceGlobalView['sectionList']">
+                        <div class="card-body" *ngIf="section.fullHeirarchy">
+                            <h5 class="card-title">{{section.sectionName}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">No. of Questions: {{section.eachSectionQuestionCount}}</h6>
+                            <p class="card-text">Section Code:
+                                <span style="color:green">{{section.sectionCode}}</span>
+                            </p>
+
+                            <!-- <p class="card-text">Last modified: {{section.modifiedOn =='null' ? " " : section.modifiedOn | date }}</p> -->
+                            <p class="card-text mb-3" style="cursor: pointer" title={{section.fullHeirarchy}} *ngIf="section.fullHeirarchy.length>=40">{{section.fullHeirarchy | slice:0:40}}..</p>
+                            <p class="card-text mb-3" *ngIf="section.fullHeirarchy.length<40">{{section.fullHeirarchy }}</p>
+                            <hr>
+
+                            <!-- <a href="#" class="card-link" style="float: right;" (click)="onSection($event,section.instanceConfigId);" data-toggle="modal" data-target="#exampleModalCenter">+ Add New Question</a> -->
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal -->
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <!-- <app-add-question [sectionId]="sectionId"></app-add-question> -->
+
+            </div>
+
+        </div>
+    </div>
+</div>

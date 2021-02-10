@@ -1,0 +1,915 @@
+<block-ui>
+
+</block-ui>
+<section class="tenant_reg_sec">
+    <div class="tenant_reg_gradient">
+        <div class="p-4">
+            <img src="./../../../assets/images/316X120.png" width="144px" height="50px" style="margin:0.28rem;padding-top:2px ;padding-bottom:2px ;"
+            />
+        </div>
+        <div class="text-center mt-4 mb-5 test_tile" *ngIf="testTiltle">
+            <h2>Welcome to {{testTiltle}} Test</h2>
+            <hr>
+        </div>
+        <div class="candid_forms_sec pl-5 pr-5">
+            <div class="pl-5 pr-5">
+                <mat-horizontal-stepper [linear]="isLinear" #stepper class="p-5">
+                    <mat-step [stepControl]="firstFormGroup">
+                        <div class="p-4 reg_title text-center">
+                            <h5>
+                                <b style="border-bottom: 2px solid #5ccd71;">Personal Details</b>
+                            </h5>
+                        </div>
+                        <form [formGroup]="firstFormGroup" #formDir="ngForm" class="row">
+                            <!-- <ng-template matStepLabel>Fill out your name</ng-template> -->
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="candidateFirstName">First Name</label>
+                                    <input type="text" placeholder="John" [(ngModel)]="candidForm?.candidateDetails.candidatePersonalDetails.candidateFirstName"
+                                        class="form-control" id="candidateFirstName" formControlName="candidateFirstName" [ngClass]="{'form-control':true,'red_border': firstFormGroup.controls['candidateFirstName'].touched && firstFormGroup.controls['candidateFirstName'].errors,'disabledClass':testTypeId == 1}">
+                                    <span *ngIf="(firstFormGroup.controls['candidateFirstName'].touched && firstFormGroup.controls['candidateFirstName'].errors && firstFormGroup.controls['candidateFirstName'].errors.required) || (submittedFirst && firstFormGroup.controls['candidateFirstName'].errors)"
+                                        class="errorTxt">Please Enter First Name</span>
+                                    <!-- <span *ngIf="firstFormGroup.touched && firstFormGroup.controls['candidateFirstName'].errors" class="errorTxt">Please Enter First Name</span> -->
+                                    <p class="m-0">
+                                        <span class="errorTxt" *ngIf="firstFormGroup.controls.candidateFirstName.errors && firstFormGroup.controls.candidateFirstName.errors.minlength">Must have atleast 3 characters</span>
+                                    </p>
+                                    <p class="m-0">
+                                        <span class="errorTxt" *ngIf="firstFormGroup.controls.candidateFirstName.errors && firstFormGroup.controls.candidateFirstName.errors.pattern">
+                                            Numbers Not Allowed
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="candidateLastName">Last Name</label>
+                                    <input type="text" placeholder="Doe" [(ngModel)]="candidForm?.candidateDetails.candidatePersonalDetails.candidateLastName"
+                                        class="form-control" id="candidateLastName" formControlName="candidateLastName" [ngClass]="{'form-control':true,'red_border': firstFormGroup.controls['candidateLastName'].touched && firstFormGroup.controls['candidateLastName'].errors,'disabledClass':testTypeId == 1}">
+                                    <span *ngIf="(firstFormGroup.controls['candidateLastName'].touched && firstFormGroup.controls['candidateLastName'].errors && firstFormGroup.controls['candidateLastName'].errors.required) || (submittedFirst && firstFormGroup.controls['candidateLastName'].errors)"
+                                        class="errorTxt">Please Enter Last Name</span>
+                                    <!-- <span *ngIf="firstFormGroup.touched && firstFormGroup.controls['candidateLastName'].errors" class="errorTxt">Please Enter Last Name</span> -->
+                                    <p class="m-0">
+                                        <span class="errorTxt" *ngIf="firstFormGroup.controls.candidateLastName.errors && firstFormGroup.controls.candidateLastName.errors.pattern">
+                                            Numbers Not Allowed
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="candidateMail">Email ID</label>
+                                    <input type="text" class="form-control" placeholder="john.doe@gmail.com" [(ngModel)]="candidForm?.candidateDetails.candidatePersonalDetails.candidateMail"
+                                        id="candidateMail" formControlName="candidateMail" [ngClass]="{'form-control':true,'red_border': firstFormGroup.controls['candidateMail'].touched && firstFormGroup.controls['candidateMail'].errors,'disabledClass':testTypeId == 1}">
+                                    <!-- <span *ngIf="firstFormGroup.touched && firstFormGroup.controls['candidateMail'].errors" class="errorTxt">Please Enter Valid Email Id</span> -->
+                                    <span class="errorTxt" *ngIf="checkMail() || (submittedFirst && firstFormGroup.controls['candidateMail'].errors)">Please Enter Valid Email Id</span>
+                                    <span *ngIf="firstFormGroup.controls['candidateMail'].touched && firstFormGroup.controls['candidateMail'].errors && firstFormGroup.controls['candidateMail'].errors.required"
+                                        class="errorTxt">Please Enter Email ID</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group" id="dob">
+                                    <label class="d-block" for="dob">Date of Birth</label>
+                                    <!-- <mat-form-field>
+                                        <input placeholder="MM/DD/YYYY" matInput [matDatepicker]="dobPicker" [(ngModel)]="candidForm?.candidateDetails.candidatePersonalDetails.candidateDateOfBirth"
+                                            id="dob" formControlName="candidateDateOfBirth" [ngClass]="{'form-control':true,'red_border': firstFormGroup.controls['candidateDateOfBirth'].touched && firstFormGroup.controls['candidateDateOfBirth'].errors}">
+                                        <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #dobPicker></mat-datepicker>
+                                    </mat-form-field> -->
+                                    <div *ngIf="startDOB">
+                                        <input placeholder="MM/DD/YYYY" class="form-control " [(ngModel)]="candidForm['candidateDetails'].candidatePersonalDetails.candidateDateOfBirth"
+                                            id="dob" formControlName="candidateDateOfBirth" disabled>
+                                    </div>
+                                    <div *ngIf="!startDOB">
+                                        <mat-form-field >
+                                            <input placeholder="MM/DD/YYYY"  [max]="todayDate" matInput [matDatepicker]="dobPicker" id="dob" formControlName="candidateDateOfBirth" [ngClass]="{'form-control':true,'red_border': firstFormGroup.controls['candidateDateOfBirth'].touched && firstFormGroup.controls['candidateDateOfBirth'].errors}">
+                                            <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+                                            <mat-datepicker  #dobPicker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                    <span *ngIf="(firstFormGroup.controls['candidateDateOfBirth'].touched && firstFormGroup.controls['candidateDateOfBirth'].errors && firstFormGroup.controls['candidateDateOfBirth'].errors.required) || (submittedFirst && firstFormGroup.controls['candidateDateOfBirth'].errors)"
+                                        class="errorTxt">Please Enter DOB</span>
+                                    <!-- <span *ngIf="firstFormGroup.touched && firstFormGroup.controls['candidateDateOfBirth'].errors" class="errorTxt">Please Enter DOB</span> -->
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="candidateGender">Gender</label>
+                                            <select class="form-control" id="candidateGender" formControlName="candidateGender" [ngClass]="{'form-control':true,'red_border': firstFormGroup.controls['candidateGender'].touched && firstFormGroup.controls['candidateGender'].errors}">
+                                                <option [value]="" [selected]="true" disabled>Select Gender</option>
+                                                <option [value]="'Male'" [selected]="'Male' == candidForm?.candidateDetails.candidatePersonalDetails.candidateGender">Male</option>
+                                                <option [value]="'Female'" [selected]="'Female' == candidForm?.candidateDetails.candidatePersonalDetails.candidateGender">Female</option>
+                                            </select>
+                                            <span *ngIf="(firstFormGroup.controls['candidateGender'].touched && firstFormGroup.controls['candidateGender'].errors && firstFormGroup.controls['candidateGender'].errors.required) || (submittedFirst && firstFormGroup.controls['candidateGender'].errors)"
+                                                class="errorTxt">Please Select Gender</span>
+                                            <!-- <span *ngIf="firstFormGroup.touched && firstFormGroup.controls['candidateGender'].errors" class="errorTxt">Please Select Gender</span> -->
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="maritalStatus">Marital Status</label>
+                                            <select class="form-control" id="maritalStatus" [(ngModel)]="candidForm?.candidateDetails.candidatePersonalDetails.maritalStatus"
+                                                formControlName="maritalStatus" [ngClass]="{'form-control':true,'red_border': firstFormGroup.controls['maritalStatus'].touched && firstFormGroup.controls['maritalStatus'].errors}">
+                                                <option [selected]="true" disabled>Select</option>
+                                                <option [value]="'married'" [selected]="'married' == candidForm?.candidateDetails.candidatePersonalDetails.maritalStatus">Married</option>
+                                                <option [value]="'unmarried'" [selected]="'unmarried' == candidForm?.candidateDetails.candidatePersonalDetails.maritalStatus">Unmarried</option>
+                                            </select>
+                                            <span *ngIf="(firstFormGroup.controls['maritalStatus'].touched && firstFormGroup.controls['maritalStatus'].errors && firstFormGroup.controls['maritalStatus'].errors.required) || (submittedFirst && firstFormGroup.controls['maritalStatus'].errors)"
+                                                class="errorTxt">Please Select Marital Status</span>
+                                            <!-- <span *ngIf="firstFormGroup.touched && firstFormGroup.controls['maritalStatus'].errors" class="errorTxt">Please Select Marital Status</span> -->
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="candidateMobile">Phone Number</label>
+                                    <input placeholder="9898989898" type="number" [(ngModel)]="candidForm?.candidateDetails.candidatePersonalDetails.candidateMobile"
+                                        class="form-control" id="candidateMobile" formControlName="candidateMobile" [ngClass]="{'form-control':true,'red_border': firstFormGroup.controls['candidateMobile'].touched && firstFormGroup.controls['candidateMobile'].errors,'disabledClass':testTypeId == 1}">
+                                    <span class="errorTxt" *ngIf="checkMobile()">Please Enter Valid Mobile Number</span>
+                                    <span *ngIf="(firstFormGroup.controls['candidateMobile'].touched && firstFormGroup.controls['candidateMobile'].errors && firstFormGroup.controls['candidateMobile'].errors.required) || (submittedFirst && firstFormGroup.controls['candidateMobile'].errors)"
+                                        class="errorTxt">Please Enter Mobile Number</span>
+                                    <!-- <span *ngIf="firstFormGroup.touched && firstFormGroup.controls['candidateMobile'].errors" class="errorTxt">Please Enter Mobile Number</span> -->
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="occupation">Selection Occupation</label>
+                                    <select class="form-control" id="occupation" 
+                                     
+                                        formControlName="occupation" [ngClass]="{'form-control':true,'red_border': firstFormGroup.controls['occupation'].touched && firstFormGroup.controls['occupation'].errors,'disabledClass':candidForm.candidateDetails.candidatePersonalDetails.occupation ==1 || candidForm.candidateDetails.candidatePersonalDetails.occupation == 2 || candidForm.candidateDetails.candidatePersonalDetails.occupation ==3}">
+                                        <option [selected]="true" disabled>Select Occupation</option>
+                                        <option value="2" [selected]="2 == candidForm?.candidateDetails.candidatePersonalDetails.occupation">Student</option>
+                                        <option value="3" [selected]="3 == candidForm?.candidateDetails.candidatePersonalDetails.occupation">Fresher</option>
+                                        <option value="1" [selected]="1 == candidForm?.candidateDetails.candidatePersonalDetails.occupation">Experienced</option>
+                                    </select>
+                                    <span *ngIf="(firstFormGroup.controls['occupation'].touched && firstFormGroup.controls['occupation'].errors) || (submittedFirst && firstFormGroup.controls['occupation'].errors)"
+                                        class="errorTxt">Please Select Occupation</span>
+                                    <!-- <span *ngIf="firstFormGroup.touched && firstFormGroup.controls['occupation'].errors" class="errorTxt">Please Enter Occupation</span> -->
+                                </div>
+                            </div>
+                            <div class="col-sm-6 pt-4 mt-1" *ngIf="firstFormGroup.controls['occupation'].value == 1">
+                                <mat-checkbox formControlName="contractPositionStatus">
+                                    I am interested in contract positions too
+                                </mat-checkbox>
+                            </div>
+                        </form>
+                        <div class="text-right pt-4 pb-4">
+                            <button mat-button matStepperNext class="submit_btn" (click)="eductionDetails(firstFormGroup)">
+                                <b>Next</b>
+                            </button>
+                        </div>
+                    </mat-step>
+                    <mat-step [stepControl]="secondFormGroup">
+                        <div class="p-4 reg_title text-center">
+                            <h5>
+                                <b style="border-bottom: 2px solid #5ccd71;">Educational Details</b>
+                            </h5>
+                        </div>
+                        <div *ngIf="qualificationList.length" class="mb-5">
+                            <div class="row" *ngFor="let qual of qualificationList;let i=index">
+                                <div class="col-sm-12">
+                                    <hr class="qual_hr" *ngIf="i!=0">
+                                </div>
+                                <p class="col-sm-12">
+                                    <b>Qualification - {{i+1}}</b>
+                                    <span class="qual_icon">
+                                        <i class="material-icons" (click)="editEducDetails(qual,i)">
+                                            edit
+                                        </i>
+                                    </span>
+                                    <!-- <span class="qual_icon" data-toggle="modal" data-target="#qualEditModal">
+                                        <i class="material-icons" (click)="editEducDetails(qual,i)">
+                                            edit
+                                        </i>
+                                    </span> -->
+                                    <span class="cert_icon pl-4">
+                                        <i class="material-icons" (click)="deleteQual(qual,i)">
+                                            highlight_off
+                                        </i>
+                                    </span>
+                                </p>
+                                <div class="col-sm-4 mb-4">
+                                    <span>Qualification - {{i+1}} :</span>
+                                    <span class="pl-4">
+                                        <b>{{qual.qualification}}</b>
+                                    </span>
+                                </div>
+                                <div class="col-sm-8 mb-4">
+                                        <span>College :</span>
+                                        <span class="pl-4">
+                                            <b>{{qual.collegeName}}</b>
+                                        </span>
+                                    </div>
+                                <div class="col-sm-4 mb-4">
+                                    <span>University Name :</span>
+                                    <span class="pl-4">
+                                        <b>{{qual.univercity}}</b>
+                                    </span>
+                                </div>
+                                <div class="col-sm-8 mb-4">
+                                    <span>Percentage / CGPA :</span>
+                                    <span class="pl-4">
+                                        <b>{{qual.passPercentage}}</b>
+                                    </span>
+                                </div>
+                                <div class="col-sm-4 mb-4">
+                                    <span>Year of Completion :</span>
+                                    <span class="pl-4">
+                                        <b>{{qual.yearOfCompletion}}</b>
+                                    </span>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <hr class="qual_hr" *ngIf="(i+1)==qualificationList.length">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div *ngIf="certificationList.length" class="mb-5">
+                            <div class="row" *ngFor="let cert of certificationList;let i=index">
+                                <div class="col-sm-12">
+                                    <hr class="qual_hr" *ngIf="i!=0">
+                                </div>
+
+                                <p class="col-sm-12">
+                                    <b>Certification - {{i+1}}</b>
+                                    <span class="qual_icon">
+                                        <i class="material-icons" (click)="editCertDetails(cert,i)">
+                                            edit
+                                        </i>
+                                    </span>
+                                    <!-- <span class="qual_icon" data-toggle="modal" data-target="#certEditModal">
+                                        <i class="material-icons" (click)="editCertDetails(cert,i)">
+                                            edit
+                                        </i>
+                                    </span> -->
+                                    <span class="cert_icon pl-4">
+                                        <i class="material-icons" (click)=" deleteCert(cert,i)">
+                                            highlight_off
+                                        </i>
+                                    </span>
+                                </p>
+                                <div class="col-sm-6 mb-4">
+                                    <span>Certification Name :</span>
+                                    <span class="pl-4">
+                                        <b>{{cert.certificationName}}</b>
+                                    </span>
+                                </div>
+                                <div class="col-sm-6 mb-4">
+                                    <span>Year of Completion :</span>
+                                    <span class="pl-4">
+                                        <b>{{cert.yearOfCompletion}}</b>
+                                    </span>
+                                </div>
+                                <div class="col-sm-6 mb-4">
+                                    <span>Percentage / CGPA :</span>
+                                    <span class="pl-4">
+                                        <b>{{cert.passPercentage}}</b>
+                                    </span>
+                                </div>
+                                <div class="col-sm-12">
+                                    <hr class="qual_hr" *ngIf="(i+1)==certificationList.length">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <form [formGroup]="secondFormGroup" class="row" *ngIf="!isCertf && isEdit">
+                            <!-- <ng-template matStepLabel>Fill out your address</ng-template> -->
+                            <div class="col-sm-12 text-right close_form">
+                                <span class="errorTxt pointer">
+                                    <i class="material-icons" (click)="closeSecondForm()">
+                                        highlight_off
+                                    </i>
+                                </span>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="qualification">Qualification</label>
+                                    <input type="text" placeholder="B.Tech" class="form-control" formControlName="qualification" [ngClass]="{'form-control':true,'red_border': secondFormGroup.controls['qualification'].touched && secondFormGroup.controls['qualification'].errors}">
+                                    <span class="errorTxt" *ngIf="(secondFormGroup.controls['qualification'].touched && secondFormGroup.controls['qualification'].errors && secondFormGroup.controls['qualification'].errors.required) || (QualSubmit && secondFormGroup.controls['qualification'].errors && secondFormGroup.controls['qualification'].errors.required)">Please Enter Qualification</span>
+                                    <span class="errorTxt" *ngIf="secondFormGroup.controls.qualification.errors && secondFormGroup.controls.qualification.errors.pattern">
+                                        Numbers Not Allowed
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="univercity">University Name</label>
+                                    <input type="text" placeholder="JNTUK" class="form-control" formControlName="univercity" [ngClass]="{'form-control':true,'red_border': secondFormGroup.controls['univercity'].touched && secondFormGroup.controls['univercity'].errors}">
+                                    <span class="errorTxt" *ngIf="(secondFormGroup.controls['univercity'].touched && secondFormGroup.controls['univercity'].errors && secondFormGroup.controls['univercity'].errors.required) || (QualSubmit && secondFormGroup.controls['univercity'].errors && secondFormGroup.controls['univercity'].errors.required)">Please Enter University</span>
+                                    <span class="errorTxt" *ngIf="secondFormGroup.controls.univercity.errors && secondFormGroup.controls.univercity.errors.pattern">
+                                        Numbers Not Allowed
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="collegeName">College</label>
+                                    <input type="text" placeholder="Layola College" class="form-control" id="collegeName" formControlName="collegeName" [ngClass]="{'form-control':true,'red_border': secondFormGroup.controls['collegeName'].touched && secondFormGroup.controls['collegeName'].errors}">
+                                    <span class="errorTxt" *ngIf="(secondFormGroup.controls['collegeName'].touched && secondFormGroup.controls['collegeName'].errors && secondFormGroup.controls['collegeName'].errors.required) || (QualSubmit && secondFormGroup.controls['collegeName'].errors && secondFormGroup.controls['collegeName'].errors.required)">Please Provide College Name</span>
+                                    <span class="errorTxt" *ngIf="secondFormGroup.controls.collegeName.errors && secondFormGroup.controls.collegeName.errors.pattern">
+                                        Numbers Not Allowed
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="passPercentage">Percentage / CGPA</label>
+                                    <input placeholder="90.99" type="number" class="form-control" id="passPercentage" formControlName="passPercentage" [ngClass]="{'form-control':true,'red_border': secondFormGroup.controls['passPercentage'].touched && secondFormGroup.controls['passPercentage'].errors}">
+                                    <!-- <span class="errorTxt" *ngIf="(secondFormGroup.controls['yearOfCompletion'].touched &&secondFormGroup.controls['yearOfCompletion'].errors) || (QualSubmit &&secondFormGroup.controls['yearOfCompletion'].errors)">Please Enter Percentage</span> -->
+                                    <span class="errorTxt" *ngIf="(secondFormGroup.controls['passPercentage'].touched && secondFormGroup.controls['passPercentage'].errors && secondFormGroup.controls['passPercentage'].errors.required) || (QualSubmit && secondFormGroup.controls['passPercentage'].errors && secondFormGroup.controls['passPercentage'].errors.required)">
+                                        Please Enter Percentage
+                                    </span>
+                                    <!-- <span class="errorTxt" *ngIf="secondFormGroup.controls['passPercentage'].touched && secondFormGroup.controls['passPercentage'].errors && secondFormGroup.controls['passPercentage'].errors.pattern">
+                                        Must be a number with up to 2 decimal places may have %
+                                    </span> -->
+                                    <span class="errorTxt" *ngIf="secondFormGroup.controls['passPercentage'].touched && secondFormGroup.controls['passPercentage'].errors && secondFormGroup.controls['passPercentage'].errors.max">
+                                        Please Enter Valid Percentage
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="yearOfCompletion">Year of Completion</label>
+                                    <input type="number" placeholder="2019" class="form-control" id="yearOfCompletion" formControlName="yearOfCompletion" [ngClass]="{'form-control':true,'red_border': secondFormGroup.controls['yearOfCompletion'].touched && secondFormGroup.controls['yearOfCompletion'].errors}">
+
+                                    <span class="errorTxt" *ngIf="(secondFormGroup.controls['yearOfCompletion'].touched &&secondFormGroup.controls['yearOfCompletion'].errors) || (QualSubmit &&secondFormGroup.controls['yearOfCompletion'].errors)">Please Enter Year of Completion, Year Should not be More than the Current Year</span>
+                                   
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <button class="btn btn-success save_btn" (click)="saveQual()">Save</button>
+                            </div>
+                        </form>
+                        <form [formGroup]="certificateFormGroup" class="row" *ngIf="isCertf && isEdit">
+                            <!-- <ng-template matStepLabel>Fill out your address</ng-template> -->
+                            <div class="col-sm-12 text-right close_form">
+                                    <span class="errorTxt pointer">
+                                        <i class="material-icons" (click)="closeCertForm()">
+                                            highlight_off
+                                        </i>
+                                    </span>
+                                </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="certificationName">Certification Name</label>
+                                    <input type="text" class="form-control" id="certificationName" formControlName="certificationName" [ngClass]="{'form-control':true,'red_border': certificateFormGroup.controls['certificationName'].touched && certificateFormGroup.controls['certificationName'].errors}">
+                                    <span class="errorTxt" *ngIf="(certificateFormGroup.controls['certificationName'].touched && certificateFormGroup.controls['certificationName'].errors) || (CertSubmit && certificateFormGroup.controls['certificationName'].errors && certificateFormGroup.controls['certificationName'].errors.required)">Please Mention Certification Name</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="yearOfCompletion">Year of Completion</label>
+                                    <input type="number" minlength="4" maxlength="4" class="form-control" id="yearOfCompletion" formControlName="yearOfCompletion"
+                                        [ngClass]="{'form-control':true,'red_border': certificateFormGroup.controls['yearOfCompletion'].touched && certificateFormGroup.controls['yearOfCompletion'].errors}">
+                                    <span class="errorTxt" *ngIf="(certificateFormGroup.controls['yearOfCompletion'].touched && certificateFormGroup.controls['yearOfCompletion'].errors) || (CertSubmit && certificateFormGroup.controls['yearOfCompletion'].errors && certificateFormGroup.controls['yearOfCompletion'].errors.required)">Please Enter Year of Completion, Year Should not be More than the Current Year</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="passPercentage">Percentage / CGPA</label>
+                                    <input type="number" class="form-control" id="passPercentage" formControlName="passPercentage" [ngClass]="{'form-control':true,'red_border': certificateFormGroup.controls['passPercentage'].touched && certificateFormGroup.controls['passPercentage'].errors}">
+                                    <span class="errorTxt" *ngIf="(certificateFormGroup.controls['passPercentage'].touched && certificateFormGroup.controls['passPercentage'].errors && certificateFormGroup.controls['passPercentage'].errors.required) || (CertSubmit && certificateFormGroup.controls['passPercentage'].errors && certificateFormGroup.controls['passPercentage'].errors.required)">Please Enter Percentage</span>
+                                    <!-- <span class="errorTxt" *ngIf="certificateFormGroup.controls['passPercentage'].touched && certificateFormGroup.controls['passPercentage'].errors && certificateFormGroup.controls['passPercentage'].errors.pattern">
+                                    Must be a number with up to 2 decimal places may have %</span> -->
+                                    <span class="errorTxt" *ngIf="certificateFormGroup.controls['passPercentage'].touched && certificateFormGroup.controls['passPercentage'].errors && certificateFormGroup.controls['passPercentage'].errors.max">
+                                        Please Enter Valid Percentage</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <button class="btn btn-success save_btn" (click)="saveCert()">Save</button>
+                            </div>
+
+                        </form>
+                        <div class="pt-4 pb-4">
+                            <button mat-button type="button" class="another_btn" (click)="addQual(secondFormGroup)">+ Add Another Qualification</button>
+                        </div>
+                        <div class="pt-4 pb-4">
+                            <button type="button" class="btn btn-link" (click)="addCertif(certificateFormGroup)">+ Add Certification</button>
+                        </div>
+                        <div class="text-right pt-4 pb-4">
+                            <button mat-button matStepperPrevious class="submit_btn float-left">
+                                <b>Back</b>
+                            </button>
+                            <ng-container *ngIf="firstFormGroup.controls['occupation'].value != 1">
+                                <button mat-button matStepperNext class="submit_btn" (click)="careerForm()">
+                                    <b>Finish</b>
+                                </button>
+                            </ng-container>
+                            <ng-container *ngIf="firstFormGroup.controls['occupation'].value == 1">
+                                <button mat-button matStepperNext class="submit_btn" (click)="checkQualList()">
+                                    <b>Next</b>
+                                </button>
+                            </ng-container>
+
+                        </div>
+                    </mat-step>
+                    <mat-step [stepControl]="thirdFormGroup" *ngIf="firstFormGroup.controls['occupation'].value == 1">
+                        <!-- <ng-template matStepLabel>Done</ng-template> -->
+                        <div class="p-4 reg_title text-center">
+                            <h5>
+                                <b style="border-bottom: 2px solid #5ccd71;">Career Details</b>
+                            </h5>
+                        </div>
+                        <div *ngIf="experienceList.length" class="mb-5">
+                            <div class="row" *ngFor="let exp of experienceList;let i=index">
+                                <p class="col-sm-12">
+                                    <b>Experience - {{i+1}}</b>
+                                    <span class="qual_icon" (click)="editExpDetails(exp,i)">
+                                        <i class="material-icons">
+                                            edit
+                                        </i>
+                                    </span>
+                                    <!-- <span class="qual_icon" (click)="editExpDetails(exp,i)" data-toggle="modal" data-target="#expDetailModal">
+                                        <i class="material-icons">
+                                            edit
+                                        </i>
+                                    </span> -->
+                                    <span class="cert_icon pl-4">
+                                        <i class="material-icons" (click)="deleteExp(exp,i)">
+                                            highlight_off
+                                        </i>
+                                    </span>
+                                </p>
+                                <div class="col-sm-5 mb-4">
+                                    <span>Company Name :</span>
+                                    <span class="pl-4">
+                                        <b>{{exp.companyName}}</b>
+                                    </span>
+                                </div>
+                                <div class="col-sm-7 mb-4">
+                                    <span>Designation :</span>
+                                    <span class="pl-4">
+                                        <b>{{exp.designation}}</b>
+                                    </span>
+                                </div>
+                                <div class="col-sm-5 mb-4">
+                                    <span>Start Date :</span>
+                                    <span class="pl-4">
+                                        <b>{{exp.startDate | date:'mediumDate'}}</b>
+                                    </span>
+                                </div>
+                                <div class="col-sm-7 mb-4">
+                                    <span>End Date :</span>
+                                    <span class="pl-4" *ngIf="exp.endDate != 'null'">
+                                        <b>{{exp.endDate | date:'mediumDate'}}</b>
+                                    </span>
+                                    <span class="pl-4" *ngIf="exp.endDate == 'null'">
+                                        <b>-</b>
+                                    </span>
+                                </div>
+                                <div class="col-sm-5 mb-4">
+                                    <span>Location :</span>
+                                    <span class="pl-4">
+                                        <b>{{exp.location}}</b>
+                                    </span>
+                                </div>
+                                <div class="col-sm-7 mb-4">
+                                    <span>Mode of Employment :</span>
+                                    <span class="pl-4">
+                                        <b>{{exp.modeOfEmployement}}</b>
+                                    </span>
+                                </div>
+                                <div class="col-sm-5 mb-4">
+                                    <span>Salary :</span>
+                                    <span class="pl-4">
+                                        <b>{{exp.salary}}</b> &nbsp; &nbsp;
+                                        <b>{{exp.currency}} </b>
+                                    </span>
+                                </div>
+                                <div class="col-sm-7 mb-4">
+                                    <span>Currently Working here:</span>
+                                    <span class="pl-4" *ngIf="exp.currentWorking">
+                                        <b>Yes</b>
+                                    </span>
+                                    <span class="pl-4" *ngIf="!exp.currentWorking">
+                                        <b>No</b>
+                                    </span>
+                                </div>
+                            </div>
+                            <hr class="qual_hr">
+                        </div>
+
+                        <form [formGroup]="thirdFormGroup" class="row" *ngIf="expForm">
+                            <!-- <ng-template matStepLabel>Fill out your address</ng-template> -->
+                            <div class="col-sm-12 text-right close_form">
+                                <span class="errorTxt pointer">
+                                    <i class="material-icons" (click)="closeThirdForm()">
+                                        highlight_off
+                                    </i>
+                                </span>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <label for="companyName">Company Name</label>
+                                    <input type="text" placeholder="Nexiilabs" class="form-control" id="companyName" formControlName="companyName" [ngClass]="{'form-control':true,'red_border': thirdFormGroup.controls['companyName'].touched && thirdFormGroup.controls['companyName'].errors}">
+                                    <span class="errorTxt" *ngIf="(thirdFormGroup.controls['companyName'].touched && thirdFormGroup.controls['companyName'].errors && thirdFormGroup.controls['companyName'].errors.required) || (ExpSub && thirdFormGroup.controls['companyName'].errors && thirdFormGroup.controls['companyName'].errors.required)">
+                                        Please Provide the Company Name
+                                    </span>
+                                    <span class="errorTxt" *ngIf="(thirdFormGroup.controls['companyName'].touched && thirdFormGroup.controls['companyName'].errors && thirdFormGroup.controls['companyName'].errors.pattern)">
+                                        Numbers Not Allowed
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="designation">Designation</label>
+                                    <input placeholder="MTS-1" type="text" class="form-control" id="designation" formControlName="designation" [ngClass]="{'form-control':true,'red_border': thirdFormGroup.controls['designation'].touched && thirdFormGroup.controls['designation'].errors}">
+                                    <span class="errorTxt" *ngIf="(thirdFormGroup.controls['designation'].touched && thirdFormGroup.controls['designation'].errors) || (ExpSub && thirdFormGroup.controls['designation'].errors  && thirdFormGroup.controls['designation'].errors.required)">
+                                        Please Provide the Designation
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <label class="d-block" for="startDate">Start Date</label>
+                                    <mat-form-field>
+                                        <input placeholder="MM/DD/YYYY" matInput [matDatepicker]="picker" [max]="todayDate" id="startDate" formControlName="startDate" [ngClass]="{'form-control':true,'red_border': thirdFormGroup.controls['startDate'].touched && thirdFormGroup.controls['startDate'].errors}">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                    <span class="errorTxt" *ngIf="(thirdFormGroup.controls['startDate'].touched && thirdFormGroup.controls['startDate'].errors) || (ExpSub && thirdFormGroup.controls['startDate'].errors  && thirdFormGroup.controls['startDate'].errors.required)">
+                                        Please Mention the Start Date
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4" *ngIf='!checkbox.checked'>
+                                <div class="form-group">
+                                    <label class="d-block" for="endDate">End Date</label>
+                                    <mat-form-field>
+                                        <input placeholder="MM/DD/YYYY" matInput [max]="todayDate" [matDatepicker]="picker1" id="endDate" formControlName="endDate" [ngClass]="{'form-control':true,'red_border': thirdFormGroup.controls['endDate'].touched && thirdFormGroup.controls['endDate'].errors}">
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-sm-3" style="padding-top: 2.25rem;">
+                                <mat-checkbox formControlName="currentWorking" #checkbox [ngClass]="{'red_border': thirdFormGroup.controls['currentWorking'].touched && thirdFormGroup.controls['currentWorking'].errors}">
+                                    Currently Working here
+                                </mat-checkbox>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <label for="location">Location</label>
+                                    <input placeholder="Hyderabad" type="text" class="form-control" id="location" formControlName="location" [ngClass]="{'form-control':true,'red_border': thirdFormGroup.controls['location'].touched && thirdFormGroup.controls['location'].errors}">
+                                    <span class="errorTxt" *ngIf=" (thirdFormGroup.controls['location'].touched && thirdFormGroup.controls['location'].errors && thirdFormGroup.controls['location'].errors.required) || (ExpSub && thirdFormGroup.controls['location'].errors && thirdFormGroup.controls['location'].errors.required)">
+                                        Please Provide the Location
+                                    </span>
+                                    <span class="errorTxt" *ngIf=" (thirdFormGroup.controls['location'].touched && thirdFormGroup.controls['location'].errors && thirdFormGroup.controls['location'].errors.pattern)">
+                                        Numbers Not Allowed
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="modeOfEmployement">Mode of Employment</label>
+                                    <select class="form-control" id="modeOfEmployement" formControlName="modeOfEmployement" [ngClass]="{'form-control':true,'red_border': thirdFormGroup.controls['modeOfEmployement'].touched && thirdFormGroup.controls['modeOfEmployement'].errors}">
+                                        <option [selected]="true" disabled>Select Mode</option>
+                                        <option>Permanent</option>
+                                        <option>Contract</option>
+                                    </select>
+                                    <span class="errorTxt" *ngIf="(thirdFormGroup.controls['modeOfEmployement'].touched && thirdFormGroup.controls['modeOfEmployement'].errors) || (ExpSub && thirdFormGroup.controls['modeOfEmployement'].errors  && thirdFormGroup.controls['modeOfEmployement'].errors.required)">
+                                        Please Select the Mode of Employment
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-5">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <div class="form-group">
+                                            <label for="salary">Salary (Lacs Per Annum)</label>
+                                            <input placeholder="5 (or) 3.25 (or) 7.5 .." type="number" class="form-control" id="salary" formControlName="salary" [ngClass]="{'form-control':true,'red_border': thirdFormGroup.controls['salary'].touched && thirdFormGroup.controls['salary'].errors}">
+                                            <span class="errorTxt" *ngIf="(thirdFormGroup.controls['salary'].touched && thirdFormGroup.controls['salary'].errors && thirdFormGroup.controls['salary'].errors.required) || (ExpSub && thirdFormGroup.controls['salary'].errors && thirdFormGroup.controls['salary'].errors.required)">
+                                                Please Enter the salary
+                                            </span>
+                                            <!-- <span class="errorTxt" *ngIf="thirdFormGroup.controls['salary'].touched && thirdFormGroup.controls['salary'].errors && thirdFormGroup.controls['salary'].errors.pattern">
+                                                Only Numbers upto two decimals are allowed
+                                            </span> -->
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="currency">Currency</label>
+                                            <select class="form-control" id="currency" formControlName="currency" [ngClass]="{'form-control':true,'red_border': thirdFormGroup.controls['currency'].touched && thirdFormGroup.controls['currency'].errors}">
+                                                <option [selected]="true" disabled>Select Currency</option>
+                                                <option>INR</option>
+                                                <option>USD</option>
+                                            </select>
+                                            <span class="errorTxt" *ngIf="(thirdFormGroup.controls['currency'].touched && thirdFormGroup.controls['currency'].errors) || (ExpSub && thirdFormGroup.controls['currency'].errors && thirdFormGroup.controls['currency'].errors.required)">
+                                                Please Select the Currency
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <button class="btn btn-success save_btn" (click)="addExp(thirdFormGroup)">Save</button>
+                            </div>
+
+                        </form>
+                        <div class="pt-4 pb-4">
+                            <button *ngIf="experienceList.length" mat-button type="button" class="another_btn" (click)="addExpForm()">+ Add Another Experience</button>
+
+                            <button *ngIf="!experienceList.length" mat-button type="button" class="another_btn" (click)="addExpForm()">+ Add Experience</button>
+                        </div>
+                        <div class="text-right pt-4 pb-4">
+                            <button mat-button matStepperPrevious class="submit_btn float-left">
+                                <b>Back</b>
+                            </button>
+                            <button mat-button matStepperNext class="submit_btn" (click)="careerForm(thirdFormGroup)">
+                                <b>Finish</b>
+                            </button>
+                        </div>
+                    </mat-step>
+                </mat-horizontal-stepper>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- The Modal -->
+<div class="modal" id="qualEditModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Education Details</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form [formGroup]="secondFormGroup" class="row">
+                    <!-- <ng-template matStepLabel>Fill out your address</ng-template> -->
+                    <input type="hidden" [(ngModel)]="qualEditData.candidateEducationDetailsId" id="candidateEducationDetailsId"
+                    formControlName="candidateEducationDetailsId">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="qualification">Qualification</label>
+                            <input type="text" placeholder="B.Tech" class="form-control" [(ngModel)]="qualEditData.qualification" id="qualification"
+                                formControlName="qualification" [ngClass]="{'form-control':true,'red_border': secondFormGroup.controls['qualification'].touched && secondFormGroup.controls['qualification'].errors}">
+                                <span class="errorTxt" *ngIf="(secondFormGroup.controls['qualification'].touched && secondFormGroup.controls['qualification'].errors && secondFormGroup.controls['qualification'].errors.required)">Please Enter Qualification</span>
+                                <span class="errorTxt" *ngIf="(secondFormGroup.controls['qualification'].touched && secondFormGroup.controls['qualification'].errors && secondFormGroup.controls['qualification'].errors.pattern)">Numbers Not Allowed</span>
+                            </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="univercity">University Name</label>
+                            <input type="text" placeholder="JNTUK" class="form-control" [(ngModel)]="qualEditData.univercity" id="univercity" formControlName="univercity"
+                                [ngClass]="{'form-control':true,'red_border': secondFormGroup.controls['univercity'].touched && secondFormGroup.controls['univercity'].errors}">
+                                <span class="errorTxt" *ngIf="(secondFormGroup.controls['univercity'].touched && secondFormGroup.controls['univercity'].errors && secondFormGroup.controls['univercity'].errors.required)">Please Enter University</span>
+                                <span class="errorTxt" *ngIf="(secondFormGroup.controls['univercity'].touched && secondFormGroup.controls['univercity'].errors && secondFormGroup.controls['univercity'].errors.pattern)">Numbers Not Allowed</span>
+                            </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="collegeName">College</label>
+                            <input type="text" placeholder="Layola College" class="form-control" [(ngModel)]="qualEditData.collegeName" id="collegeName"
+                                formControlName="collegeName" [ngClass]="{'form-control':true,'red_border': secondFormGroup.controls['collegeName'].touched && secondFormGroup.controls['collegeName'].errors}">
+                                <span class="errorTxt" *ngIf="(secondFormGroup.controls['collegeName'].touched && secondFormGroup.controls['collegeName'].errors && secondFormGroup.controls['collegeName'].errors.required)">Please Provide College Name</span>
+                                <span class="errorTxt" *ngIf="(secondFormGroup.controls['collegeName'].touched && secondFormGroup.controls['collegeName'].errors && secondFormGroup.controls['collegeName'].errors.pattern)">Numbers Not Allowed</span>
+                            </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="passPercentage">Percentage</label>
+                            <input placeholder="90.99" type="number" class="form-control" [(ngModel)]="qualEditData.passPercentage" id="passPercentage"
+                                formControlName="passPercentage" [ngClass]="{'form-control':true,'red_border': secondFormGroup.controls['passPercentage'].touched && secondFormGroup.controls['passPercentage'].errors}">
+                                <span class="errorTxt" *ngIf="(secondFormGroup.controls['passPercentage'].touched && secondFormGroup.controls['passPercentage'].errors && secondFormGroup.controls['passPercentage'].errors.required)">
+                                    Please Enter Percentage
+                                </span>
+                                <span class="errorTxt" *ngIf="secondFormGroup.controls['passPercentage'].touched && secondFormGroup.controls['passPercentage'].errors && secondFormGroup.controls['passPercentage'].errors.max">
+                                    Please Enter Valid Percentage
+                                </span>
+                            </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="yearOfCompletion">Year of Completion</label>
+                            <input type="number" placeholder="2019" class="form-control" id="yearOfCompletion" formControlName="yearOfCompletion" [(ngModel)]="qualEditData.yearOfCompletion"
+                                [ngClass]="{'form-control':true,'red_border': secondFormGroup.controls['yearOfCompletion'].touched && secondFormGroup.controls['yearOfCompletion'].errors}">
+                                <span class="errorTxt" *ngIf="(secondFormGroup.controls['yearOfCompletion'].touched &&secondFormGroup.controls['yearOfCompletion'].errors) || (QualSubmit &&secondFormGroup.controls['yearOfCompletion'].errors)">Please Enter Year of Completion, Year Should not be More than the Current Year</span>
+                                <!-- <span class="errorTxt" 
+                            *ngIf="secondFormGroup.controls['yearOfCompletion'].errors">Please Enter Valid Mobile Number</span> -->
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="editQualification(qual,i)" [disabled]="secondFormGroup.invalid">Update</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="certEditModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Certification Details</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form [formGroup]="certificateFormGroup" class="row">
+                    <!-- <ng-template matStepLabel>Fill out your address</ng-template> -->
+                    <input type="hidden" [(ngModel)]="qualEditData.candidateCertificationId" id="candidateCertificationId"
+                    formControlName="candidateCertificationId">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="certificationName">Certification Name</label>
+                            <input type="text" class="form-control" [(ngModel)]="certEditData.certificationName" id="certificationName" formControlName="certificationName"
+                                [ngClass]="{'form-control':true,'red_border': certificateFormGroup.controls['certificationName'].touched && certificateFormGroup.controls['certificationName'].errors}">
+                                <span class="errorTxt" *ngIf="(certificateFormGroup.controls['certificationName'].touched && certificateFormGroup.controls['certificationName'].errors)">Please Mention Certification Name</span>
+                            </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="yearOfCompletion">Year of Completion</label>
+                            <input type="number" minlength="4" maxlength="4" [(ngModel)]="certEditData.yearOfCompletion" class="form-control" id="yearOfCompletion"
+                                formControlName="yearOfCompletion" [ngClass]="{'form-control':true,'red_border': certificateFormGroup.controls['yearOfCompletion'].touched && certificateFormGroup.controls['yearOfCompletion'].errors}">
+                                <span class="errorTxt" *ngIf="(certificateFormGroup.controls['yearOfCompletion'].touched && certificateFormGroup.controls['yearOfCompletion'].errors) || (CertSubmit && certificateFormGroup.controls['yearOfCompletion'].errors && certificateFormGroup.controls['yearOfCompletion'].errors.required)">Please Enter Year of Completion, Year Should not be More than the Current Year</span>
+                            </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="passPercentage">Percentage / CGPA</label>
+                            <input type="number" class="form-control" [(ngModel)]="certEditData.passPercentage" id="passPercentage" formControlName="passPercentage"
+                                [ngClass]="{'form-control':true,'red_border': certificateFormGroup.controls['passPercentage'].touched && certificateFormGroup.controls['passPercentage'].errors}">
+                                <span class="errorTxt" *ngIf="(certificateFormGroup.controls['passPercentage'].touched && certificateFormGroup.controls['passPercentage'].errors && certificateFormGroup.controls['passPercentage'].errors.required)">Please Enter Percentage</span>
+                                <!-- <span class="errorTxt" *ngIf="certificateFormGroup.controls['passPercentage'].touched && certificateFormGroup.controls['passPercentage'].errors && certificateFormGroup.controls['passPercentage'].errors.pattern">
+                                Must be a number with up to 2 decimal places may have %</span> -->
+                                <span class="errorTxt" *ngIf="certificateFormGroup.controls['passPercentage'].touched && certificateFormGroup.controls['passPercentage'].errors && certificateFormGroup.controls['passPercentage'].errors.max">
+                                    Please Enter Valid Percentage</span>
+                            </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="editCertification(cert,i)" [disabled]="certificateFormGroup.invalid">Update</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- The Modal -->
+<div class="modal" id="expDetailModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Experience Details</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form [formGroup]="thirdFormGroup" class="row">
+                    <!-- <ng-template matStepLabel>Fill out your address</ng-template> -->
+                    <input type="hidden" [(ngModel)]="qualEditData.candidateProfessionalDetailsId" id="candidateProfessionalDetailsId"
+                    formControlName="candidateProfessionalDetailsId">
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <label for="companyName">Company Name</label>
+                            <input type="text" placeholder="Nexiilabs" class="form-control" [(ngModel)]="expDetails.companyName" id="companyName" formControlName="companyName"
+                                [ngClass]="{'form-control':true,'red_border': thirdFormGroup.controls['companyName'].touched && thirdFormGroup.controls['companyName'].errors}">
+                                <span class="errorTxt" *ngIf="(thirdFormGroup.controls['companyName'].touched && thirdFormGroup.controls['companyName'].errors && thirdFormGroup.controls['companyName'].errors.required)">
+                                        Please Provide the Company Name
+                                    </span>
+                                    <span class="errorTxt" *ngIf="(thirdFormGroup.controls['companyName'].touched && thirdFormGroup.controls['companyName'].errors && thirdFormGroup.controls['companyName'].errors.pattern)">
+                                        Numbers Not Allowed
+                                    </span>
+                            </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="designation">Designation</label>
+                            <input placeholder="MTS-1" type="text" class="form-control" [(ngModel)]="expDetails.designation" id="designation" formControlName="designation"
+                                [ngClass]="{'form-control':true,'red_border': thirdFormGroup.controls['designation'].touched && thirdFormGroup.controls['designation'].errors}">
+                                <span class="errorTxt" *ngIf="(thirdFormGroup.controls['designation'].touched && thirdFormGroup.controls['designation'].errors)">
+                                        Please Provide the Designation
+                                    </span>
+                            </div>
+                    </div>
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-5" *ngIf="expDetails && expDetails.startDate">
+                        <div class="form-group">
+                            <label class="d-block" for="startDate">Start Date</label>
+                            <mat-form-field>
+                                <input placeholder="MM/DD/YYYY" matInput [max]="todayDate" [matDatepicker]="picker" id="startDate" formControlName="startDate" [ngClass]="{'form-control':true,'red_border': thirdFormGroup.controls['startDate'].touched && thirdFormGroup.controls['startDate'].errors}">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                            <span class="errorTxt" *ngIf="(thirdFormGroup.controls['startDate'].touched && thirdFormGroup.controls['startDate'].errors)">
+                                    Please Mention the Start Date
+                                </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4" *ngIf='!checkbox.checked'>
+                        <div class="form-group">
+                            <label class="d-block" for="endDate">End Date</label>
+                            <mat-form-field>
+                                <input placeholder="MM/DD/YYYY" matInput [max]="todayDate" [matDatepicker]="picker1" id="endDate" formControlName="endDate" [ngClass]="{'form-control':true,'red_border': thirdFormGroup.controls['endDate'].touched && thirdFormGroup.controls['endDate'].errors}">
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-sm-3" style="padding-top: 2.25rem;">
+                        <mat-checkbox formControlName="currentWorking" #checkbox [ngClass]="{'red_border': thirdFormGroup.controls['currentWorking'].touched && thirdFormGroup.controls['currentWorking'].errors}">
+                            Currently Working here
+                        </mat-checkbox>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input placeholder="Hyderabad" type="text" [(ngModel)]="expDetails.location" class="form-control" id="location" formControlName="location"
+                                [ngClass]="{'form-control':true,'red_border': thirdFormGroup.controls['location'].touched && thirdFormGroup.controls['location'].errors}">
+                                <span class="errorTxt" *ngIf="(thirdFormGroup.controls['location'].touched && thirdFormGroup.controls['location'].errors && thirdFormGroup.controls['location'].errors.required)">
+                                        Please Provide the Location
+                                    </span>
+                                    <span class="errorTxt" *ngIf="(thirdFormGroup.controls['location'].touched && thirdFormGroup.controls['location'].errors && thirdFormGroup.controls['location'].errors.pattern)">
+                                        Numbers Not Allowed
+                                    </span>
+                            </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="modeOfEmployement">Mode of Employment</label>
+                            <select class="form-control" id="modeOfEmployement" [(ngModel)]="expDetails.modeOfEmployement" formControlName="modeOfEmployement"
+                                [ngClass]="{'form-control':true,'red_border': thirdFormGroup.controls['modeOfEmployement'].touched && thirdFormGroup.controls['modeOfEmployement'].errors}">
+                                <option [selected]="true" disabled>Select Mode</option>
+                                <option>Permanent</option>
+                                <option>Contract</option>
+                            </select>
+                            <span class="errorTxt" *ngIf="(thirdFormGroup.controls['modeOfEmployement'].touched && thirdFormGroup.controls['modeOfEmployement'].errors)">
+                                    Please Select the Mode of Employment
+                                </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-5">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <label for="salary">Salary (Lacs Per Annum)</label>
+                                    <input placeholder="5" type="number" [(ngModel)]="expDetails.salary" class="form-control" id="salary" formControlName="salary"
+                                        [ngClass]="{'form-control':true,'red_border': thirdFormGroup.controls['salary'].touched && thirdFormGroup.controls['salary'].errors}">
+                                        <span class="errorTxt" *ngIf="(thirdFormGroup.controls['salary'].touched && thirdFormGroup.controls['salary'].errors && thirdFormGroup.controls['salary'].errors.required)">
+                                            Please Enter the salary
+                                        </span>
+                                    </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="currency">Currency</label>
+                                    <select class="form-control" id="currency" [(ngModel)]="expDetails.currency" formControlName="currency" [ngClass]="{'form-control':true,'red_border': thirdFormGroup.controls['currency'].touched && thirdFormGroup.controls['currency'].errors}">
+                                        <option [selected]="true" disabled>Select Currency</option>
+                                        <option>INR</option>
+                                        <option>USD</option>
+                                    </select>
+                                    <span class="errorTxt" *ngIf="(thirdFormGroup.controls['currency'].touched && thirdFormGroup.controls['currency'].errors)">
+                                            Please Select the Currency
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-sm-4">
+                    <button class="btn btn-success save_btn" (click)="updateExp(thirdFormGroup)">Update</button>
+                </div> -->
+
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="updateExp(thirdFormGroup)" 
+                    [disabled]="!thirdFormGroup.valid">Update</button>
+            </div>
+
+        </div>
+    </div>
+</div>

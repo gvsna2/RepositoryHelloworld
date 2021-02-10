@@ -1,0 +1,437 @@
+<block-ui>
+
+</block-ui>
+<div class="list_user_sec mt-4 mb-4">
+    <h4>List of Users</h4>
+    <hr class="m-0">
+    <div class="text-right mt-3 mb-3">
+        <button type="button" class="btn btn-primary" *ngIf="listUsers && listUsers['allUsers'].length" data-toggle="modal" data-target="#newUserModal">+ Create New User</button>
+    </div>
+    <div class="row" *ngIf="listUsers && !listUsers['allUsers'].length">
+        <div class="well col-sm-12 text-center p-5">
+            <h4 class="errorTxt"> You don't have any users created. Create now.</h4>
+        </div>
+        <div class="well col-sm-12 errorTxt text-center">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#newUserModal">+ Create New User</button>
+        </div>
+    </div>
+    <div class="row col-sm-12" *ngIf="listUsers && listUsers['allUsers']">
+        <div [ngClass]="{'user_card pl-0 pb-0 pt-3 pb-0 m-2 flex_width col-sm-3 text-center white_bg pointer':true,'redBorder':user.role == 'Admin','blueBorder': user.role == 'Evaluator','greenBorder': user.role == 'Test Manager'}" *ngFor="let user of listUsers['allUsers'];let i=index"
+            (mouseover)="openModal(i)" (mouseout)="closeModal(i)" data-toggle="modal" data-target="#editUserModal">
+            <!-- <p [hidden]="true"  id="matTrig{{i}}">open</p> [matMenuTriggerFor]="menu"  (mouseover)="openModal(i)" -->
+            <div class="text-center hover_panel hover_panel{{i}}" (click)="preventDef($event)">
+                <img *ngIf="user.imageUrl != 'No Image For This User'" [src]="user.imageUrl">
+                <img *ngIf="user.imageUrl == 'No Image For This User'" src="./../../../assets/images/boy.png">
+                <p class="text-center mt-4">
+                    <b>{{user.userName}}</b>
+                </p>
+                <p class="text-center">{{user.roleName}}</p>
+                <hr>
+                <div class="row m-0">
+                    <div class="col-sm-5">
+                        <p>Email : </p>
+                    </div>
+                    <div class="col-sm-7">
+                        <p class="textExceed" title="{{user.userEmail}}">{{user.userEmail}}</p>
+                    </div>
+                </div>
+                <div class="row m-0">
+                    <div class="col-sm-5">
+                        <p>Phone no : </p>
+                    </div>
+                    <div class="col-sm-7">
+                        <p>{{user.phoneNumber}}</p>
+                    </div>
+                </div>
+                <div class="row m-0">
+                    <div class="col-sm-5">
+                        <p>Created on : </p>
+                    </div>
+                    <div class="col-sm-7">
+                        <p>{{user.createdOn}}</p>
+                    </div>
+                </div>
+                <div class="row m-0">
+                    <div class="col-sm-5">
+                        <p>Designation : </p>
+                    </div>
+                    <div class="col-sm-7">
+                        <p>{{user.designation}}</p>
+                    </div>
+                </div>
+                <div class="row m-0">
+                    <div class="col-sm-5">
+                        <p>Department : </p>
+                    </div>
+                    <div class="col-sm-7">
+                        <p>{{user.department}}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- <mat-menu #menu="matMenu" yPosition="above">
+                <div class="text-center">
+                    <img  src="./../../../assets/images/list-users/{{i+1}}.png">
+                    <p class="text-center"><b>Radhika</b></p>
+                    <p class="text-center">Admin</p>
+                    <hr>
+                    <div class="row m-0">
+                        <div class="col-sm-5">
+                            <p>Email : </p>
+                        </div>
+                        <div class="col-sm-7">
+                            <p>radhika@example.com</p>
+                        </div>
+                    </div>
+                    <div class="row m-0">
+                        <div class="col-sm-5">
+                            <p>Phone no : </p>
+                        </div>
+                        <div class="col-sm-7">
+                            <p>+91 12345667788</p>
+                        </div>
+                    </div>
+                    <div class="row m-0">
+                        <div class="col-sm-5">
+                            <p>Created on : </p>
+                        </div>
+                        <div class="col-sm-7">
+                            <p>10, July</p>
+                        </div>
+                    </div>
+                </div>
+              </mat-menu> -->
+            <div class="d-flex">
+                <div class="flex-fill text-center">
+                    <img *ngIf="user.imageUrl != 'No Image For This User'" class="user-icon rounded-circle" [src]="user.imageUrl">
+                    <img *ngIf="user.imageUrl == 'No Image For This User'" class="user-icon" src="./../../../assets/images/boy.png">
+                </div>
+                <div class="flex-fill text-center" (click)="getUserDetailesById(user.userId)">
+                    <p>
+                        <b>{{user.userName}}</b>
+                    </p>
+                    <p>{{user.roleName}}</p>
+                </div>
+                <div class="flex-fill text-center">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal row" id="newUserModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title col-sm-12 text-left">
+
+                    <b>New User </b>
+                </h4>
+                <button type="button" id="closeUser" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row pt-5">
+                    <div class="col-sm-7 offset-sm-1">
+                        <form #newUser="ngForm" (submit)="createUser(newUser)">
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label for="fname">First Name</label>
+                                    <input type="text" class="form-control" placeholder="First Name" id="fname" required ngModel name="userFirstName" #userFirstName="ngModel" [ngClass]="{'red_border':userFirstName.touched && userFirstName.errors}">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="lname">Last Name</label>
+                                    <input type="text" class="form-control" placeholder="Last Name" id="lname" ngModel name="userLastName" #userLastName="ngModel" [ngClass]="{'red_border':userLastName.touched && userLastName.errors}" required>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="designation">Designation</label>
+                                    <input type="text" class="form-control" placeholder="designation" id="designation" required ngModel name="designation" #designation="ngModel" [ngClass]="{'red_border':designation.touched && designation.errors}">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <popover-content #departmentEditPop title="" placement="right" [animation]="true" style="box-shadow: 10px 10px 5px #aaaaaa;">
+                                        <span style="color: #646363;">Specify the department of the user. For eg.HR, Technical,Accounts etc .</span>
+                                    </popover-content>
+                                    <label for="lname">Department <span><i style="    font-size: 13px;color: #969696;top: 2px;"  [popoverOnHover]="true" [popover]="departmentEditPop" class="material-icons">info</i></span></label>
+                                    <input type="text" class="form-control" placeholder="department" id="department" ngModel name="department" #department="ngModel" [ngClass]="{'red_border':department.touched && department.errors}" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label for="email">Email</label>
+                                    <input type="text" class="form-control" placeholder="Email" id="email" ngModel name="userEmail" #userEmail="ngModel" [ngClass]="{'red_border':userEmail.touched && userEmail.errors}" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label for="email">Phone Number</label>
+                                    <input type="text" class="form-control" placeholder="PhoneNumber" id="phoneNumber" ngModel name="phoneNumber" #phoneNumber="ngModel" [ngClass]="{'red_border':phoneNumber.touched && phoneNumber.errors}" required>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="listRoles && listRoles['allRoles']">
+                                <div class="form-group col-sm-12">
+
+                                    <popover-content #rolePop title="" placement="right" [animation]="true" style="box-shadow: 10px 10px 5px #aaaaaa;">
+                                        <span style="color: #646363;">Specify role for each user such as admin/test Setter/Evaluator etc.</span>
+                                    </popover-content>
+
+                                    <label for="role">Role <span><i style="    font-size: 13px;color: #969696;top: 2px;"  [popoverOnHover]="true" [popover]="rolePop" class="material-icons">info</i></span></label>
+                                    <select class="form-control" id="role" ngModel name="roleId" #roleId="ngModel" [ngClass]="{'red_border':roleId.touched && roleId.errors}" required>
+                                        <option value="">Select Role</option>
+                                        <option *ngFor="let role of listRoles['allRoles']" [value]="role.roleId">{{role.roleName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row float-right pt-4 pb-4">
+                                <button class="btn btn-primary" type="submit">
+                                    Create
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-sm-4 text-center">
+                        <div>
+                            <img src="./../../../assets/images/women-standing.png" class="women_Stand">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<button id="perm_modal" type="button" class="btn btn-primary" data-toggle="modal" data-target="#permissionModal">
+    Open modal
+</button>
+<!-- The Modal -->
+<div class="modal" id="permissionModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Select Your Roles</h4>
+                <button type="button" id="close_perm_modal" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row" *ngIf="!useRoles">
+                    <div class="col-sm-12 text-center errorTxt">
+                        <p><b>Please Wait! We Are Fetching Roles ...</b></p>
+                    </div>
+                </div>
+                <div class="row" *ngIf="useRoles && useRoles['allRoles'].length">
+                    <!-- <div class="col-sm-12" *ngFor="let role of useRoles['allRoles']">
+                        <mat-checkbox class="example-margin" [color]="color" [checked]="role.roleName == 'Admin'" [disabled]="role.roleName == 'Admin'"
+                            (click)="selectRole(role.roleId)">
+                            {{role.roleName}}
+                        </mat-checkbox>
+                    </div> -->
+                    <div class="col-sm-6 mt-5 pl-5 pr-5" *ngFor="let role of useRoles['allRoles']">
+                        <div class="d-flex boxShadow" *ngIf="role.roleName == 'Admin'">
+                            <div class="admin_role">
+                                <div>
+                                    <img src="./../../../assets/images/student.png" alt="employee">
+                                </div>
+                                <p>
+                                    <b>Admin</b>
+                                </p>
+                            </div>
+                            <div class="flex-fill">
+                                <p class="mb-0 text-right mt-2 mr-2">
+                                    <mat-checkbox class="example-margin" [color]="color" [checked]="role.roleName == 'Admin'" [disabled]="role.roleName == 'Admin'" (click)="selectRole(role.roleId)">
+                                        <!-- {{role.roleName}} -->
+                                    </mat-checkbox>
+                                </p>
+                                <ul>
+                                    <li>User Creation</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="d-flex boxShadow" *ngIf="role.roleName == 'Test Manager'">
+                            <div class="test_role">
+                                <div>
+                                    <img src="./../../../assets/images/student.png" alt="employee">
+                                </div>
+                                <p>
+                                    <b>Test Manager</b>
+                                </p>
+                            </div>
+                            <div class="flex-fill">
+                                <p class="mb-0 text-right mt-2 mr-2">
+                                    <mat-checkbox class="example-margin" [color]="color" [checked]="role.roleName == 'Admin'" [disabled]="role.roleName == 'Admin'" (click)="selectRole(role.roleId)">
+                                        <!-- {{role.roleName}} -->
+                                    </mat-checkbox>
+                                </p>
+
+                                <ul>
+                                    <li>Test & Test Instance Creation</li>
+                                    <li>Test Administraion</li>
+                                    <li>Section & Category Management </li>
+                                    <li>Reports </li>
+                                    <li>Sub Category Management </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="d-flex boxShadow" *ngIf="role.roleName == 'Evaluator'">
+                            <div class="eval_role">
+                                <div>
+                                    <img src="./../../../assets/images/student.png" alt="employee">
+                                </div>
+                                <p>
+                                    <b>Evaluator</b>
+                                </p>
+                            </div>
+                            <div class="flex-fill">
+                                <p class="mb-0 text-right mt-2 mr-2">
+                                    <mat-checkbox class="example-margin" [color]="color" [checked]="role.roleName == 'Admin'" [disabled]="role.roleName == 'Admin'" (click)="selectRole(role.roleId)">
+                                        <!-- {{role.roleName}} -->
+                                    </mat-checkbox>
+                                </p>
+
+                                <ul>
+                                    <li>Evaluation</li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-sm-12">
+                        <mat-checkbox class="example-margin">
+                            Test Manager
+                        </mat-checkbox>
+                    </div>
+                    <div class="col-sm-12">
+                        <mat-checkbox class="example-margin">
+                            Evaluator
+                        </mat-checkbox>
+                    </div> -->
+                </div>
+                <div class="row p-4 text-center" *ngIf="useRoles && useRoles['allRoles'].length">
+                    <button class="btn btn-primary updateSupRole m-auto" (click)="updateRoles()" [disabled]="!this.selectedRoles.length">Update</button>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal row" id="editUserModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title col-sm-12 text-left">
+                    <b>Edit User</b>
+                </h4>
+                <button type="button" id="closeUser" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row pt-5">
+                    <div class="col-sm-7 offset-sm-1" *ngIf="userDetailes.length">
+
+                        <form #newUser="ngForm" (submit)="editUser(newUser)" *ngFor="let user of userDetailes">
+                            <div class="row">
+
+                                <input type="hidden" class="form-control" placeholder="First Name" id="fname" required ngModel="{{user.userId}}" name="userId" #userId="ngModel" [ngClass]="{'red_border':userId.touched && userId.errors}">
+
+                                <div class="form-group col-sm-6">
+                                    <label for="fname">First Name</label>
+                                    <input type="text" class="form-control" placeholder="First Name" id="fname" required ngModel="{{user.userFirstName}}" name="userFirstName" #userFirstName="ngModel" [ngClass]="{'red_border':userFirstName.touched && userFirstName.errors}">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="lname">Last Name</label>
+                                    <input type="text" class="form-control" placeholder="Last Name" id="lname" ngModel="{{user.userLastName}}" name="userLastName" #userLastName="ngModel" [ngClass]="{'red_border':userLastName.touched && userLastName.errors}" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label for="designation">Designation</label>
+                                    <input type="text" class="form-control" placeholder="designation" id="designation" required ngModel="{{user.designation}}" name="designation" #designation="ngModel" [ngClass]="{'red_border':designation.touched && designation.errors}">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <popover-content #departmentPop title="" placement="right" [animation]="true" style="box-shadow: 10px 10px 5px #aaaaaa;">
+                                        <span style="color: #646363;">Specify the department of the user. For eg.HR, Technical,Accounts etc .</span>
+                                    </popover-content>
+                                    <label for="lname">Department <span><i style="    font-size: 13px;color: #969696;top: 2px;"  [popoverOnHover]="true" [popover]="departmentPop" class="material-icons">info</i></span></label>
+                                    <input type="text" class="form-control" placeholder="department" id="department" ngModel="{{user.department}}" name="department" #department="ngModel" [ngClass]="{'red_border':department.touched && department.errors}" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label for="email">Email</label>
+                                    <input type="text" class="form-control" placeholder="Email" id="email" ngModel="{{user.userEmail}}" name="userEmail" #userEmail="ngModel" [ngClass]="{'red_border':userEmail.touched && userEmail.errors}" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label for="phone number">Phone Number</label>
+                                    <input type="text" class="form-control" placeholder="Phone Number" id="phoneNumber" ngModel="{{user.phoneNumber}}" name="phoneNumber" #phoneNumber="ngModel" [ngClass]="{'red_border':phoneNumber.touched && phoneNumber.errors}" required>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="listRoles && listRoles['allRoles']">
+                                <div class="form-group col-sm-12">
+                                    <popover-content #roleEditPop title="" placement="right" [animation]="true" style="box-shadow: 10px 10px 5px #aaaaaa;">
+                                        <span style="color: #646363;">Specify role for each user such as admin/test Setter/Evaluator etc.</span>
+                                    </popover-content>
+                                    <label for="role">Role <span><i style="    font-size: 13px;color: #969696;top: 2px;"  [popoverOnHover]="true" [popover]="roleEditPop" class="material-icons">info</i></span></label>
+                                    <select class="form-control" id="role" ngModel={{user.roleId}} name="roleId" #roleId="ngModel" [ngClass]="{'red_border':roleId.touched && roleId.errors}" required>
+                                        <option value="">Select Role</option>
+                                        <option *ngFor="let role of listRoles['allRoles']" [value]="role.roleId">{{role.roleName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row float-right pt-4 pb-4">
+                                <button class="btn btn-primary" type="submit">
+                                    update
+                                </button>&nbsp;
+                                <button class="btn btn-danger" type="button" data-dismiss="modal" data-toggle="modal" (click)="deleteUser(user.userId)" data-target="#deleteModal">
+                                    delete
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-sm-4 text-center">
+                        <div>
+                            <img src="./../../../assets/images/women-standing.png" class="women_Stand">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal fade" id="deleteModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Confirm Delete User</h4>
+                <button type="button" id="delete_modal" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" (click)="confirmDeleteUser()">Confirm</button>
+            </div>
+
+        </div>
+    </div>
+</div>

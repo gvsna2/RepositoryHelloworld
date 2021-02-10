@@ -1,0 +1,383 @@
+<div class="dashboard_sec pt-4 pb-4 pr-5">
+    <div class="">
+        <h4>Dashboard </h4>
+        <hr>
+    </div>
+    <div class="d-flex" *ngIf="!isRecruiter" >
+        <div class="p-2 text-center flex-fill pointer boxShadow mr-3 pt-3 pb-3 borderleft1 white_bg" [routerLink]="['/test-setup']">
+            Add Test Master
+            <i class="material-icons lightBlue">
+                add
+            </i>
+        </div>
+        <div class="p-2 text-center flex-fill pointer boxShadow mr-3 pt-3 pb-3 borderleft2 white_bg" [routerLink]="['/sections']">
+            Add Sections
+            <i class="material-icons yellow">
+                add
+            </i>
+        </div>
+        <div class="p-2 text-center flex-fill pointer boxShadow mr-3 pt-3 pb-3 borderleft3 white_bg" [routerLink]="['/list-questions']">
+            Add Questions
+            <i class="material-icons">
+                add
+            </i>
+        </div>
+        <div class="p-2 text-center flex-fill pointer boxShadow mr-3 pt-3 pb-3 borderleft4 white_bg" [routerLink]="['/list-users']"
+            *ngIf="checkPerm('UserManagement')">
+            Add Users
+            <i class="material-icons">
+                add
+            </i>
+        </div>
+        <!-- <div class="p-2 text-center flex-fill pointer boxShadow pt-3 pb-3 borderleft5 white_bg">
+            Add Candidates
+            <i class="material-icons orange">
+                add
+            </i>
+        </div> -->
+    </div>
+    <div class="row m-0 mt-5" *ngIf="!isRecruiter">
+        <div class="col-sm-6 pl-0 pr-4">
+            <popover-content #testMaster title="" placement="right" [animation]="true" style="box-shadow: 10px 10px 5px #aaaaaa;">
+                <span style="color: #646363;">Set up the structure of your test.Set the topic,categories and sections</span>
+
+            </popover-content>
+
+
+            <h5>Test Masters
+                <span>
+                    <i style="font-size: 16px;color: #969696;top: 2px;" [popoverOnHover]="true" [popover]="testMaster" class="material-icons">info</i>
+                </span>
+            </h5>
+            <table class="table boxShadow borderleft1 white_bg  height247">
+                <thead class="dash_th">
+                    <tr>
+                        <th>Test Master Title</th>
+                        <th>Owner</th>
+                        <th>Category</th>
+                        <th>Instance Count</th>
+                        <!-- <th>createdOn</th> -->
+                        <!-- <th>Status</th> -->
+                    </tr>
+                </thead>
+                <tbody *ngIf="!testsArr">
+                    <div class="loader_div">
+                        <img src="./../../../assets/images/dashboard/loader_dash.gif">
+                    </div>
+                </tbody>
+                <tbody *ngIf="testsArr && testsArr['listOfTestSetups'] && testsArr['listOfTestSetups'].length">
+                    <tr *ngFor="let test of testsArr['listOfTestSetups'].slice(0,4)">
+                        <td>
+                            <span>
+                                <i class="material-icons icon_dot lightBlue">fiber_manual_record</i>
+                            </span>
+                            <span title="{{test.testSetupTitle}}" *ngIf="test.testSetupTitle?.length>8">{{test.testSetupTitle.slice(0,8)}}...</span>
+                            <span title="{{test.testSetupTitle}}" *ngIf="test.testSetupTitle?.length<=8">{{test.testSetupTitle}}</span>
+                        </td>
+                        <td>
+                            <span title="{{test.testOwner}}" *ngIf="test.testOwner?.length>8">{{test.testOwner.slice(0,8)}}...</span>
+                            <span title="{{test.testOwner}}" *ngIf="test.testOwner?.length<=8">{{test.testOwner}}</span>
+                        </td>
+
+                        <td>
+                            <span title="{{test.testCategoryName}}" *ngIf="test.testCategoryName?.length>8">{{test.testCategoryName.slice(0,8)}}...</span>
+                            <span title="{{test.testCategoryName}}" *ngIf="test.testCategoryName?.length<=8">{{test.testCategoryName}}</span>
+                        </td>
+                        <td class="text-center">
+                            <span>{{test.instanceCount}}</span>
+                        </td>
+                        <!-- <td>
+                            <span *ngIf="test.createdOn">{{test.createdOn | date:'mediumDate'}}</span>
+                            <span *ngIf="!test.createdOn">-</span>
+                        </td> -->
+                        <!-- <td>{{test.testStatus}}</td> -->
+                    </tr>
+                </tbody>
+                <tbody *ngIf="testsArr && testsArr['listOfTestSetups'] && !testsArr['listOfTestSetups'].length">
+                    <tr class="text-center">
+                        <td class="errorTxt not_found_Dash" colspan="4">Test Masters Not Yet Created</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p *ngIf="testsArr && testsArr['listOfTestSetups'] && testsArr['listOfTestSetups'].length>4">
+                <button class="btn btn-link float-right" [routerLink]="['/configure-tests']">Load More</button>
+            </p>
+        </div>
+        <div class="col-sm-6 pr-0 pl-0">
+            <popover-content #testInstance title="" placement="right" [animation]="true" style="box-shadow: 10px 10px 5px #aaaaaa;">
+                <span style="color: #646363;">Create your test. Select questions from question Pool and/or add your own</span>
+
+            </popover-content>
+            <h5>Test Instances
+                <span>
+                    <i style=" font-size: 16px;color: #969696;top: 2px;" [popoverOnHover]="true" [popover]="testInstance" class="material-icons">info</i>
+                </span>
+            </h5>
+            <table class="table boxShadow borderleft3 white_bg height247">
+                <thead class="dash_th">
+                    <tr>
+                        <th>Test Instance</th>
+                        <th>Owner</th>
+                        <th>Test</th>
+                        <th>Administered Tests</th>
+                        <!-- <th>createdOn</th> -->
+                    </tr>
+                </thead>
+                <tbody *ngIf="!testInstances">
+                    <div class="loader_div">
+                        <img src="./../../../assets/images/dashboard/loader_dash.gif">
+                    </div>
+                </tbody>
+                <tbody *ngIf="testInstances && testInstances['listOfTestInstances'] && testInstances['listOfTestInstances'].length">
+                    <tr *ngFor="let instance of testInstances['listOfTestInstances'] | slice:0:4">
+                        <td>
+                            <span>
+                                <i class="material-icons sec_circ">
+                                    fiber_manual_record
+                                </i>
+                            </span>
+                            <span title="{{instance.instanceTitle}}" *ngIf="instance.instanceTitle?.length>8">{{instance.instanceTitle.slice(0,8)}}...</span>
+                            <span title="{{instance.instanceTitle}}" *ngIf="instance.instanceTitle?.length<=8">{{instance.instanceTitle}}</span>
+                            <!-- {{instance.instanceTitle}} -->
+                        </td>
+                        <td>
+                            <span title="{{instance.testOwner}}" *ngIf="instance.testOwner?.length>8">{{instance.testOwner.slice(0,8)}}...</span>
+                            <span title="{{instance.testOwner}}" *ngIf="instance.testOwner?.length<=8">{{instance.testOwner}}</span>
+                            <!-- {{instance.testOwner}} -->
+                        </td>
+                        <td>
+                            <span title="{{instance.testSetupTitle}}" *ngIf="instance.testSetupTitle?.length>8">{{instance.testSetupTitle.slice(0,8)}}...</span>
+                            <span title="{{instance.testSetupTitle}}" *ngIf="instance.testSetupTitle?.length<=8">{{instance.testSetupTitle}}</span>
+                            <!-- {{instance.testSetupTitle}} -->
+                        </td>
+                        <td class="text-center">
+                            <span>{{instance.administeredTestCount}}</span>
+                        </td>
+                        <!-- <td>
+                                <span *ngIf="instance.createdOn">{{instance.createdOn | date:'mediumDate'}}</span>
+                                <span *ngIf="!instance.createdOn">-</span>
+                            </td> -->
+                    </tr>
+                </tbody>
+                <tbody *ngIf="testInstances && testInstances['listOfTestInstances'] && !testInstances['listOfTestInstances'].length">
+                    <tr class="text-center">
+                        <td class="errorTxt not_found_Dash" colspan="4">Test Instances Not Yet Created</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p *ngIf="testInstances && testInstances['listOfTestInstances'] && testInstances['listOfTestInstances'].length>4">
+                <button class="btn btn-link float-right" [routerLink]="['/administer-tests']">Load More</button>
+            </p>
+        </div>
+        <!-- <div class="col-sm-6 pr-0 pl-4">
+            <h5>Total Sections</h5>
+            <table class="table boxShadow borderleft3 white_bg height247">
+                <thead>
+                    <tr>
+                        <th>Section Title</th>
+                        <th>Sub Category</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="sectionArr && sectionArr['listOfAllSections'].length">
+                    <tr *ngFor="let sec of sectionArr['listOfAllSections'] | slice:0:4">
+                        <td>
+                            <span>
+                                <i class="material-icons sec_circ">
+                                    fiber_manual_record
+                                </i>
+                            </span>
+                            {{sec.testSectionName}}
+                        </td>
+                        <td>{{sec.testSubCategoryName}}</td>
+                    </tr>
+                </tbody>
+                <tbody *ngIf="sectionArr && !sectionArr['listOfAllSections'].length">
+                    <tr class="text-center">
+                        <td class="errorTxt not_found_Dash" colspan="3">No Sections Found</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p *ngIf="sectionArr && sectionArr['listOfAllSections'].length>3">
+                <button class="btn btn-link float-right" [routerLink]="['/sections']">Load More</button>
+            </p>
+        </div> -->
+    </div>
+    <div class="row m-0 mt-5">
+
+        <div class="col-sm-12 pl-0 pr-4">
+            <popover-content #administerTest title="" placement="right" [animation]="true" style="box-shadow: 10px 10px 5px #aaaaaa;">
+                <span style="color: #646363;"> View the list of tests that have already been conducted.</span>
+
+            </popover-content>
+            <h5>Administered Tests
+                <span>
+                    <i style="    font-size: 16px;color: #969696;top: 2px;" [popoverOnHover]="true" [popover]="administerTest" class="material-icons">info</i>
+                </span>
+            </h5>
+            <table class="table boxShadow borderleft3 white_bg height247">
+                <thead class="dash_th">
+                    <tr>
+                        <th>Test</th>
+                        <th>Owner</th>
+                         
+                        <th class="text-center">Administers</th>
+                        <!-- <th>createdOn</th> -->
+                    </tr>
+                </thead>
+                <tbody *ngIf="!administeredTests">
+                        <div class="loader_div">
+                            <img src="./../../../assets/images/dashboard/loader_dash.gif">
+                        </div>
+                    </tbody>
+                <tbody *ngIf="administeredTests && administeredTests['listOfTests'] && administeredTests['listOfTests'].length">
+                    <tr *ngFor="let test of administeredTests['listOfTests'] | slice:0:4">
+                        <td>
+                            <span>
+                                <i class="material-icons sec_circ">
+                                    fiber_manual_record
+                                </i>
+                            </span>
+                            <span title="{{test.testTitle}}" *ngIf="test.testTitle?.length>14">{{test.testTitle.slice(0,14)}}...</span>
+                            <span title="{{test.testTitle}}" *ngIf="test.testTitle?.length<=14">{{test.testTitle}}</span>
+                            <!-- {{instance.instanceTitle}} -->
+                        </td>
+                        <td>
+                            <span title="{{test.testOwner}}" *ngIf="test.testOwner?.length>14">{{test.testOwner.slice(0,14)}}...</span>
+                            <span title="{{test.testOwner}}" *ngIf="test.testOwner?.length<=14">{{test.testOwner}}</span>
+                            <!-- {{instance.testOwner}} -->
+                        </td>
+                         
+                        <td class="text-center">
+                            <span>{{test.administeredTestCount}}</span>
+                        </td>
+                        <!-- <td>
+                                    <span *ngIf="instance.createdOn">{{instance.createdOn | date:'mediumDate'}}</span>
+                                    <span *ngIf="!instance.createdOn">-</span>
+                                </td> -->
+                    </tr>
+                </tbody>
+                <tbody *ngIf="administeredTests && administeredTests['listOfTests'] && !administeredTests['listOfTests'].length">
+                    <tr class="text-center">
+                        <td class="errorTxt not_found_Dash" colspan="5">Tests Not Yet Administered</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p *ngIf="testInstances && testInstances['listOfTestInstances'] && testInstances['listOfTestInstances'].length>4">
+                <button class="btn btn-link float-right" [routerLink]="['/manage-tests']">Load More</button>
+            </p>
+        </div>
+        <!-- <div class="col-sm-6 pr-0 pl-4  ">
+            <h5>Reports</h5>
+            <table class="table boxShadow borderleft2 white_bg height247">
+                <thead class="dash_th">
+                    <tr>
+                        <th>Name</th>
+                        <th>Test Title</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="reportsArr && reportsArr['listOfCandidateResults'].length">
+                    <tr *ngFor="let rep of reportsArr['listOfCandidateResults'] | slice:0:4">
+                        <td>
+                            <span>
+                                <i class="material-icons icon_dot yellow">fiber_manual_record</i>
+                            </span>
+                            {{rep.candidateName}}
+                        </td>
+                        <td>{{rep.testTitle}}</td>
+                        <td>{{rep.testPercentage}}</td>
+                    </tr>
+                </tbody>
+                <tbody *ngIf="reportsArr && !reportsArr['listOfCandidateResults'].length">
+                    <tr class="text-center">
+                        <td class="errorTxt not_found_Dash" colspan="3">No Reports Found</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p *ngIf="reportsArr && reportsArr['listOfCandidateResults'].length>4">
+                <button class="btn btn-link float-right" [routerLink]="['/reports']">Load More</button>
+            </p>
+        </div> -->
+
+    </div>
+    <div class="row m-0 mt-5" *ngIf="checkPerm('UserManagement') || isRecruiter">
+        <div class="pr-4 pl-0" [ngClass]="{'col-sm-6':!isRecruiter,'col-sm-12':isRecruiter}">
+            <popover-content #testReports title="" placement="right" [animation]="true" style="box-shadow: 10px 10px 5px #aaaaaa;">
+                <span style="color: #646363;">View analytics on tests conducted.</span>
+
+            </popover-content>
+            <h5>Test Reports
+                <span>
+                    <i style="    font-size: 16px;color: #969696;top: 2px;" [popoverOnHover]="true" [popover]="testReports" class="material-icons">info</i>
+                </span>
+            </h5>
+            <table class="table boxShadow borderleft2 white_bg height247">
+                <thead class="dash_th">
+                    <tr>
+                        <th>Candidate Name</th>
+                        <th>Test Title</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="!reportsArr">
+                        <div class="loader_div">
+                            <img src="./../../../assets/images/dashboard/loader_dash.gif">
+                        </div>
+                    </tbody>
+                <tbody *ngIf="reportsArr && reportsArr['listOfCandidateResults'].length">
+                    <tr *ngFor="let rep of reportsArr['listOfCandidateResults'] | slice:0:4">
+                        <td>
+                            <span>
+                                <i class="material-icons icon_dot yellow">fiber_manual_record</i>
+                            </span>
+                            {{rep.candidateName}}
+                        </td>
+                        <td>{{rep.testTitle}}</td>
+                        <td>{{rep.testPercentage}}</td>
+                    </tr>
+                </tbody>
+                <tbody *ngIf="reportsArr && !reportsArr['listOfCandidateResults'].length">
+                    <tr class="text-center">
+                        <td class="errorTxt not_found_Dash" colspan="3">Candidates Not Found</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p *ngIf="reportsArr && reportsArr['listOfCandidateResults'].length>4">
+                <button class="btn btn-link float-right" [routerLink]="['/reports']">Load More</button>
+            </p>
+        </div>
+        <div class="col-sm-6 pr-4 pl-0" *ngIf="checkPerm('UserManagement')" >
+            <popover-content #users title="" placement="right" [animation]="true" style="box-shadow: 10px 10px 5px #aaaaaa;">
+                <span style="color: #646363;">Create new users. Add/edit access rights</span>
+
+            </popover-content>
+            <h5>Users
+                <span>
+                    <i style="    font-size: 16px;color: #969696;top: 2px;" [popoverOnHover]="true" [popover]="users" class="material-icons">info</i>
+                </span>
+            </h5>
+            <div class="d-flex boxShadow pointer users_dash pt-4 pb-3 borderleft4 white_bg user_block" *ngIf="listUsers && listUsers['allUsers'] && listUsers['allUsers'].length">
+                <div class="p-2 align-self-center text-center flex-fill border_right_users" *ngFor="let user of listUsers['allUsers'].slice(0,3)">
+                    <img *ngIf="user.imageUrl!='No Image For This User'" [src]="user.imageUrl" class="img-rounded" alt="user_dp">
+                    <img *ngIf="user.imageUrl == 'No Image For This User'" src="./../../../assets/images/profile.png" class="img-rounded" alt="user_dp">
+                    <h6 class="darkBlack mt-3 mb-2">{{user.userName}}</h6>
+                    <p>
+                        <span>
+                            <i class="material-icons user_circ">fiber_manual_record</i>
+                        </span>
+                        {{user.roleName}}
+                    </p>
+                </div>
+
+            </div>
+            <div class="d-flex boxShadow pointer users_dash pt-4 pb-3 borderleft4 white_bg user_block" *ngIf="!listUsers || (listUsers && listUsers['allUsers'] && !listUsers['allUsers'].length)">
+                    <div class="flex-fill text-center align-self-center">
+                        <span class="errorTxt">Users Not Found</span>
+                    </div>
+            </div>
+            <p *ngIf="listUsers && listUsers['allUsers'].length>3">
+                <button class="btn btn-link float-right" [routerLink]="['/list-users']">Load More</button>
+            </p>
+        </div>
+    </div>
+</div>

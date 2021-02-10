@@ -1,0 +1,17 @@
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+
+
+import { TermsConditionComponent } from './../../Components/terms-condition/terms-condition.component';
+
+const routes: Routes = [{
+  path:"",
+  component : TermsConditionComponent
+}];
+
+@NgModule({
+  declarations:[TermsConditionComponent],
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class TermsConditionRoutingModule { }

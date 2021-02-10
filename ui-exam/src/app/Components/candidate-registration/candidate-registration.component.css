@@ -1,0 +1,98 @@
+.tenant_reg_sec{
+    height:100%;
+    /* background-color: #12BCFF; */
+    /* background-color: #D63031; */
+    background-color: #2ECC71;
+    /* background-image: url('./../../../assets/images/office_building.jpg'); */
+    background-size: cover;
+    position: fixed;
+    overflow:auto;
+}
+.tenant_reg_gradient{
+    /* background-image: linear-gradient(0.40turn,rgba(61, 112, 178, 0.89), rgba(65, 214, 195, 0.89),rgba(85, 150, 230, 0.89)); */
+    height: 100%;
+    overflow:auto;
+}
+.coc_title{
+    color: #ffffff;
+    font-weight: 700; 
+}
+.submit_btn{
+    /* background-color: #19bbfc; */
+    /* background-color: #d63732; */
+    background-color: #2ECC71;
+    color: #ffffff;
+    padding: 5px 40px;
+}
+.another_btn{
+    border:1px solid #707070;
+    color:#707070;
+}
+.reg_title{
+    /* color: #19bbfc; */
+    /* color: #d63732; */
+    color: #2ECC71;
+}
+.qual_hr{
+    border-top: 2px dashed #1CBC90; 
+}
+.qual_icon i{
+    color: #1CBC90;
+    position: relative;
+    top: 3px;
+    left: 10px;
+    font-size: 20px;
+}
+.cert_icon i{
+    color: #FA7070;
+    position: relative;
+    top: 3px;
+    left: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+.test_tile{
+    color:#ffffff;
+}
+.test_tile hr{
+    border-width: 1px;
+    width: 25%;
+    border-color: #ffffff;
+    margin: 0 auto;
+}
+.qual_icon i{
+    cursor: pointer;
+}
+input::-webkit-input-placeholder{
+    opacity:0.5
+}
+.scheduledDob{
+    pointer-events: none;
+    cursor: not-allowed;
+}
+.scheduledDob input{
+    background-color: #e9ecef; 
+}
+.disabledClass{
+    pointer-events: none;
+    cursor: not-allowed;
+    background-color: #e9ecef; 
+}
+.disabledClass_dob{
+   
+}
+.disabledClass_dob input{
+    background-color: #e9ecef; 
+    pointer-events: none;
+    cursor: not-allowed;
+}
+.save_btn{
+    margin-top: 30px;
+    width: 100%;
+    background-color: #1CBC90;
+    color: #ffffff;
+    border-color: #1CBC90;
+}
+#expDetailModal .modal-dialog{
+    max-width: 1000px;
+}

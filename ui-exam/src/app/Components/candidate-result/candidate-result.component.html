@@ -1,0 +1,472 @@
+<block-ui>
+
+</block-ui>
+
+<div id="content">
+
+
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark header_nav pt-0 pb-0">
+        <!-- Brand/logo -->
+        <!-- <a class="navbar-brand" href="">NO CHEATING DUDE</a> -->
+        <!-- <img src="./../../../assets/images/NCD-logo-small.png" width="131px" height="50px" style="margin: 0.28rem;" /> -->
+        <img src="./../../../assets/images/ncd_finalized_logo.png" width="144px" height="50px" style="margin:0.28rem;padding-top:2px ;padding-bottom:2px ;" />
+        <div class="col-10" style="text-align:end">
+            <button id="dowloadBtn" class="btn-info" #dowloadBtn (click)="download()"> Download</button>
+
+        </div>
+
+        <!-- Links -->
+        <!-- <ul class="navbar-nav ml-auto">
+        <li class="nav-item user_icon dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">{{getUsername()}}</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item pointer">
+                    <span class="">Role &nbsp; : </span> <b>{{getRoleName()}}</b>
+                </a>
+                <a class="dropdown-item pointer" [routerLink]="['/settings']">
+                    <span class="">Profile</span>
+                </a>
+                <a class="dropdown-item pointer" [routerLink]="['/set-password']">
+                    <span class="">Change Password</span>
+                </a>
+                <a class="dropdown-item pointer" (click)="logout()">
+                    <i class="material-icons">
+            power_settings_new
+          </i>
+                    <span class="">Logout</span>
+                </a>
+            </div>
+        </li>
+        <li class="nav-item user_icon">
+            <img src="./../../../assets/images/boy.png" class="boxShadow">
+        </li>
+    </ul> -->
+    </nav>
+
+
+    <div class="row m-0 report_result">
+        <!-- <div class="col-sm-12 p-0">
+        <hr>
+    </div> -->
+        <div class="col-sm-12 pl-5 pr-5 pt-4 pb-4">
+            <p class="abt_txt">
+                <b>About</b>
+            </p>
+            <p>
+                Make the best of an online evaluation and assessment portal with hassle-free authorisation and authentication mechanisms.
+            </p>
+            <p>
+                Seamless & robust candidate authorisation and authentication mechanisms with constant candidate photo and video capture. Tab change lock that enables recruiters ensure fair play while candidates take online exams, multiple examination patterns & methods,
+                global community based export, import and bulk upload of questions and many more features that follow.
+            </p>
+        </div>
+
+
+    </div>
+
+    <div class="row m-0 report_result p-5 boxShadow" *ngIf="candidate">
+        <div class="col-sm-2 text-center">
+            <span class="person_img">
+            <i class="material-icons boxShadow">
+                person
+            </i>
+        </span>
+        </div>
+        <div class="col-sm-6">
+            <div class="d-flex">
+                <div class="flex-fill">
+                    <h4>
+                        <b>{{candidate.candidateName}}</b>
+                    </h4>
+                    <hr>
+                </div>
+                <div class="flex-fill text-center">
+                    <span class="ml-3 mr-3 check_icon" *ngIf="candidate.testStatus == 'Qualified'">
+                    <i class="material-icons">
+                        check
+                    </i>
+                </span>
+                    <span class="ml-3 mr-3 cancel_icon" *ngIf="candidate.testStatus == 'Not Qualified'">
+                    <i class="material-icons">
+                        close
+                    </i>
+                </span>
+                    <span *ngIf="candidate.testStatus == 'Qualified'">{{candidate.testStatus}}</span>
+                    <span class="errorTxt" *ngIf="candidate.testStatus == 'Not Qualified' ">{{candidate.testStatus}}</span>
+                </div>
+            </div>
+            <div class="test_details">
+                <div class="d-flex">
+                    <div class="">
+                        <p>Test Title</p>
+                    </div>
+                    <div class="pl-5 ml-1">
+                        <b>{{candidate.testTitle}}</b>
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <div class="">
+                        <p>Test Duration</p>
+                    </div>
+                    <div class="pl-3 ml-1">
+                        <b>{{candidate.testDuration}}</b>
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <div class="">
+                        <p>Written on</p>
+                    </div>
+                    <div class="pl-4 ml-3">
+                        <b>{{candidate.writtenOn | date:'mediumDate'}}</b>
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <div class="">
+                        <p>Percentage</p>
+                    </div>
+                    <div class="pl-5 ml-4">
+                        <b>{{candidate.testPercentage}} %</b>
+                    </div>
+                </div>
+                <!-- <div class="mail_Score col-sm-12">
+                <button class="btn pb-2" (click)="mailResult()">Mail This
+                    <i class="material-icons pull-right pl-5">
+                        email
+                    </i>
+                </button>
+                <button class="btn pb-2 review_btn  ml-4" data-toggle="modal" data-target="#reviewModal" (click)="getCandidateQUestions(candidate)">Review</button>
+
+            </div> -->
+
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="row score_board p-4">
+                <div class="col-sm-6">
+                    <h4>Sections</h4>
+                    <hr>
+                </div>
+                <div class="col-sm-6">
+                    <h4>Percentage</h4>
+                    <hr>
+                </div>
+                <div class="col-sm-12" *ngFor="let sec of sectionList['sections']">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>{{sec.sectionName}}</p>
+                        </div>
+                        <div class="col-sm-6">
+                            =
+                            <span class="score_left">{{sec.sectionwisePercentage}} %</span>
+                        </div>
+                    </div>
+                </div>
+                <hr class="col-sm-12 mt-0">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>Overall Test Percentage</p>
+                        </div>
+                        <div class="col-sm-6">
+                            =
+                            <span class="score_left">{{sectionList.total}} %</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="row pt-5 col-sm-12">
+            <div class="col-sm-8 mail_Score">
+                <input class="form-control" placeholder="Link to View Result" [(ngModel)]="candidate.candidateResultViewURL" disabled>
+            </div>
+            <div class="col-sm-4 mail_Score">
+                <button class="btn pb-2" (click)="shareResult(candidate)">Copy Link to Share Result </button>
+            </div>
+        </div> -->
+
+        <!-- <div class="col-sm-12" *ngIf="userPics && userPics['candidatePictureList'].length">
+            <h4>ScreenShots</h4>
+            <div class="row pt-5 pb-5">
+                <div class="col-sm-2" *ngFor="let pic of userPics['candidatePictureList']">
+                    <img [src]="pic.imgSrc" class="exam_pic pointer" alt="candidate-exam-pics">
+                </div>
+            </div>
+        </div> -->
+    </div>
+
+    <div *ngIf="!candidReview" class="well errorTxt text-center">
+        No Test Review Questions Available.
+    </div>
+    <div class="report_result p-5">
+        <div class="row m-0 ">
+            <h4 class="rev_txt col-sm-12">
+                <b>Test Review</b>
+            </h4>
+            <hr class="col-sm-12 m-0">
+        </div>
+        <div class="row m-0" *ngFor="let ques of candidReview;let i=index">
+            <div class="col-sm-12" *ngIf="ques.questionTypeId == '3' || ques.questionTypeId == '4' || ques.questionTypeId == '5' || ques.questionTypeId == '6'">
+                <div class="pt-3 pb-3">
+                    <span class="report_txt">
+                    <b>{{i+1}}.</b>
+                </span>
+                    <span class="report_txt pl-4"> {{ques.qustionText}}</span>
+                    <span *ngIf="ques.answerStatus=='Correct'" [ngClass]="{'correct_tick':ques.answerStatus=='Correct','review_tick':true}">
+                    <i class="material-icons">
+                        done
+                    </i>
+                </span>
+                    <span *ngIf="ques.answerStatus=='InCorrect'" [ngClass]="{'wrong_tick':ques.answerStatus=='InCorrect','review_tick':true}">
+                    <i class="material-icons">
+                        clear
+                    </i>
+                </span>
+
+                </div>
+                <div class="pt-3 pb-3 col-sm-12">
+                    <pre *ngIf=" ques && ques.questionCode && ques.questionCode != 'null'">{{ques.questionCode}}</pre>
+                </div>
+                <div>
+                    <div class="col-sm-12" *ngIf="ques.questionTypeId == '3'">
+                        <span class="pl-4 ml-2">
+                        <b>A .</b>
+                    </span>
+                        <textarea [ngModel]="ques.candidateAnswer" cols='50' rows="5" [ngClass]="{'fill_ans': ques.answerStatus == 'Correct','fill_in form-control ml-4':true}" disabled></textarea>
+                        <span *ngIf="ques.answerStatus == 'Correct'" [ngClass]="{'correct_ans_txt':ques.answerStatus == 'Correct'}">Correct Answer !</span>
+                    </div>
+                    <div class="col-sm-12" *ngIf="ques.questionTypeId != '3'">
+                        <textarea [ngModel]="ques.candidateAnswer" class="text_area_ans" cols="50" rows="5" disabled></textarea>
+                        <span *ngIf=" ques.questionTypeId != '3' && ques.answerStatus == 'Correct'" [ngClass]="{'correct_ans_txt':ques.answerStatus == 'Correct'}">Correct Answer !</span>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+
+                    <!-- <p class="p-4 ml-4">
+                    <span *ngIf="ques.questionTypeId == '3' && ques.candidateAnswer != ques.actualAnswer" [ngClass]="{'fill_ans': ques.candidateAnswer != ques.actualAnswer}">
+                        {{ques.actualAnswer}}
+                    </span>
+                    <span *ngIf="ques.candidateAnswer!=ques.actualAnswer" [ngClass]="{'correct_ans_txt':ques.candidateAnswer!=ques.actualAnswer}">Correct Answer !</span>
+                </p>
+                <textarea *ngIf="ques.questionTypeId != '3' && ques.candidateAnswer!=ques.actualAnswer" [ngModel]="ques.actualAnswer" class="text_area_ans"
+                    cols="50" rows="5" disabled></textarea>
+                <span *ngIf=" ques.questionTypeId != '3' && ques.candidateAnswer!=ques.actualAnswer" [ngClass]="{'correct_ans_txt':ques.candidateAnswer!=ques.actualAnswer}">Correct Answer !</span> -->
+                    <div class="p-4 ml-4 row">
+                        <div *ngIf="ques.questionTypeId == '3' && ques.answerStatus == 'InCorrect'" [ngClass]="{'fill_ans': ques.answerStatus == 'InCorrect','col-sm-8 m-0':true}">
+                            {{ques.actualAnswer}}
+                        </div>
+                        <div *ngIf="ques.questionTypeId == '3' && ques.answerStatus == 'InCorrect'" [ngClass]="{'correct_ans_txt':ques.answerStatus == 'InCorrect','col-sm-4 m-0':true}">Correct Answer !</div>
+                    </div>
+                    <textarea *ngIf="ques.questionTypeId != '3' && ques.answerStatus == 'InCorrect'" [ngModel]="ques.actualAnswer" class="text_area_ans" cols="50" rows="5" disabled></textarea>
+                    <span *ngIf=" ques.questionTypeId != '3' && ques.answerStatus == 'InCorrect'" [ngClass]="{'correct_ans_txt':ques.answerStatus == 'InCorrect'}">Correct Answer !</span>
+
+                </div>
+            </div>
+            <div *ngIf="ques.questionTypeId == '1'" class="col-sm-12">
+                <div class="pt-3 pb-3">
+                    <span class="report_txt">
+                    <b>{{i+1}}.</b>
+                </span>
+                    <span class="report_txt pl-4">{{ques.qustionText}}</span>
+                    <span *ngIf="ques.answerStatus=='Correct'" [ngClass]="{'correct_tick':ques.answerStatus=='Correct','review_tick':true}">
+                    <i class="material-icons">
+                        done
+                    </i>
+                </span>
+                    <span *ngIf="ques.answerStatus=='InCorrect'" [ngClass]="{'wrong_tick':ques.answerStatus=='InCorrect','review_tick':true}">
+                    <i class="material-icons">
+                        clear
+                    </i>
+                </span>
+
+                </div>
+                <div class="pt-3 pb-3 col-sm-12">
+                    <pre *ngIf="ques.questionCode && ques.questionCode != 'null'">{{ques.questionCode}}</pre>
+                </div>
+
+                <div class="col-sm-12">
+
+                    <mat-radio-group [(ngModel)]="ques.candidateAnswer" disabled="true">
+                        <mat-radio-button [ngClass]="{'correct_radio': ques.candidateAnswer==ques.actualAnswer,'wrong_radio':ques.candidateAnswer!=ques.actualAnswer}" [value]="option.optionText" *ngFor="let option of ques.optionsList">
+                            <span [ngClass]="{'correct_ans':option.optionText==ques.actualAnswer}">{{option.optionText}}</span>
+                            <span *ngIf="option.optionText==ques.actualAnswer" [ngClass]="{'correct_ans_txt':option.optionText==ques.actualAnswer}">Correct Answer !</span>
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <!-- <div class="col-sm-12">
+                            <button class="btn btn-success">Answer &nbsp; : &nbsp;
+                                <b class="actul_ans_bg">{{ques.actualAnswer}}</b>
+                            </button>
+                        </div> -->
+            </div>
+            <div *ngIf="ques.questionTypeId == '2'" class="col-sm-12">
+                <div class="pt-3 pb-3">
+                    <span class="report_txt">
+                    <b>{{i+1}}.</b>
+                </span>
+                    <span class="report_txt pl-4">{{ques.qustionText}}</span>
+                    <span *ngIf="ques.answerStatus=='Correct'" [ngClass]="{'correct_tick':ques.answerStatus=='Correct','review_tick':true}">
+                    <i class="material-icons">
+                        done
+                    </i>
+                </span>
+                    <span *ngIf="ques.answerStatus=='InCorrect'" [ngClass]="{'wrong_tick':ques.answerStatus=='InCorrect','review_tick':true}">
+                    <i class="material-icons">
+                        clear
+                    </i>
+                </span>
+
+                </div>
+                <div class="pt-3 pb-3 col-sm-12">
+                    <pre *ngIf="ques.questionCode && ques.questionCode != 'null'">{{ques.questionCode}}</pre>
+                </div>
+
+                <div class="col-sm-12">
+
+                    <div class="check_green" *ngFor="let opt of ques.optionsList">
+                        <mat-checkbox [ngClass]="{'check_ans' : ques.candidateAnswer.split(',').includes(opt.optionText)}" [checked]="ques.candidateAnswer.split(',').includes(opt.optionText)" [disabled]="true">
+                            <!-- {{opt.optionText}} -->
+                            <span [ngClass]="{'correct_ans':ques.actualAnswer.split(',').includes(opt.optionText)}">{{opt.optionText}}</span>
+                            <span *ngIf="ques.actualAnswer.split(',').includes(opt.optionText)" [ngClass]="{'correct_ans_txt':ques.actualAnswer.split(',').includes(opt.optionText)}">Correct Answer !</span>
+                        </mat-checkbox>
+                    </div>
+                    <!-- <mat-radio-group [(ngModel)]="ques.candidateAnswer" disabled="true">
+                                    <mat-radio-button [ngClass]="{'correct_radio': ques.candidateAnswer==ques.actualAnswer,'wrong_radio':ques.candidateAnswer!=ques.actualAnswer}" [value]="option.optionText" *ngFor="let option of ques.optionsList">
+                                        {{option.optionText}}
+                                    </mat-radio-button>
+                                </mat-radio-group>                                 -->
+
+                </div>
+                <!-- <div class="col-sm-12 mt-4">
+                            <button class="btn btn-success">Answer &nbsp; : &nbsp;
+                                <b class="actul_ans_bg">{{ques.actualAnswer}}</b>
+                            </button>
+                        </div> -->
+            </div>
+        </div>
+
+
+
+
+    </div>
+    <div class="report_result ">
+        <!-- -------------- ScreenShots Start  ------------------ -->
+        <div style="padding-left: 3rem;">
+            <div *ngIf="!apiService.cfs" class="col-sm-12">
+                <div class="col-sm-12" *ngIf="userPics && userPics['candidatePictureList'].length">
+                    <h4>ScreenShots</h4>
+                    <div class="row pt-5 pb-5 col-sm-12">
+                        <div class="col-sm-2" *ngFor="let pic of userPics['candidatePictureList']">
+                            <img [src]="pic.imgSrc" class="exam_pic pointer" alt="candidate-exam-pics">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="apiService.cfs" class="col-sm-12">
+                <div class="col-sm-12" *ngIf="userPics && userPics['candidatePictureList'].length">
+                    <h4>ScreenShots</h4>
+                    <div class="row pt-5 pb-5 col-sm-12">
+                        <div class="col-sm-2" *ngFor="let pic of userPics['candidatePictureList'];index as i">
+                            <img  (load)="onImageLoad($event,i)" crossorigin="anonymous" [src]="pic.cfsViewURL" id={{pic.pictureFileName}} class="exam_pic pointer" alt="candidate-exam-pics">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- -------------- ScreenShots End  ------------------ -->
+
+        <!-- -------------- Suspicious Activities Start  ------------------ -->
+
+        <div class="col-sm-12" style=" padding-top: 10px;padding-right: 100px;padding-bottom: 78px;padding-left: 100px;">
+
+            <h5>User Suspicious Activities</h5>
+
+            <div class="row filter_tbl " *ngIf="activities && activities['candidateSuspiciousActivityList'].length">
+
+                <table class="table mb-0">
+                    <thead style="background-color: #425db5;">
+                        <tr class="cursor_initial">
+                            <th>S.NO</th>
+                            <th>Activity</th>
+                            <th>Out Time</th>
+                            <th>In Time</th>
+                            <th>Duration<span style="font-size:x-small">(In Secs)</span></th>
+
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background-color:  #ffffff;color:black;" *ngFor="let activity of activities['candidateSuspiciousActivityList']; index as i">
+                            <td>{{i+1}}</td>
+                            <td>{{activity.activityTypeName}}</td>
+                            <td> {{activity.activityOUT | date:'medium' }}</td>
+                            <td> {{activity.activityIn | date:'medium' }}</td>
+                            <td> {{activity.timeDuration }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row filter_tbl  " *ngIf="activities && !activities['candidateSuspiciousActivityList'].length">
+
+                <table class="table mb-0">
+                    <thead style="background-color: #425db5;">
+                        <tr class="cursor_initial">
+                            <th>S.NO</th>
+                            <th>Activity</th>
+                            <th>Out Time</th>
+                            <th>In Time</th>
+                            <th>Duration</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background-color:  #ffffff;color:red;">
+                            <td></td>
+                            <td></td>
+                            <td style="text-align:center;">No Suspicious Activity Found</td>
+                            <td> </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <!-- -------------- Suspicious Activities End  ------------------ -->
+
+
+    </div>
+    <div class="row m-0 report_result">
+        <div class="col-sm-4 pl-5">
+            <img src="./../../../assets/images/ncd_finalized_logo.png" width="144px" height="50px" style="margin:0.28rem;padding-top:2px ;padding-bottom:2px ;" />
+
+        </div>
+        <div class="col-sm-4 text-center ncd_link">
+            <a href="https://www.nocheatingdude.com" target="_blank">www.nocheatingdude.com</a>
+        </div>
+        <div class="col-sm-4 text-center">
+            <h4>
+                Stay In Touch
+            </h4>
+            <div>
+                <a target="_blank" href="https://www.facebook.com/nocheatingdude/"> <img class="soc_icon" alt="social icons" src="./../../../assets/images/facebook.png"></a>
+                <a target="_blank" href="https://twitter.com/DudeCheating"><img class="soc_icon" alt="social icons" src="./../../../assets/images/twitter.png"></a>
+                <a target="_blank" href=" https://www.linkedin.com/company/no-cheating-dude/"><img class="soc_icon" alt="social icons" src="./../../../assets/images/linkedin.png"></a>
+            </div>
+        </div>
+
+        <div class="col-sm-12 p-0">
+            <hr>
+        </div>
+
+        <div class="text-center col-sm-12">
+            <p>Powered by NoCheatingDude</p>
+            <p>
+                Copyrights &copy; 2019 Nexii Automation People.All rights reserved.
+            </p>
+        </div>
+
+    </div>
+
+</div>

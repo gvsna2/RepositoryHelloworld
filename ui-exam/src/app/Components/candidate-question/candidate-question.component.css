@@ -1,0 +1,51 @@
+.can_ques_sec .arrow_back{
+    color: #707070;
+    position: relative;
+    top: 5px;
+    right: 5px;
+    padding-right: 5px;
+}
+.test_eval_txt b{
+    color:#3D70B2;
+}
+.can_ques_sec .btn-success{
+    color: #707070;
+    background-color: inherit;
+    border-color: #188D18;
+    width: 92px;
+}
+.can_ques_sec .btn-danger{
+    color: #707070;
+    background-color: inherit;
+    border-color: #BF3222;
+    width: 92px;
+}
+.ques_no{
+    border: 1px solid #707070;
+    padding: 5px 10px;
+    border-radius: 50%;
+}
+.can_ques_sec .btn-primary{
+    background-color: #3D70B2;
+    border-color: #3D70B2;
+    color: #ffffff;
+    width: 159px;
+}
+.can_ques_sec .collapse b{
+    color:#0C456B;
+}
+.can_ques_sec .collapse{
+    background-color: #F9F9F9;
+    padding: 20px 20px;
+}
+.ques_row{
+    background-color: #ffffff;
+}
+.correct_Ans{
+    width:100%;
+}
+.correct_ans_div{
+    /* background-color: #f7f7f7; */
+    background-color: rgba(65, 214, 195, 0.2);
+    padding: 27px 0px;
+}

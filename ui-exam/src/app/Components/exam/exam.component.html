@@ -1,0 +1,309 @@
+
+<block-ui>
+
+</block-ui>
+<nav *ngIf=examActive class="navbar navbar-expand-sm bg-dark navbar-dark header_nav pt-0 pb-0">
+    <!-- Brand/logo -->
+    <div class="col-4">
+        <img src="./../../../assets/images/ncd_finalized_logo.png" width="144px" height="50px" style="margin:0.28rem;padding-top:2px ;padding-bottom:2px ;" />
+    </div>
+    <div class="col-4" style="text-align: center">
+       <webcam  [height]="5" [width]="5" [trigger]="triggerObservable" (cameraSwitched)="cameraSwitchedOn($event)" *ngIf="flag && needCamera" (imageCapture)="handleImage($event)"  [imageQuality]="1"  (initError)="handleInitError($event)" ></webcam> 
+    </div>
+    <div class="col-4">
+
+      
+            <ng-container *ngIf="questionFlag" [counter]="counter" [interval]="interval" (value)="value = $event">
+                <h3 style="float: right">{{ value | minuteSeconds }}</h3>
+              </ng-container>
+       
+    </div>
+    
+    
+    
+  </nav>
+
+  <div class="row justify-content-md-center" style="padding-top: 8rem;" *ngIf="!examActive" id="finish_block">
+    <div *ngIf="!ratingSubmited" class="col-6" style="   height: 40vh; background: white;   padding-bottom: 1rem; text-align: left;
+    padding: 2rem;    border-radius: 4px; ">
+         <p style="font-weight: 700;color:#00000096;">Please Rate This Test</p>
+        <div class="row">
+            <div class="col-4">
+                   <p style="color: #339c48">  Overall Test Quality</p>
+            </div>
+            <div class="col-3">
+                    <span>
+                           <star-rating [starType]="'svg'" (ratingChange)="overallTestRating=$event.rating"  [getHalfStarVisible]="getHalfStarVisible" [showHalfStars]="true"  [rating]="overallTestRating"></star-rating>
+                        </span> 
+                </div>
+
+        </div> 
+
+        <div class="row">
+                <div class="col-4">
+                       <p style="color: #339c48">  Question Quality</p>
+                </div>
+                <div class="col-3">
+                        <span>
+                               <star-rating [starType]="'svg'" (ratingChange)="questionQualityRating=$event.rating"  [getHalfStarVisible]="getHalfStarVisible" [showHalfStars]="true"  [rating]="questionQualityRating"></star-rating>
+                            </span> 
+                    </div>
+    
+            </div> 
+
+       
+         
+        <textarea id="txtarea" class="form-control" (input)="comments=$event.target.value"  style="font-size: smaller;" spellcheck="false" placeholder="Add Comments.."></textarea>
+        <button  type="button" (click)=submitRating() class="btn btn-primary" style="background-color: #51bd90;
+        border-color: #51bd90;
+        float: right;
+        height: 30px;
+        line-height: 18px;
+        padding: 0rem 2rem;
+        margin: 1rem;
+        margin-right:0rem ;
+        ">Submit</button>
+    </div>
+    
+    <div *ngIf="ratingSubmited" class="col-6" style="    background: white;height: 30vh;   padding-bottom: 1rem; text-align: center;
+    padding: 3rem;    border-radius: 4px; ">
+        <div style="max-width: 60%;
+        text-align: right;
+        margin-top: -6rem;
+        padding-bottom: 1rem;">
+            <img src="../.././../assets/images/boy.png" style="    max-width: 30%;background: white;border-radius: 50%;    padding: 0.5rem;box-shadow: 1px 1px 2px 7px rgba(0,0,0,.05), 2px 2px 5px rgba(0,0,0,.1)">
+        </div>
+         You have successfully finished your test. Soon we will intimate you the score card through mail or call.
+    </div>
+    </div>
+
+<div class="row" *ngIf=flag style="justify-content: center;">
+
+<div *ngIf=!noCamera style="padding:3rem">
+    <h4 style="padding-bottom: 1rem">Instructions</h4>
+    <p> We would request you to kindly read below mentioned instructions carefully and proceed with test</p>
+
+
+    <p>  <strong >✓ </strong> Your test is under monitor (picture capturing / video recording) in order to avoid malpractice.</p>
+        <p><strong>✓ </strong> Your test will be submitted automatically in case test time is out or if you refresh your browser.</p> 
+            <p><strong>✓ </strong> No negative marking in the test. </p>
+                <p><strong>✓ </strong> Minimizing the browser tab is strictly prohibited while the test is going on. </p>
+                    <p><strong>✓ </strong> You can review your answered questions at any moment within the test time. </p>
+<div style="padding: 2rem">
+
+    <button (click)="startExam()" type="button"  class="btn btn-primary"    style="background-color: #51bd90;
+        border-color: #51bd90;
+        float: right;
+        height: 30px;
+        line-height: 18px;
+        padding: 0rem 2rem;">Start Test</button>
+        </div>
+
+</div>
+<div *ngIf=noCamera >
+        <p> Please Use the Camera Enabled Device to access the Test</p>
+</div>
+</div>
+
+
+<div class="row" *ngIf="!flag && examActive" appNoRightClick>
+
+<div id=question_section class="col-md-9">
+    <p *ngIf="testType==5" style="padding: 1rem;text-align: end;font-weight: 700;">Total Number of Questions:{{testTotalNoOfQuestions}} </p>
+    
+<div class="row " id="question" *ngIf="questionFlag">
+ 
+    
+<div class="col-md-12"><p><span style="word-break: break-all;">{{questionData.questionSno}}. {{questionData.qustionText}} </span> </p></div>
+    <div class="col-md-12"><p><span *ngIf="questionData.questionCode!=''" style="word-break: break-all;"><pre *ngIf="questionData.questionCode!='null'" [innerHtml]=questionData.questionCode style="     white-space: pre-line;word-break: break-all;margin: 1rem;background: #4c4b4b;color: white;font-family: monospace;padding: 2rem;margin-left: 2px;font-size: 13px;border-radius: 5px;"></pre> </span> </p></div>
+ <div class="col-md-10" id="code" *ngIf="questionData.questionTypeId==4 || questionData.questionTypeId==6">
+    <div class="form-group" style="margin-left: -2rem;">
+        
+        <textarea id="descriptiveCode{{questionData.testInstanceQuestionId}}" (input)="answer=$event.target.value" class="form-control"  rows="8" style="margin-left: 16px;" style="margin-left: 16px;"></textarea>
+      </div>
+ </div>  
+ <div class="col-md-12" id="MAQs" *ngIf="questionData.questionTypeId==2">
+        <div class="form-group" *ngFor="let option of questionData.optionsList" >
+            
+                <label class="container" style="word-break: break-all;"><span>{{option.optionText}}</span>
+                    <input type="checkbox" (change)="onCheckboxChagen($event, option.optionId);getAnswer($event)" id={{option.optionId}} >
+                    <span class="checkmark"></span>
+                  </label>
+          </div>
+           
+     </div>  
+<div class="col-md-12" id="blanks" *ngIf="questionData.questionTypeId==3 || questionData.questionTypeId==5">
+    <div class="form-group row" style="margin-left: -2rem;">
+        <label for="answer" class="col-sm-1 col-form-label">Ans)</label>
+        <div class="col-sm-11">
+          <input  type="text" id="shortAnswer{{questionData.testInstanceQuestionId}}" (input)="answer=$event.target.value" class="form-control-plaintext"  placeholder="">
+        </div>
+      </div>
+</div>
+<div class="col-md-12" id="options" *ngIf="questionData.questionTypeId==1" >
+    
+        
+         
+ 
+<div class="cntr" id="options" style="position: relative">
+           
+           
+           
+    
+        <div class="form-check"  *ngFor="let option of questionData.optionsList">
+          <label for={{option.optionId}} class="radio" style="word-break: break-all;">
+              <input (click)="getAnswer($event)" type="radio" name="rdo" id={{option.optionId}} class="hidden"/>
+              <span class="label"></span>{{option.optionText}}
+            </label>
+      </div>
+      
+      <!-- <div class="form-check">
+          <label for="opt2" class="radio">
+              <input type="radio" name="rdo" id="opt2" class="hidden"/>
+              <span class="label"></span>Link
+            </label>
+      </div> -->
+      
+     
+      <!-- <div class="form-check">
+          <label for="opt3" class="radio">
+              <input type="radio" name="rdo" id="opt3" class="hidden"/>
+              <span class="label"></span>Move
+            </label>
+      </div>
+      <div class="form-check">
+          <label for="opt4" class="radio">
+              <input type="radio" name="rdo" id="opt4" class="hidden"/>
+              <span class="label"></span>Resolve
+            </label>
+      </div> -->
+      
+      
+      
+    </div>
+</div>
+
+</div>
+
+<div class=" row" style="width: 100%;padding-top: 6rem;" *ngIf="questionData">
+    <div class="col-5">
+        
+     <button type="button" class="btn btn-outline-success" *ngIf="questionData.questionSno!=1 && testType!=5 " style="    background-color: #ffffff;
+     border-color: #51bd90;
+     height: 30px;
+     line-height: 18px;
+     padding: 0rem 2rem;
+     color: #51bd90;" (click)="getQuestionBySno('pre')" >Previous</button>
+        </div>
+        <div class="col-4"  *ngIf="testType!=5" >
+             
+            <label class="container" *ngIf="questionData"><span>Review Later</span>
+                <input type="checkbox"  id="review{{questionData.testInstanceQuestionId}}" >
+                <span class="checkmark"></span>
+              </label>
+        
+        
+        
+              </div> 
+     <div class="" [ngClass]="{ 'col-6':testType==5,'col-3':testType!=5}">
+    <button (click)="getQuestionBySno('next')" type="button"  class="btn btn-primary" *ngIf="questionData.questionSno!=examData.length && testType!=5" style="    background-color: #51bd90;
+    border-color: #51bd90;
+    height: 30px;
+    line-height: 18px;
+    padding: 0rem 2rem;">Next</button>
+
+<button (click)="submitAnswerInProgressive()" type="button"  class="btn btn-primary" *ngIf="testType==5 && testTotalNoOfQuestions!=questionData.questionSno"  style="background-color: #51bd90;
+        border-color: #51bd90;
+        float: right;
+        height: 30px;
+        line-height: 18px;
+        padding: 0rem 2rem;">Next</button>
+
+
+<button (click)="submitAnswerInProgressive();confirmSubmission()" type="button"  class="btn btn-primary" *ngIf="testType==5 && testTotalNoOfQuestions==questionData.questionSno"  style="background-color: #51bd90;
+border-color: #51bd90;
+float: right;
+height: 30px;
+line-height: 18px;
+padding: 0rem 2rem;">Submit</button>
+
+
+      </div> 
+</div>
+</div>  
+<div class="col-md-3" *ngIf="testType==5" style="text-align: center;" >
+    <webcam *ngIf="testType==5 && needCamera" [height]="110" [width]="100" [trigger]="triggerObservable" (imageCapture)="handleImage($event)"   [imageQuality]="1"  (initError)="handleInitError($event)" ></webcam>
+</div>
+<div class="col-md-3" id="question_selection" style="float:right;padding-top: 1rem;height: auto;" *ngIf="testType!=5">
+<div class="col-md-12" style="text-align: center;">
+    <webcam *ngIf="testType!=5 && needCamera" [height]="110" [width]="100" [trigger]="triggerObservable" (imageCapture)="handleImage($event)"  [imageQuality]="1"  (initError)="handleInitError($event)" ></webcam>
+</div>
+       <b>Questions</b> 
+     
+     <div class="row">
+            
+     <div class="col" *ngFor="let item of examData"><span (click)="getQuestion(item.encryptedTestInstanceQuestionId) " [ngClass]="{ 'review':item.shouldbeReviewed==1,'answered':item.isAnswered==1&&item.shouldbeReviewed==0}" *ngIf="item.questionSno<10" style="padding: 0.3rem 0.8rem;cursor: pointer;">{{item.questionSno}}</span> <span (click)="getQuestion(item.encryptedTestInstanceQuestionId)" [ngClass]="{ 'review':item.shouldbeReviewed==1,'answered':item.isAnswered==1&&item.shouldbeReviewed==0}"  *ngIf="item.questionSno>=10" style="cursor: pointer;">{{item.questionSno}}</span></div>
+      
+     
+     <!-- <div class="col"><span style="padding: 0.3rem 0.8rem;">2</span></div><div class="col"><span style="padding: 0.3rem 0.8rem;">3</span></div><div class="col"><span style="padding: 0.3rem 0.8rem;">4</span></div><div class="col"><span style="padding: 0.3rem 0.8rem;">5</span></div><div class="w-100"></div><div class="col"><span style="padding: 0.3rem 0.8rem;">6</span></div>
+     <div class="col"><span style="padding: 0.3rem 0.8rem;">7</span></div>          
+     <div class="col" ><span style="padding: 0.3rem 0.8rem;">8</span></div>          
+     <div class="col" ><span style="padding: 0.3rem 0.8rem;">9</span></div>          
+     <div class="col"><span>10</span></div>          
+     <div class="col"><span>11</span></div>          
+     <div class="col"><span>12</span></div>          
+     <div class="col"><span>13</span></div>          
+     <div class="col"><span>14</span></div>          
+     <div class="col"><span>15</span></div>          
+     <div class="col"><span>16</span></div>          
+     <div class="col"><span>17</span></div>          
+     <div class="col"><span>18</span></div>          
+     <div class="col"><span>19</span></div>          
+     <div class="col"><span>20</span></div>          
+     <div class="col"><span>21</span></div>          
+     <div class="col"><span>22</span></div>           -->
+     <div class="w-100" style="padding-bottom: 4rem;"></div>
+     <div class="square"></div>  
+     <div>Questions answered</div>        
+     <div class="w-100" style="padding-bottom: 1rem;"></div>
+     <div class="square" style="background: #ffffff"></div>  
+     <div>Questions to answered</div>        
+     <div class="w-100" style="padding-bottom: 1rem;"></div>
+     <div class="square" style="background:#9FA3FF"></div>  
+     <div>Review Questions</div>        
+     <div class="w-100"></div>
+
+
+    </div>
+
+    <div class="col-3" style="padding:6rem">
+        <button (click)="submitQuestion();confirmSubmission()" type="button"  class="btn btn-primary"   style="    background-color: #51bd90;
+        border-color: #51bd90;
+        height: 30px;
+        line-height: 18px;
+        padding: 0rem 2rem;">Submit</button>
+    
+    
+    
+    
+          </div>
+
+
+
+          
+    
+
+</div>
+</div>
+
+
+
+ 
+ 
+
+
+
+
+
+
+

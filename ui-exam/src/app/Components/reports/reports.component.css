@@ -1,0 +1,278 @@
+.report_txt {
+    color: #707070;
+    font-size: 18px;
+    font-weight: bold;
+    word-break: break-all;
+}
+
+hr {
+    border-top: 1px solid #707070;
+    margin-top: 0px;
+}
+
+.filters_sec input {
+    display: inline-block;
+    width: auto;
+}
+
+.filters_sec .form-control {
+    border-radius: 0px;
+}
+
+.filters_sec select {
+    /* -webkit-appearance: none; */
+    /* -webkit-appearance: button-bevel; */
+    -webkit-appearance: media-sliderthumb;
+}
+
+.filter_Serch_btn {
+    background-color: #41D6C3;
+    color: #ffffff;
+    padding: 2px 5px;
+    border-radius: 0px;
+    margin: 0px 15px;
+}
+
+.filter_Serch_btn i {
+    position: relative;
+    top: 4px;
+}
+
+.select_arrow {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    cursor: pointer;
+}
+
+.filter_tbl {
+    background-color: #ffffff;
+}
+
+.filter_tbl tr:hover {
+    background-color: #5596E6;
+    color: #ffffff;
+    box-shadow: 0 1px 5px #959595;
+    cursor: pointer;
+}
+
+.filter_tbl tr {
+    background-color: #425db5;
+    ;
+    color: #ffffff;
+    box-shadow: 0 1px 5px #959595;
+}
+
+.no_filter_tbl:hover,
+.no_filter_tbl {
+    background-color: inherit !important;
+    cursor: inherit !important;
+    box-shadow: inherit !important;
+}
+
+.report_result {
+    background-color: #ffffff;
+}
+
+.close_btn {
+    background-color: #41D6C3;
+    color: #ffffff;
+    padding: 0px 5px;
+    border-radius: 50%;
+}
+
+.close_btn i {
+    position: relative;
+    right: 0px;
+    top: 3px;
+}
+
+.person_img i {
+    background-color: #ffffff;
+    color: #41D6C3;
+    padding: 5px 5px;
+    border-radius: 50%;
+    font-size: 50px;
+}
+
+.check_icon i {
+    background-color: #44DA39;
+    color: #ffffff;
+    border-radius: 50%;
+    font-size: 20px;
+    padding: 3px;
+    position: relative;
+    top: 5px;
+}
+
+.check_icon span {
+    color: #44DA39;
+}
+
+.cancel_icon i {
+    background-color: #d63732;
+    color: #ffffff;
+    border-radius: 50%;
+    font-size: 20px;
+    padding: 3px;
+    position: relative;
+    top: 5px;
+}
+
+.cancel_icon span {
+    color: #d63732;
+}
+
+.mail_Score button {
+    border: 1px solid #41D6C3;
+    color: #41D6C3;
+}
+
+.mail_Score i {
+    position: relative;
+    top: 5px;
+}
+
+.score_board {
+    border: 1px solid #707070;
+}
+
+.score_left {
+    padding: 0px 30px;
+    color: #707070;
+    font-weight: bolder;
+}
+
+.review_btn {
+    padding: 7px 9px;
+}
+
+#reviewModal .modal-dialog {
+    max-width: 1000px;
+}
+
+.text_area {
+    background-color: #707070;
+    color: #ffffff;
+}
+
+.text_area_ans {
+    border-color: #d1f6f3;
+    background-color: #d1f6f3;
+    padding: 10px 30px;
+    margin-left: 75px;
+    cursor: not-allowed;
+}
+
+.actul_ans_bg {
+    color: #707070;
+    background-color: #ffffff;
+    padding: 3px 10px;
+    border-radius: 6px;
+}
+
+.exam_pic {
+    width: 150px;
+    padding-bottom: 1rem;
+    position: relative;
+    z-index: 99;
+}
+
+.exam_pic:hover {
+    /* transform:scale(2); */
+    transform: scale(1.5);
+    z-index: 999;
+}
+
+.correct_tick {
+    background-color: #40BF37;
+    color: #ffffff;
+    padding: 2px 3px;
+    border-radius: 50%;
+}
+
+.review_tick {
+    /* margin: 0px 10px; */
+    margin: 0px 50px;
+}
+
+.review_tick i {
+    position: relative;
+    top: 3px;
+    font-size: 18px;
+}
+
+.wrong_tick {
+    background-color: #F31320;
+    color: #ffffff;
+    padding: 2px 3px;
+    border-radius: 50%;
+}
+
+.test_title {
+    position: relative;
+    margin-right: 20px;
+    padding-left: 1rem;
+}
+
+.qualified_title {
+    position: relative;
+    margin-right: 20px;
+}
+
+.notify_results {
+    position: relative;
+    margin-right: 20px;
+}
+
+.correct_ans_txt {
+    color: #40BF37;
+    font-size: 14px;
+    margin-left: 15px;
+}
+
+.rev_txt {
+    color: #3D70B2;
+}
+
+#reviewModal .close span {
+    background-color: #41D6C3;
+    color: #fff;
+    padding: 2px 5px 0px 5px;
+    border-radius: 21px;
+}
+
+#reviewModal .close span i {
+    font-size: 20px;
+}
+
+.rev_txt {
+    color: #3D70B2;
+}
+
+.fill_in {
+    padding: 10px 40px;
+    border-left: none;
+    border-left: none;
+    border-right: none;
+    width: auto;
+    display: inline-block;
+    border-top: none;
+    border-radius: 0px;
+}
+
+.fill_ans {
+    background-color: rgba(65, 214, 195, 0.2);
+    padding: 10px 40px;
+    margin-left: 27px;
+}
+
+input:not([type]):disabled {
+    background-color: #ffffff;
+    cursor: not-allowed;
+}
+
+.reports_answer {
+    position: absolute;
+    top: 12px;
+}

@@ -1,0 +1,341 @@
+<nav   class="navbar navbar-expand-sm navbar-dark header_nav pt-0 pb-0">
+        <!-- Brand/logo -->
+        <div *ngIf=!flag class="col-4" style="margin-top:-12rem">
+            <img src="./../../../assets/images/ncd_finalized_logo.png" width="144px" height="50px" style="margin:0.28rem;padding-top:2px ;padding-bottom:2px ;" />
+        </div>
+        <div *ngIf=flag class="col-4" >
+            <img src="./../../../assets/images/ncd_finalized_logo.png" width="144px" height="50px" style="margin:0.28rem;padding-top:2px ;padding-bottom:2px ;" />
+        </div>
+        <div  class="col-4" style="text-align: center">
+          
+          <p *ngIf=!flag style="padding: 6rem 0rem;font-size: 21px;font-weight: 900;">You are one step away to check your results. Upload your updated resume to get results.</p>
+        </div>
+
+</nav>
+
+<div *ngIf=!flag class="row" style="justify-content: center;padding: 5rem;">
+  
+
+<div *ngIf=!resumeFlag style="text-align: center;" >
+  <label for="files" class="btn" style="background: #59d7c3;color: #fff;border-radius: 0px;margin-left: 16rem;">Upload Resume</label>
+  <input id="files" (change)=uploadResume($event) style="visibility:hidden;" type="file">
+    <br>
+  <span style="    font-size: x-small;color: #0e6557;" >Supported  files doc ,docx,pdf  and size of file should not exceed 6mb</span>
+</div>
+<div *ngIf=resumeFlag >
+    <div style="padding: 1.1rem 0.2rem; background: #2cc3ff1f;border-radius: 5px;width: 600px;"><span style="background: #2CC3FF;
+        padding: 1rem;
+        border-radius: 5px;
+        color: white;
+        font-weight: 500;
+        font-variant-caps: all-petite-caps;
+        font-size: 30px;">.{{fileType}}</span> <span style="    position: absolute;
+    padding-left: 1rem;
+    font-weight: 500;">{{fileName}}</span> <span style="padding-left: 1rem;
+    padding-top: 1.5rem;
+    position: absolute;
+    color: #707070;
+    opacity: 0.6;">{{fileSize | filesize}}</span> <span (click)=cancelUpload() style="
+    float: right;
+    font-size: 15px;
+    padding: 1rem;">X</span></div>
+    <div> <p style="color:#3C8214;    text-align: right;">Successfully Uploaded !</p></div>
+  <div style="padding: 3rem 15rem;">
+        <button  type="button" (click)="getResults()" class="btn btn-primary" style="background-color: #41D6C3;
+        border-color: #41D6C3;
+        height: 30px;
+        line-height: 18px;
+        padding: 0rem 2rem;">Next</button>
+  </div>
+  
+</div>
+</div>
+
+<div *ngIf=flag class="row" style="justify-content: center;padding: 5rem;">
+  
+
+  <div class="" >
+   
+    <div class="row m-0 report_result p-5 boxShadow" style="background: white;">
+        <div class="col-sm-2 text-center">
+            <span class="person_img">
+                <i class="material-icons boxShadow">
+                    person
+                </i>
+            </span>
+        </div>
+        <div class="col-sm-6">
+            <div class="d-flex">
+                <div class="flex-fill">
+                    <h4>
+                        <b>{{candidate.candidateName}}</b>
+                    </h4>
+                    <hr>
+                </div>
+                <div class="flex-fill text-center">
+                    <span class="ml-3 mr-3 check_icon" *ngIf="candidate.testStatus == 'Qualified'">
+                        <i class="material-icons">
+                            check
+                        </i>
+                    </span>
+                    <span class="ml-3 mr-3 cancel_icon" *ngIf="candidate.testStatus == 'Not Qualified'">
+                        <i class="material-icons">
+                            close
+                        </i>
+                    </span>
+                    <span *ngIf="candidate.testStatus == 'Qualified'">{{candidate.testStatus}}</span>
+                    <span class="errorTxt" *ngIf="candidate.testStatus == 'Not Qualified' ">{{candidate.testStatus}}</span>
+                </div>
+            </div>
+            <div class="test_details col-10">
+                <div class="row">
+                    <div class="col">
+                        <p>Test Title</p>
+                    </div>
+                    <div class="col">
+                        <b>{{candidate.testTitle}}</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p>Test Duration</p>
+                    </div>
+                    <div class="col">
+                        <b>{{candidate.testDuration}}</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p>Written on</p>
+                    </div>
+                    <div class="col">
+                        <b>{{candidate.writtenOn | date:'mediumDate'}}</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p>Score</p>
+                    </div>
+                    <div class="col">
+                        <b>{{candidate.testPercentage}}</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p>Total no. of questions</p>
+                    </div>
+                    <div class="col">
+                        <b>{{candidate.testTotalNumberOfQuestions}}</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p>Complexity</p>
+                    </div>
+                    <div class="col">
+                        <b>{{candidate.testComplexityType}}</b>
+                    </div>
+                </div>
+                <!-- <div class="mail_Score">
+                    <button class="btn pb-2" (click)="mailResult()">Mail This
+                        <i class="material-icons pull-right pl-5">
+                            email
+                        </i>
+                    </button>
+                    <button class="btn pb-2 review_btn  ml-4" data-toggle="modal" data-target="#reviewModal" (click)="getCandidateQUestions(candidate)">Review</button>
+                </div> -->
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="row score_board p-5">
+                <div class="col-sm-6">
+                    <h4>Sections</h4>
+                    <hr>
+                </div>
+                <div class="col-sm-6">
+                    <h4>Score</h4>
+                    <hr>
+                </div>
+                <div class="col-sm-12" *ngFor="let sec of candidate['sectionwiseResult']">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>{{sec.sectionName}}</p>
+                        </div>
+                        <div class="col-sm-6">
+                            =
+                            <span class="score_left">{{sec.sectionwisePercentage}}</span>
+                        </div>
+                    </div>
+                </div>
+                <hr class="col-sm-12 mt-0">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>Total</p>
+                        </div>
+                        <div class="col-sm-6">
+                            =
+                            <span class="score_left">{{candidate.testPercentage}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         
+    </div>
+</div>
+
+<div class="col-md-12 boxShadow" style="padding-top:2rem;background: white;">
+    <nav>
+        <div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist">
+          <a class="nav-item nav-link active" id="nav-home-tab" (click)="onRankingTypeChanged('Current')" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Exam Day Ranking</a>
+          <a class="nav-item nav-link" id="nav-profile-tab" (click)="onRankingTypeChanged('Overall')" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Overall Ranking</a>
+        </div>
+      </nav>
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+           <div class="row">
+            <div class="col-2">
+                <p>Test Ranking</p>
+             <div class="card" style="border-left: 2px solid #FD7272;">
+                 <div class="col">
+                        <span style="font-size: x-small">Your's</span><span style="padding-left:1rem;font-size: x-small">candidates</span>
+                        <h5><span style="color:#FD7272;font-weight: 600;margin-left: -25px;">{{candidate.currentRanking.candidateRank}}</span> <span style="    font-size: x-large;line-height: 1px;padding-left: 0.2rem;">/</span> {{candidate.currentRanking.totalNoOfCandidates}}</h5>
+                 </div>
+                    
+                    <!-- <div class="row">
+                        <div class="col">
+                           
+                        </div>
+                        <div class="col">
+                                <p>candidates</p><h5>/ 100</h5>
+                        </div>
+                    </div> -->
+
+             </div>
+            </div>
+            <div class="col">
+                    <p>Answered Ques</p>
+                    <div class="card" style="border-left: 2px solid #41D6C3;">
+                                  <div class="col">
+                       
+                        <h6 style="color:#41D6C3;">{{candidate.currentRanking.noOfAnsweredQuestions}}</h6>
+                 </div>
+                    </div>
+             </div>
+             <div class="col">
+                    <p>Unanswered Ques</p>
+                    <div class="card" style="border-left: 2px solid #82589F;">
+                            <div class="col">
+                       
+                                    <h6 style="color:#82589F;">{{candidate.currentRanking.noOfUnAnsweredQuestions}}</h6>
+                             </div>
+                    </div>
+             </div>
+             
+             <div class="col">
+                    <p>Right Answered Ques</p>
+                    <div class="card" style="border-left: 2px solid #41D6C3;">
+                            <div class="col">
+                       
+                                    <h6 style="color:#41D6C3;">{{candidate.currentRanking.noOfRightAnsweredQuestions}}</h6>
+                             </div>
+                    </div>
+             </div>
+             <div class="col">
+                    <p>Wrong Answered Ques</p>
+                    <div class="card" style="border-left: 2px solid #B33771;">
+                            <div class="col">
+                       
+                                    <h6 style="color:#B33771;">{{candidate.currentRanking.noOfWrongAnsweredQuestions}}</h6>
+                             </div>
+                    </div>
+             </div>
+             <div class="col">
+                    <p>No. of Qualified</p>
+                    <div class="card" style="border-left: 2px solid #1B9CFC;">
+                            <div class="col">
+                       
+                                    <h6 style="color:#1B9CFC;">{{candidate.currentRanking.noOfQualifiedCandidates}}</h6>
+                             </div>
+                    </div>
+             </div>
+             <div class="col">
+                <p>No. of not Qualified</p>
+                <div class="card" style="border-left: 2px solid #3B3B98;">
+                        <div class="col">
+                   
+                                <h6 style="color:#3B3B98;">{{candidate.currentRanking.noOfNotQualifiedCandidates}}</h6>
+                         </div>
+                </div>
+         </div>
+                  
+                                                                     </div>
+                                                                     
+        <h5 style="    padding: 2rem;">Section Wise Rankings</h5>
+            <div style="display: block; padding: 1rem 5rem;">
+                <canvas baseChart width="300" height="150"
+                  [datasets]="lineChartData"
+                  [labels]="lineChartLabels"
+                  [options]="lineChartOptions"
+                  [colors]="lineChartColors"
+                  [legend]="lineChartLegend"
+                  [chartType]="lineChartType"
+                  [plugins]="lineChartPlugins">
+                </canvas>
+              </div>
+        </div>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <div class="row">
+                <div class="col-6">
+                    <p>Overall Ranking</p>
+                 <div class="card" style="border-left: 2px solid #FD7272;">
+                     <div class="col">
+                            <span style="font-size: x-small">Your's</span><span style="padding-left:1rem;font-size: x-small">candidates</span>
+                            <h5><span style="color:#FD7272;font-weight: 600;margin-left: -25px;">{{candidate.overallRanking.candidateRank}}</span> <span style="    font-size: x-large;line-height: 1px;padding-left: 0.2rem;">/</span> {{candidate.overallRanking.totalNoOfCandidates}}</h5>
+                     </div>
+                        
+                         
+    
+                 </div>
+                </div>
+                
+             <div class="col">
+                    <p>No. of Qualified</p>
+                    <div class="card" style="border-left: 2px solid #1B9CFC;">
+                            <div class="col">
+                       
+                                    <h6 style="color:#1B9CFC;">{{candidate.overallRanking.noOfQualifiedCandidates}}</h6>
+                             </div>
+                    </div>
+             </div>
+             <div class="col">
+                <p>No. of not Qualified</p>
+                <div class="card" style="border-left: 2px solid #3B3B98;">
+                        <div class="col">
+                   
+                                <h6 style="color:#3B3B98;">{{candidate.overallRanking.noOfNotQualifiedCandidates}}</h6>
+                         </div>
+                </div>
+         </div>
+                </div>
+       
+            <h5 style="    padding: 2rem;">Section Wise Rankings</h5>   
+            <div style="display: block; padding: 1rem 5rem;">
+                <canvas baseChart width="300" height="150"
+                  [datasets]="lineChartData"
+                  [labels]="lineChartLabels"
+                  [options]="lineChartOptions"
+                  [colors]="lineChartColors"
+                  [legend]="lineChartLegend"
+                  [chartType]="lineChartType"
+                  [plugins]="lineChartPlugins">
+                </canvas>
+              </div>
+        </div>
+      </div>
+      
+</div>
+
+
+</div>

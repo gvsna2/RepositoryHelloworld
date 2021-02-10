@@ -1,0 +1,757 @@
+<block-ui>
+
+</block-ui>
+   <div class="sections">
+       <div class="row" *ngIf="flag">
+           <div class="col-sm-12 report_txt">
+               <h4 style="padding:0rem;padding-top: 1rem;color: #707070;">
+                   <p>List of Sections</p>
+               </h4>
+               <hr class="m-0">
+           </div>
+       </div>
+       <div *ngIf="!flag" pt-4 pb-4>
+           <div class="row">
+               <div class="col-6">
+                   <h4><span style="color:#434b4a;font-size: 20px;margin-left: -1.25rem;">Test Instance Creation</span></h4>
+   
+   
+   
+               </div>
+   
+   
+               <div class="col-6">
+   
+                   <button type="button" class="btn btn-primary" style="    background: #3D70B2;border: 1px solid #3D70B2;height: 30px;line-height: 17px;border-radius: 0px;width: 200px;font-weight: 600;font-size: 15px;margin: 1rem;float: right;margin-right: 7rem;" (click)="createTestInstance()">Create Test Instance </button>
+   
+   
+   
+   
+               </div>
+           </div>
+   
+           <div class="row" style="padding: 0rem 4rem;margin-left: -5rem;margin-right: 1rem;">
+               <div class="col">
+   
+   
+                   <div class="form-group">
+                           <popover-content #namePop title=""placement="right"[animation]="true"  style="box-shadow: 10px 10px 5px #aaaaaa;">
+                           <span style="color: #646363;"> Add a name/number to identify your test.</span>  
+                           
+                           </popover-content>
+                       <label for="Title">Test Instance Name <span><i style="    font-size: 13px;color: #969696;top: 2px;"  [popoverOnHover]="true" [popover]="namePop" class="material-icons">info</i></span></label>
+                       <input *ngIf="testSetupData" type="text" class="form-control" id="testInstanceAliasName"  value={{testSetupData.testInstanceAliasName}} name="testSetupTitle"  disabled>
+                   </div>
+   
+                   <div class="form-group">
+                           <popover-content #aliasNamePop title=""placement="right"[animation]="true"  style="box-shadow: 10px 10px 5px #aaaaaa;">
+                           <span style="color: #646363;">  Create a descriptive name for you to easily identify the test. </span>  
+                           
+                           </popover-content>
+                       <label for="Title">Test Instance Alias Name <span><i style="    font-size: 13px;color: #969696;top: 2px;"  [popoverOnHover]="true" [popover]="aliasNamePop" class="material-icons">info</i></span></label>
+                       <input type="text" class="form-control" id="Title" placeholder="" name="testInstanceName" (input)="testInstanceName=$event.target.value">
+                   </div>
+   
+               </div>
+               <div class="col">
+   
+                   <div class="form-group">
+                       <label for="Title">Test Master</label>
+                       <input *ngIf=testSetup type="text" class="form-control" id="testMaster" placeholder="" value={{testSetup}} name="testSetupTitle"   disabled>
+                   </div>
+                   <div class="form-group">
+                       <label for="Title">Category </label>
+                       <input *ngIf=testSetupData type="text" class="form-control" id="category" placeholder="" value={{testSetupData.testCategoryName}} name="testSetupTitle" disabled>
+                   </div>
+   
+               </div>
+   
+           </div>
+           <div class="row" >
+               <div class="col-md-11">
+                       <div class="form-group">
+                   
+                               <label for="Title">Tags<span style="font-size:x-small;color: #051d0a;">(Max Tags Limit:10)</span></label>
+                               <tag-input theme='bootstrap' [(ngModel)]="itemsAsObjects" [onlyFromAutocomplete]="false"  [addOnBlur]=true (identifyBy)=0 [identifyBy]="'instanceModelTagId'" [displayBy]="'instanceModelTagName'" [maxItems]=10 (onAdd)="onItemAdded($event)" >
+                                       <!-- <tag-input-dropdown [showDropdownIfEmpty]="true"
+                                       [autocompleteItems]="items">
+                   </tag-input-dropdown> -->
+                               </tag-input>
+                           </div>
+               </div>
+               
+           </div>
+   
+       </div>
+      
+       <div *ngIf="flag" class="row" style="padding-top: 2rem;">
+        <div class="form-group col-md-6">
+
+            <input type="text" class="form-control" placeholder="Search By Sections" [(ngModel)]="serachBySection" style="border-radius: 0px;box-shadow: 1px 2px 3px 2px #c2c2c2;">
+
+
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-sm-4">
+
+                    <span>
+                        <b>Filter By Test Master :</b>
+                    </span>
+                </div>
+                <div class="col-sm-7 p-0">
+                    <div id="mul_close">
+                            <angular2-multiselect name="testInsSections2" [data]="dropdownListMaster" [(ngModel)]="selectedMaster" [settings]="dropdownCateg" (onSelect)="onMasterSelect($event)"
+                            (onDeSelectAll)="onRemoveAll()" (onDeSelect)="onRemoveAll()" (onSelect)="clickDiv()"></angular2-multiselect>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+   
+       <div *ngIf="flag" class="row justify-content-end" style="padding-right:6.5rem">
+   
+   
+   
+   
+       </div>
+   
+       <h4 *ngIf="!flag"><span style="color:#434b4a;font-size: 20px;margin-left: -1.25rem;">Sections</span></h4>
+   
+       <div class="row " style="margin-left: -2rem;">
+           <div *ngIf=false class="card col-md-4" id="add" style=" cursor: pointer;   border: 1px dashed;background: transparent;" data-toggle="modal" data-target="#myModal">
+   
+               <i class="material-icons mx-auto" style="background: #DEDBDB;margin-top: 3.5rem;color: #2C2C2C;width: fit-content;border-radius: 50%;font-size: 30px;padding: 0.3rem;">add</i>
+               <p style="text-align: center">Add New Section</p>
+   
+           </div>
+           <div *ngIf=!flag class="card col-md-4" id="add" style=" cursor: pointer;   border: 1px dashed;background: transparent;" data-toggle="modal" data-target="#sectionModal">
+   
+            <i class="material-icons mx-auto" style="background: #DEDBDB;margin-top: 3.5rem;color: #2C2C2C;width: fit-content;border-radius: 50%;font-size: 30px;padding: 0.3rem;">add</i>
+            <p style="text-align: center">Add New Section</p>
+
+        </div>
+   
+           <!-- The Modal -->
+           <!-- The Modal -->
+           <div class="modal" id="myModal">
+               <div class="modal-dialog">
+                   <div class="modal-content">
+   
+                       <!-- Modal Header -->
+                       <div class="modal-header">
+                           <h4 class="modal-title">Create Section</h4>
+                           <button type="button" class="close" data-dismiss="modal">&times;</button>
+                       </div>
+   
+                       <!-- Modal body -->
+                       <div class="modal-body">
+                       <form #myForm1="ngForm" (ngSubmit)="flag ? addSection(myForm1.value):addSectionByTestInsatanceId(myForm1.value)">
+                       
+                               <div class="form-group">
+   
+                                   <select class="form-control" name="categoryId" (change)="onSeletedCatAndSub($event.target.value)">
+                                    <option disabled>Please Select Category</option>
+                                   <option   *ngFor="let arr of categoryAndSubCategoryArr;let i = index"   value={{i}}><span style="color:#34bd6f" *ngIf="arr.type==2" >&#xf07c; {{arr.name}} </span> <span   *ngIf="arr.type==1">&#xf07c; {{arr.name}} </span></option>
+                                   <!-- <option   value="type={{arr.type}},id={{arr.id}}"  *ngFor="let arr of categoryAndSubCategoryArr" > &#xf022; {{arr.name}} </option> -->
+                                   
+                             </select>
+                               </div>
+   
+                               <div class="form-group">
+   
+                                   <label for="exampleFormControlInput1">{{this.heirarchy}}</label>
+   
+                               </div>
+                               <div class="form-group">
+                                   <label for="exampleFormControlInput1">Section Name</label>
+                                   <input type="text" class="form-control" name="seactionName" ngModel placeholder="section name">
+                               </div>
+                               <!-- Modal footer -->
+                               <div class="modal-footer">
+                                   <button type="submit" class="btn btn-primary">Add Section</button>
+                               </div>
+   
+                               <div class="alert alert-success" *ngIf="this.seactionSuccessMessage">
+                                   {{this.sectionStatusMessage}}
+                               </div>
+                               <div class="alert alert-danger" *ngIf="this.seactionFailMessage">
+                                   {{this.sectionStatusMessage}}
+                               </div>
+   
+                           </form>
+   
+                       </div>
+   
+                   </div>
+               </div>
+           </div>
+            <!-- The TI Sectiom Modal -->
+           <div class="modal" id="sectionModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Create Section</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                    <form #myForm="ngForm" (ngSubmit)="flag ? addSection(myForm.value):addSectionByTestInsatanceId(myForm.value)">
+                    
+                            <div class="form-group">
+                                <div *ngIf="imgFlag">
+                                        <span class="blue" style="padding: 2rem;">
+                                                <i style="position: absolute;" class="material-icons">folder </i> <span style="color:rgb(168, 165, 165);padding-left: 2rem "  >(Category)</span> 
+                                             </span>
+                                             <span  style="padding: 2rem; color: seagreen">
+                                                <i style="position: absolute;" class="material-icons">folder </i> <span style="color:rgb(168, 165, 165);padding-left: 2rem " >(Sub-Category)</span>
+                                             </span>
+                                </div>
+                                    
+                          <angular2-multiselect name="testInsSections" (onOpen)="imgFlag=$event" (onClose)="imgFlag=$event" (onDeSelectAll)="onDeSelectAll($event)" (onSelect)="onItemSelect($event)" [data]="testSectionList"  [settings]="dropdownCateg2" [(ngModel)]="selectedItems" >
+                               
+                            
+                            <c-item>
+                                <ng-template let-item="item">
+                                        
+                                        <span class="blue" *ngIf="item.type==1" >
+                                                <i    title="category" class="material-icons">folder </i> 
+                                             </span>
+                                             <span  style="  color: seagreen" *ngIf="item.type==2">
+                                                <i title="sub-category" class="material-icons">folder </i> 
+                                             </span>
+                                             <label style="color: #333;min-width: 50px;"></label>
+                                  <label style="color: #333;">{{item.itemName}} </label>
+                                  
+                                </ng-template>
+                        </c-item>  
+                          </angular2-multiselect>
+                            </div>
+
+                            <div class="form-group">
+
+                                <label for="exampleFormControlInput1">{{this.heirarchy}}</label>
+
+                            </div>
+                            <div class="form-group">
+                                <!-- <label for="exampleFormControlInput1">Section Name</label> -->
+                                <input type="text" id="section_input" class="form-control" name="seactionName" ngModel placeholder="section name">
+                            </div>
+                            <div class="form-group" style="padding:2rem" *ngIf=testSetupData>
+                                <!-- <label for="exampleFormControlInput1">Section Name</label> -->
+                                <input *ngIf="testSetupData.isOwner==1" id="check" class="mt-2 mr-2" type="checkbox" name="addToMaster" ngModel><span *ngIf="testSetupData.isOwner==1" >Add to Master</span> 
+                                
+                                <!-- <input type="text" class="form-control" name="seactionName" ngModel placeholder="section name"> -->
+                            </div>
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button  *ngIf=heirarchy type="submit" class="btn btn-primary">Add Section</button>
+                            </div>
+
+                           
+
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+   
+   
+   
+   
+           <div class="card col-md-4" style="border-bottom:3px solid #41D6C3" *ngFor="let i=index;let section of sectionsData | sectionFilter:serachBySection">
+               <div class="card-body" *ngIf="section.hierarchy">
+                   <label class="container">
+                                     <input type="checkbox" [attr.checked]="section.isSectionActive==1 ? 'checked' : null" (change)=selectSection(i); *ngIf="!flag">
+                                     <span class="checkmark" *ngIf="!flag"></span>
+                                 </label>
+                   <h5 class="card-title">{{section.sectionName}}</h5>
+                   <h6 class="card-subtitle mb-2 text-muted">No. of Questions: {{section.totalNoOfQuestions}}</h6>
+                   <p class="card-text">Section Code: <span style="color:green">{{section.sectionCode}}</span></p>
+   
+                   <p class="card-text">Last modified: {{section.modifiedOn =='null' ? " " : section.modifiedOn | date }}</p>
+                   <p class="card-text" style="cursor: pointer" title={{section.hierarchy}} *ngIf="section.hierarchy.length>=40">{{section.hierarchy | slice:0:40}}..</p>
+                   <p class="card-text" *ngIf="section.hierarchy.length<40">{{section.hierarchy }}</p>
+                   <hr>
+   
+                   <!-- <a href="#" class="card-link" style="float: right;" (click)="onSection($event,section.sectionId);getTemplateLink()" data-toggle="modal" data-target="#exampleModalCenter">+ Add New Question</a> -->
+                   <button class="btn btn-link" style="float: right;" (click)="onSection($event,section.sectionId);getTemplateLink();sectionId=section.sectionId" data-toggle="modal"
+                   data-target="#exampleModalCenter" [disabled]="!section.isOwner">+ Add Questions</button>
+   
+   
+                   
+   
+               </div>
+   
+           </div>
+   
+   
+   
+       </div>
+   
+   
+   
+   
+   </div>
+   
+
+   <div id="UploadedQuesModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+    
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Bulk Upload Status</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+    
+                <div class="modal-body pt-0 pb-0">
+    
+                    <div class="row pt-4 pb-4">
+                        <div class="col-sm-4">
+                            <label><b>Total no of questions :</b></label>
+                            <span class="pl-3 quesCountSize tot_count">{{totalQuestionsCount}}</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <label><b>No .of success questions :</b></label>
+                            <span class="pl-3 quesCountSize succ_count">{{questionsSuccessCount}}</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <label><b>No .of already exist questions :</b></label>
+                            <span class="pl-3 quesCountSize exist_count">{{questionsExistCount}}</span>
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <table class="table text-center" *ngIf="uploadedQues && !uploadedQues['questionResponseList'].length">
+                            <tr class="text-center errorTxt">
+                                <th colspan="3">No Questions Uploaded</th>
+                            </tr>
+                        </table>
+                        <table class="table text-center" *ngIf="uploadedQues && uploadedQues['questionResponseList'].length">
+                            <thead>
+                                <tr>
+                                    <th>Question</th>
+                                    <!-- <th>Status</th> -->
+                                    <th>Message</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let ques of uploadedQues['questionResponseList']">
+                                    <td>{{ques.questionName}}</td>
+                                    <!-- <td>
+                                                <p *ngIf="ques.statusCode == 0">Failed</p>
+                                                <p *ngIf="ques.statusCode == 1">Uploaded</p>
+                                                <p *ngIf="ques.statusCode == 2">Already Exists !</p>
+                                            </td> -->
+                                    <td [ngClass]="{'red_col': ques.statusCode == 0, 'green_col':ques.statusCode == 1, 'yellow_col':ques.statusCode == 2}">{{ques.statusMessage}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+    
+        </div>
+    </div>
+
+    <!-- Modal -->
+   
+    <div class="modal fade" id="exampleModalCenter" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+
+                <div class="modal-body">
+
+                        <div class="row">
+                                <div class="col-sm-8 text-center">
+                                    <!-- <h4 class="blueColor">Add Questions</h4> -->
+                                </div>
+                                <div class="col-sm-4">
+                                    <button type="button" class="close" data-dismiss="modal">
+                                        <span class="boxShadow">
+                                            <i class="material-icons">
+                                                clear
+                                            </i>
+                                        </span>
+            
+                                    </button>
+                                </div>
+                                <!-- <div class="col-sm-12">
+                                    <hr>
+                                </div> -->
+                            </div>
+
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item col" (click)="toggleBulk('1')">
+                            <a [ngClass]="{'nav-link':true,'active':!bulkUpload}" style="text-align: center;" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Add Questions</a>
+                        </li>
+                        <li class="nav-item col" (click)="toggleBulk('2')">
+                            <a [ngClass]="{'nav-link':true,'active':bulkUpload}" id="profile-tab" style="text-align: center;" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Bulk Upload</a>
+                        </li>
+
+                    </ul>
+
+                    <div class="tab-content" id="myTabContent" *ngIf="!bulkUpload">
+
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                            <!-- <div class="p-4 text-center">
+                            <h4 class="blueColor">Add Questions</h4>
+                            <hr>
+                        </div>
+         -->
+                            <!-- Created Question -->
+                            <div class="createdQuestion.length">
+                                <div *ngFor="let ques of createdQuestion">
+                                    <div class="pl-4 pr-4">
+                                        <h4 class="blueColor">Q. {{ques.qustionText}}</h4>
+                                        <div *ngIf="ques.questionTypeId == '1' || ques.questionTypeId == '2'">
+                                            <p *ngFor="let opt of ques['optionsList'];let i=index">
+                                                <b>{{i+1}}. </b>
+                                                <span class="pl-4">{{opt.optionText}}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="ques.questionTypeId == '3' || ques.questionTypeId == '4' || ques.questionTypeId == '5' || ques.questionTypeId == '6'">
+                                        <!-- <textarea rows="6" cols="40" name="answer" [(ngModel)]="ques.answer"></textarea> -->
+                                        <p>
+                                            {{ques.answer}}
+                                        </p>
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>
+                            <!-- End Created QUestion -->
+
+
+                            <!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item col">
+                                <a class="nav-link active" style="text-align: center;" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                                    aria-selected="true">Add Questions</a>
+                            </li>
+                            <li class="nav-item col">
+                                <a class="nav-link" id="profile-tab" style="text-align: center;" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                                    aria-selected="false">Bulk Upload</a>
+                            </li>
+        
+                        </ul> -->
+
+                            <div class="tab-content" id="myTabContent">
+
+                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                                    <form #myForm="ngForm" (ngSubmit)="addQuestion(myForm)">
+
+
+                                        <div style="padding: 2rem 3rem;
+            text-align: left;
+            font-size: 14px;">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <div class="form-row">
+
+                                                        <div class="col-md-10">
+                                                                
+
+                                                            <label for="firstName">Question Title  <sup class="errorTxt">*</sup></label>
+                                                            <!-- <input type="hidden" name="sectionId" #sectionId="ngModel" ngModel/> -->
+                                                            <input type="text" class="form-control" id="questionTitle" name="questionText" ngModel placeholder="" required>
+                                                        </div>
+
+                                                        <div class="col-md-2" style="padding-top: 2rem;">
+                                                            <!-- <i class="material-icons" (click)="questionImg()" style="cursor: pointer;">
+                                                            image
+                                                        </i> -->
+                                                            <!-- <input type="file" [hidden]="true" (change)="onSelectedQuestionImage($event)" id="imageId"> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                        <popover-content #questionTypePop 
+                                                        title=""
+                                                        placement="right"
+                                                        [animation]="true" 
+                                                         style="box-shadow: 10px 10px 5px #aaaaaa;">
+                                                        <span style="color: #646363;"> Define the type of question.Eg.Multiple choice, descriptive,True/False etc</span>  
+                                                        
+                                                        </popover-content>
+                                                    <label for="lastName">Question type <span><i style="    font-size: 13px;color: #969696;top: 2px;"  [popoverOnHover]="true" [popover]="questionTypePop" class="material-icons">info</i></span> <sup class="errorTxt">*</sup></label>
+
+                                                    <select class="form-control" id="questionType" name="questionTypeId" #questionTypeId=ngModel ngModel (change)="setType(questionTypeId.value)" required>
+                                                    <option value=""> Select Type</option>
+                                                    <option value="{{questionType.questionTypeId}}" *ngFor="let questionType of questionTypeArr">{{questionType.questionType}}</option>
+                                                </select>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                        <popover-content #complexity 
+                                                        title=""
+                                                        placement="right"
+                                                        [animation]="true" 
+                                                         style="box-shadow: 10px 10px 5px #aaaaaa;">
+                                                        <span style="color: #646363;"> Identify the level of difficulty of the question. Easy/Basic, medium, Advanced etc </span>  
+                                                        
+                                                        </popover-content>
+                                                    <label for="lastName">Complexity <span><i style="    font-size: 13px;color: #969696;top: 2px;"  [popoverOnHover]="true" [popover]="complexity" class="material-icons">info</i></span> <sup class="errorTxt">*</sup></label>
+                                                    <select class="form-control" id="complexity" name="complexityId" ngModel required>
+                                                    <option value="">Select </option>
+                                                    <option value="{{complex.complexityId}}" *ngFor="let complex of complexityArr">{{complex.complexity}} </option>
+                                                </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <p>
+                                                            <popover-content #additionalData 
+                                                            title=""
+                                                            placement="right"
+                                                            [animation]="true" 
+                                                             style="box-shadow: 10px 10px 5px #aaaaaa;">
+                                                            <span style="color: #646363;"> Use this to add specific instructions on the questions.Eg.Answer one of two.</span>  
+                                                            
+                                                            </popover-content>
+                                                        <a (click)="onAccordion()" style="float: right;margin-right: 4rem;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                        + Additional data <span><i style="    font-size: 13px;color: #969696;top: 2px;"  [popoverOnHover]="true" [popover]="additionalData" class="material-icons">info</i></span>
+                                                    </a>
+
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="collapse" id="collapseExample">
+                                                <div style="border: 1px solid #c2c1e1;border-radius: 5px;">
+                                                    <ul class="nav nav-tabs" id="myTab2" role="tablist">
+                                                        <!-- <li class="nav-item col">
+                                                        <a (click)="onAccordion()" class="nav-link active" style="text-align: center;" id="text-tab" data-toggle="tab" href="#text"
+                                                            role="tab" aria-controls="text" aria-selected="true">Text</a>
+                                                    </li> -->
+                                                        <li class="nav-item col">
+                                                            <a (click)="onCode()" class="nav-link" id="code-tab" style="text-align: center;" data-toggle="tab" href="#code" role="tab" aria-controls="code" aria-selected="false">Text/Code</a>
+                                                        </li>
+
+                                                    </ul>
+                                                    <div class="tab-content">
+                                                        <div class="tab-pane active" id="text" role="tabpanel" aria-labelledby="text-tab" style="padding:1rem">
+
+                                                            <textarea id="txtarea" class="form-control " style="border:none" spellcheck="false" placeholder="Add description.."></textarea>
+
+
+
+                                                        </div>
+                                                        <div class="tab-pane fade" id="code" role="tabpanel" aria-labelledby="code-tab" style="padding:1rem">
+                                                            <textarea id="txtarea2" class="form-control " name="questionCode" ngModel style="border:none" spellcheck="false" placeholder="Add Code.."></textarea>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div *ngIf="questionType == 1 || questionType == 2">
+                                                <div *ngIf="optionList.length">
+                                                <h5>Options</h5>
+                                                <hr>
+                                                </div>
+                                               
+                                                <mat-radio-group class="example-radio-group">
+                                                <div *ngFor="let opt of optionList;let i=index">
+                                                <div class="form-row pt-4" (mouseover)="showDelete(i)" (mouseleave)="hideDelete(i)">
+                                                <div *ngIf="questionType == '1'" class="col-sm-1">
+                                               
+                                                <mat-radio-button class="example-radio-button" (click)="setMcqAns(i)" [value]="i" class="correct_radio">
+                                               
+                                                </mat-radio-button>
+                                                </div>
+                                                <div *ngIf="questionType == '2'" class="check_green">
+                                                <mat-checkbox class="example-margin" (click)="checkboxAns(i)"></mat-checkbox>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                <!-- <label for="email">Option</label> -->
+                                                <!-- <input type="hidden" class="form-control" name="tempId" ngModel="{{this.tempOptionImageId}}"> -->
+                                                <input type="text" class="form-control" [(ngModel)]="optionObj[i].optionText" [ngModelOptions]="{standalone:true}">
+                                                <span id="close_{{i}}" class="close_icon" (click)="deleteOption(i)" [hidden]="optionList.length == 1">
+                                                <i class="material-icons">
+                                                close
+                                                </i>
+                                                </span>
+                                               
+                                                </div>
+                                               
+                                                <div class=" col-md-2 " style="padding-top: 2.25rem; ">
+                                               
+                                                <i class="material-icons" (click)="optionImg(i)" style="cursor:pointer;" *ngIf="questionType == '7'">
+                                                image
+                                                </i>
+                                                <input type="file" [hidden]="true " (change)="onSelectedOptionImage($event,i)" id="optionImageId{{i}}">
+                                               
+                                                </div>
+                                               
+                                               
+                                                </div>
+                                                <button class="btn btn-link " (click)="incOptionList()" style="margin-left: 18%;" *ngIf="optionList.length == i+1">
+                                                + Add another option
+                                                </button>
+                                                </div>
+                                                </mat-radio-group>
+                                                </div>
+                                               
+                                               
+                                               
+                                                
+                                                <div class="form-row">
+                                                <div class="form-group col-md-4 ">
+                                                <div *ngIf="questionType == 3 || questionType == 4 || questionType == 5 || questionType == 6">
+                                                <label for="te ">Answer</label>
+                                                </div>
+                                                <div *ngIf="questionType == 3 || questionType == 4 || questionType == 5 || questionType == 6">
+                                                <textarea rows="6" cols="40" name="answer" ngModel></textarea>
+                                                </div>
+                                                <!-- <div *ngIf="questionType == 1 || questionType == 2">
+                                                <input type="text " class="form-control " name="answer" ngModel placeholder=" ">
+                                                </div> -->
+                                                </div>
+                                                </div>
+
+
+
+                                            <!-- <div class="form-row ">
+            <div class="form-group col-md-4 ">
+            <label for="email ">Option</label>
+            <input type="text " class="form-control " id="option " name="optionText " [(ngModel)]="this.optionObj " placeholder=" ">
+            </div>
+           
+            <div class="col-md-2 " style="padding-top: 2.25rem; "> <i class="material-icons " (click)="optionImg() " style="cursor: pointer; ">
+            image
+            </i>
+            <input type="file " [hidden]="true " (change)="onSelectedOptionImage($event) " id="optionImageId ">
+            </div>
+           
+            </div> -->
+                                            <!-- <div class="form-row ">
+            <div class="form-group col-md-4 ">
+            <label for="email ">Option</label>
+            <input type="text " class="form-control " id="option " placeholder=" ">
+            <a href="JavaScript:Void(0); " style="float: right ">
+            + Add another option
+            </a>
+            </div>
+            <div class="col-md-2 " style="padding-top: 2.25rem; "> <i class="material-icons " (click)="optionImg1() " style="cursor: pointer; ">
+            image
+            </i>
+            <input type="file " [hidden]="true " (change)="onSelectedOptionImage($event) " id="optionImageId1 ">
+            </div>
+            </div> -->
+                                             
+                                            <div class="col-md-12 pt-5 pl-0">
+                                                <div style="float:left;margin-left: -2rem ">
+                                                    <!-- <label>Mandatory</label> -->
+                                                    <!-- <label class="container-mand">
+                                                            <popover-content #manditoryPop 
+                                                            title=""
+                                                            placement="right"
+                                                            [animation]="true" 
+                                                             style="box-shadow: 10px 10px 5px #aaaaaa;">
+                                                            <span style="color: #646363;"> Specify questions must be answered before progressing to the next question.</span>  
+                                                            
+                                                            </popover-content>
+                                                    <input id="check" class="mt-2 mr-2" type="checkbox" name="isMandate" ngModel>Mandatory<span><i style="    font-size: 13px;color: #969696;top: 2px;"  [popoverOnHover]="true" [popover]="manditoryPop" class="material-icons">info</i></span> 
+                                                  
+                                                </label>-->
+
+                                                </div>
+                                                <div class="float-left mt-1 ml-4">
+                                                    <section class="example-section">
+                                                            <popover-content #globalPop 
+                                                            title=""
+                                                            placement="right"
+                                                            [animation]="true" 
+                                                             style="box-shadow: 10px 10px 5px #aaaaaa;">
+                                                            <span style="color: #646363;"> Here you get the option to contribute your question to the global catalogue and help enrich the community.</span>  
+                                                            
+                                                            </popover-content>
+                                                        <mat-slide-toggle class="example-margin" [color]="color" [checked]="true" data-toggle="toggle" name="globaleShare" ngModel>
+                                                            Contribute to Global Question Catalouge <span><i style="    font-size: 13px;color: #969696;top: 2px;"  [popoverOnHover]="true" [popover]="globalPop" class="material-icons">info</i></span>
+                                                        </mat-slide-toggle>
+                                                    </section>
+                                                </div>
+                                                <div style="float: right; ">
+
+                                                    <!-- <button type="button " class="btn btn-primary " style="background: #fff;color: #3D70B2;margin-right:2rem; border: 1px solid #3D70B2; height: 30px; line-height: 17px; border-radius: 0px; font-weight:
+            600; font-size: 15px; " routerLink="sections ">+ Add Another Question</button>
+                                                <button type="button " class="btn btn-primary " style="background: #fff;color: #3D70B2;margin-right:2rem; border: 1px solid #3D70B2; height: 30px; line-height: 17px; border-radius: 0px; font-weight:
+            600; font-size: 15px; " routerLink="sections ">Create New Section</button> -->
+
+                                                    <button type="submit " class="btn btn-primary add_ques_btn" [disabled]="!myForm.valid" [ngClass]="{'cursor_not':!myForm.valid}">
+                                                    Add Question</button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <!-- <div class="alert alert-success" style="text-align:center" *ngIf="questionSuccesMessage">
+                                        <span style="text-align:center">{{this.statusMessage}}</span>
+                                    </div>
+                                    <div class="alert alert-danger" style="text-align:center" *ngIf="questionFailMessage">
+                                        <span>{{this.statusMessage}}</span>
+                                    </div> -->
+
+
+
+                                    <div class="alert alert-success" style="text-align:center" *ngIf="optionImageSuccess">
+                                        <span style="text-align:center">{{this.optionStatusMessage}}</span>
+                                    </div>
+                                    <div class="alert alert-danger" style="text-align:center" *ngIf="optionImageFail">
+                                        <span>{{this.optionStatusMessage}}</span>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade " id="profile " role="tabpanel " aria-labelledby="profile-tab ">...</div>
+
+                            </div>
+
+
+                        </div>
+                        <div class="tab-pane fade " id="profile " role="tabpanel " aria-labelledby="profile-tab ">...</div>
+
+                    </div>
+                    <div *ngIf="bulkUpload">
+                        <div class="text-center">
+                            <div class="pt-4">
+                                <button class="btn btn-primary" (click)="clickUpload()">
+                                        <i class="material-icons">
+                                            vertical_align_top
+                                        </i>
+                                        Choose File
+                                    </button>
+                                <small *ngIf="filesToUpload.length" class="pl-5 blueColor">{{filesToUpload[0].name}}</small>
+                                <small *ngIf="filesToUpload.length" class="pl-3 redCol">{{getSize(filesToUpload[0].size)}}</small>
+                                <input id="upload_file_btn" [hidden]="true" type="file" (change)="uploadFile($event)">
+                            </div>
+                            <div class="mt-5 mb-5">
+                                <button class="btn btn-success" (click)="uploadBulkQues()">
+                                        Upload
+                                    </button>
+                            </div>
+                            <div class="mt-4 mb-4">
+                                <button class="btn btn-link float-left">
+                                        <a [href]="templateLink" download> Download Template for Questions Bulk Upload </a>
+                                    </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>

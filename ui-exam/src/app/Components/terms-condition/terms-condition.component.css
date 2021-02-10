@@ -1,0 +1,12 @@
+.terms-cond{
+    position: absolute;
+    left: 12%;
+    top: 0px;
+}
+.terms-cond ol li{
+    margin-bottom:15px;
+}
+.terms-cond .btn-primary{
+    background-color: #47bd91;
+    border-color:#47bd91;
+}

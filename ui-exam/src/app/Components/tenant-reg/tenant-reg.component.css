@@ -1,0 +1,263 @@
+ul {
+    list-style: none;
+  }
+  
+  ul li:before {
+    content: '✓';
+    
+  }
+
+
+  ul {
+    margin: 0 0 1.5em;
+    padding: 0;
+    counter-reset: item;
+  }
+  
+  ul > li {
+    margin: 0;
+    padding: 0 0 0 2em;
+    text-indent: -2em;
+    list-style-type: none;
+    counter-increment: item;
+  }
+  
+  ul > li:before {
+    display: inline-block;
+    width: 1em;
+    padding-right: 0.5em;
+    font-weight: bold;
+    text-align: right;
+    content: '✓' " ";
+  }
+
+.tenant_reg_sec{
+    /* height:100vh; */
+    background-image: url('./../../../assets/images/office_building.jpg');
+    background-size: cover;
+}
+.tenant_reg_gradient{
+    background-image: linear-gradient(0.40turn,rgba(61, 112, 178, 0.89), rgba(65, 214, 195, 0.89),rgba(85, 150, 230, 0.89));
+    /* height: 100vh; */
+}
+.coc_title{
+    color: #ffffff;
+    font-weight: 700;
+}
+.form_tenant_reg h3{
+    color:#ffffff;
+    font-weight: 700;
+}
+.form_tenant_reg h4{
+    color:#ffffff;
+}
+.form_tenant_reg{
+    width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    /* position: absolute;
+    text-align:center;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%); */
+}
+.form_tenant_reg .form-control{
+    /* width:46%; */
+    width:100%;
+    margin:0 auto;
+    padding:24px 20px;
+    /* border:none; */
+    box-shadow: none;
+    border-top: none;
+}
+.register_form .form-control{
+    /* width:auto; */
+    margin:0 auto;
+    padding:24px 20px;
+    /* border:none; */
+    box-shadow: none;
+}
+.form_tenant_reg .form-control:focus{
+    border: 4px solid #f1c40f;
+}
+.form_tenant_reg .form-control::-webkit-input-placeholder{
+    opacity:0.5
+}
+.register_form .btn-primary{
+    padding:0px 40px !important;
+}
+.form_tenant_reg .btn-primary{
+    padding: 0px;
+    height: 46px;
+    font-weight:bold;
+    background-color:#f1c40f;
+    border-color: #f1c40f;
+}
+.form_tenant_reg .btn-primary:hover{
+    box-shadow: 0 1px 5px #959595;
+}
+.form_tenant_reg .form-group{
+    /* margin-bottom:2rem; */
+}
+.heightvh{
+    height:100vh;
+}
+.form_tenant_reg .d-flex{
+    width:46%;
+    margin:0 auto;
+    color:#fff;
+}
+.active_tab::after{
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 20px solid #ffffff;
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 44px;
+}
+.active_tab{
+    position: relative;
+    font-weight: 600;
+}
+.terms_checkbox{
+    color:#ffffff;
+}
+.sigin_form{
+    position: relative;
+    left: 22%;
+}
+.forgot_form{
+    position: relative;
+    left: 23%;
+}
+
+/* new ui */
+.tenant_lft_cont{
+    /* background-image: url('../../../assets/images/Artboard.png'); */
+    background-color: #ffffff;
+    height: 100vh;
+}
+.tenant_caption{
+    color: #ffffff;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 98%;
+    border-right: 3px solid #707070;
+}
+.tenant_caption h3{
+    font-weight:bold;
+}
+.signin_black{
+    color:#4B4B4B;
+}
+.tenant_right_signin{
+    color: #ffffff;
+    position: relative;
+    top: 45%;
+    transform: translateY(-50%);
+}
+.tenant_right_signup{
+    color: #ffffff;
+    position: relative;
+    top: 5%;
+    margin: 0% 18%;
+}
+.signin_brdr{
+    /* border-top: 2px solid #12BCFF; */
+    /* border-top: 2px solid #D63031; */
+    border-top: 2px solid #5ace72;
+    width: 10%;
+    margin: 6px auto;
+}
+.tenant_right_signin label,.tenant_right_signup label{
+    color: #4B4B4B;
+    font-weight: 600;
+}
+.tenant_right_signin .form-control,.tenant_right_signup .form-control{
+    border-color:#4B4B4B;
+}
+.tenant_right_signin form{
+    width: 50%;
+    margin: 10% auto;
+}
+.tenant_right_signup form{
+    width: 90%;
+    margin: 0% auto;
+}
+.tenant_right_signin .btn-primary,.tenant_right_signup .btn-primary{
+    /* background-color: #12BCFF; */
+    /* background-color: #D63031; */
+    /* border-color: #12BCFF; */
+    /* border-color: #D63031; */
+    background-color: #59cd72;
+    border-color: #59cd72;
+    margin: 5% auto;
+}
+.registr_now{
+    position: absolute;
+    left: 50%;
+    bottom: 0%;
+    transform: translateX(-50%);
+}
+.registr_now .btn-link{
+    color:#4B4B4B;
+}
+.tenant_right_signin .input-group-addon,.tenant_right_signup .input-group-addon{
+    border: 1px solid #4B4B4B;
+    padding: 5px 4px 0px 5px;
+    border-right: none;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.tenant_right_signin .input-group-addon i,.tenant_right_signup .input-group-addon i{
+    color:#4B4B4B;
+}
+.tenant_right_signin .form-control,.tenant_right_signup .form-control{
+    border-left:none;
+}
+.tenant_right_signin .form-control:focus,.tenant_right_signup .form-control:focus{
+    /* box-shadow: 0 0 0 0.2rem #12BCFF; */
+    /* box-shadow: 0 0 0 0.2rem #d63732; */
+    box-shadow: 0 0 0 0.1rem #5ace72;
+}
+/*  end new ui */
+
+.carousel-item img{
+    /* width:333px; */
+    height:268px;
+}
+.carousel ul li{
+    margin: 0px 10px;
+    padding: 0 0 0 0px;
+    text-indent: none;
+}
+.carousel .carousel-indicators li{
+    width: 10px;
+    height: 10px;
+    border-radius:20px;
+}
+.carousel .carousel-indicators li::before{
+    content:none;
+}
+.carousel-indicators li{
+    border: 1px solid #707070;
+}
+.carousel-indicators {
+    position: relative;
+    top: 50px;
+}
+.carousel-indicators .active {
+    opacity: 1;
+    background-color: #20BF6B;
+}
+.carousel-control-prev,.carousel-control-next{
+    display: none;
+}
+.carousel_txt{
+    color: #707070;
+    padding-top: 50px;
+}

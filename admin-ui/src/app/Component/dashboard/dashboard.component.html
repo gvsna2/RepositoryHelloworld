@@ -1,0 +1,289 @@
+<body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <app-header></app-header>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <app-topbar></app-topbar>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+
+                    </div>
+
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4 ">
+                            <div class="card border-left-warning shadow h-100 py-2" [ngClass]="{'active_card_reg':selCard=='tReg'}">
+                                <div class="card-body " (click)="onSelect(this.masterDbName,0,'tReg') ">
+                                    <div class="row no-gutters align-items-center ">
+                                        <div class="col mr-2 ">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" style="color:#FFCC00;">Tenant Registered</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800 ">{{this.tenantRegistredCount}}</div>
+                                        </div>
+                                        <div class="col-auto ">
+                                            <i class="fas fa-users fa-2x text-warning-300" style="color:#FFCC00;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4 ">
+                            <div class="card border-left-success shadow h-100 py-2" [ngClass]="{'active_card':selCard=='tActive'}">
+                                <div class="card-body " (click)="onSelect(this.masterDbName,1,'tActive') ">
+                                    <div class="row no-gutters align-items-center ">
+                                        <div class="col mr-2 ">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1 ">Tenant Activated</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800 ">{{this.tenantActiveCount}}</div>
+                                        </div>
+                                        <div class="col-auto ">
+                                            <i class="fas fa-check fa-2x text-green-300" style="color:#1cc88a;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4 ">
+                            <div class="card border-left-warning shadow h-100 py-2 " [ngClass]="{'active_card_reg':selCard=='rReg'}">
+                                <div class="card-body " (click)="onSelect(this.recruiterDbName,0,'rReg') ">
+                                    <div class="row no-gutters align-items-center ">
+                                        <div class="col mr-2 ">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" style="color:#FFCC00;">Recruiters Registered</div>
+                                            <div class="row no-gutters align-items-center ">
+                                                <div class="col-auto ">
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800 ">{{recruiterRegistredCount}}</div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-auto ">
+                                            <i class="fas fa-users fa-2x text-warning-300 " style="color:#FFCC00;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pending Requests Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4 ">
+                            <div class="card border-left-success shadow h-100 py-2 " [ngClass]="{'active_card':selCard=='rActive'}">
+                                <div class="card-body " (click)="onSelect(this.recruiterDbName,1,'rActive')">
+                                    <div class="row no-gutters align-items-center ">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1 ">Recruiters Activated</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{recruitertActiveCount}}</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-check fa-2x text-green-300" style="color:#1cc88a;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Row -->
+                    <div class="row" *ngIf="succesMessage || failMessage">
+
+                        <div class="col-12 table-responsive">
+                            <h3 style="text-align:center;color:red;font-weight:bold;" *ngIf="failMessage"> {{this.statusMessage}}</h3>
+                            <table class="table table-bordered" *ngIf="succesMessage" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">S.No</th>
+                                        <th scope="col">User Name</th>
+                                        <th scope="col">Phone Number</th>
+                                        <th scope="col">Email Id</th>
+                                        <th scope="col">Detaile View</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let user of userList | paginate:{id:'listing_pagination',
+                                    itemsPerPage: 5, 
+                                    currentPage:page,
+                                    totalItems:totalRecords} ;  let i=index">
+                                        <th scope="row">{{5 *(page-1)+i+1}}</th>
+                                        <td>{{user.userName}}</td>
+                                        <td>{{user.phoneNumber}}</td>
+                                        <td>{{user.mailId}}</td>
+                                        <td>
+                                            <button type="button " (click)="getUserDetailesById(user.userId,user.dbName,user.domainName,user.phoneNumber,user.companyWebSite,user.companyName,user.country) " class="btn btn-success bg-gradient-success" data-toggle="modal" data-target="#myModal">&nbsp;<i class="far fa-eye " ></i> &nbsp;view</button>
+                                        </td>
+                                    </tr>
+
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                        <div>
+                            <pagination-controls id="listing_pagination" *ngIf="userList.length>5" maxSize="5" directionLinks="true" (pageChange)="page = $event"></pagination-controls>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <app-fotter></app-fotter>
+            <!-- End of Footer -->
+
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" style="text-align: center;font-weight: bold;color:green;" id="exampleModalLabel">{{this.typeOfUser}} Detailes</h5>
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span></button>
+
+                    </div>
+                    <div class="modal-body ">
+                        <div class="container ">
+                            <div class="row ">
+                                <div class="col ">
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold text-primary">user detailes</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group ">
+                                                <label for="usr "> User Name :  <span class="badge badge-pill badge-success" > {{this.userName}}</span></label>
+                                            </div>
+                                            <div class="form-group ">
+                                                <label for="usr "> User Email :  <span class="badge badge-pill badge-success" > {{this.email}}</span></label>
+                                            </div>
+                                            <div class="form-group ">
+                                                <label for="usr "> Phone Number :  <span class="badge badge-pill badge-success " > {{this.number}}</span></label>
+                                            </div>
+                                            <div class="form-group ">
+                                                <label for="usr "> company WebSite :  <span class="badge badge-pill badge-success " > {{this.companyWebSiteName}}</span></label>
+                                            </div>
+                                            <div class="form-group ">
+                                                <label for="usr "> Access Url :  <a class="badge badge-pill badge-success " href="http://{{this.domain}}.nocheatingdude.com/ " target="_blank " >www.{{this.domain}}.nocheatingdude</a></label>
+                                            </div>
+                                            <div class="form-group ">
+                                                <label for="usr "> DataBase Name :  <span class="badge badge-pill badge-success " > {{this.userDbName}}</span></label>
+                                            </div>
+                                            <div class="form-group ">
+                                                <label for="usr "> company Name :  <span class="badge badge-pill badge-success " > {{this.company}}</span></label>
+                                            </div>
+                                            <div class="form-group ">
+                                                <label for="usr "> company domain Name :  <span class="badge badge-pill badge-success " > {{this.domain}}</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col ">
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold text-primary">Login Detailes</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group ">
+                                                <label for="usr "> First Time User login:  <span class="badge badge-pill badge-success " > {{this.isFirstTimelogin}}</span></label>
+                                            </div>
+                                            <div class="form-group ">
+                                                <label for="usr "> Last Login Activity Message:  <span class="badge badge-pill badge-success " > {{this.loginActivityMessage}}</span></label>
+                                            </div>
+                                            <div class="form-group ">
+                                                <label for="usr "> Last Login Activity:  <span class="badge badge-pill badge-success " > {{this.lastLogin}}</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold text-primary">Test creation detailes</h6>
+                                        </div>
+                                        <div class="card-body">
+
+                                            <div class="form-group">
+                                                <label for="usr"> Test Create Or Not :  <span class="badge badge-pill badge-success " > {{this.isTestCreatedOrNot}}</span></label>
+                                            </div>
+                                            <div class="form-group ">
+                                                <label for="usr "> Number of TestMaster Count :  <span class="badge badge-pill badge-success " > {{this.testMasterCount}}</span></label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="pwd">Number of TestInstance Count :  <span class="badge badge-pill badge-success " > {{this.testInstanceCount}}</span></label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="pwd">Number of TestAdministered Count :  <span class="badge badge-pill badge-success " > {{this.testAdminSterCount}}</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded " href="#page-top ">
+        <i class="fas fa-angle-up "></i>
+    </a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel ">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true ">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout " below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" data-dismiss="modal" (click)="logOut()">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>

@@ -1,0 +1,43 @@
+.test_eval_txt{
+    color: #707070;
+}
+hr{
+    border-top: 1px solid #707070;
+    margin-top: 0px;
+}
+.search_icon i{
+    background-color: #5596E6;
+    color: #ffffff;
+    padding: 6px 10px;
+    border-radius: 4px;
+}
+.eval_table{
+    border-collapse: separate;
+    border-spacing: 0 15px;
+}
+.eval_table tbody tr{
+    background-color: #ffffff;
+    border-radius:10px;
+}
+.eval_table tbody tr:hover{
+    background-color: #5596E6;
+    border-radius:10px;
+    cursor:pointer;
+    box-shadow: 0 1px 5px #959595;
+    color:#ffffff;
+    transition: 0.5s;
+}
+
+
+.filter_tbl{
+    background-color:#ffffff;
+}
+.filter_tbl tr:hover{
+    background-color: #5596E6;
+    color: #ffffff;
+    box-shadow: 0 1px 5px #959595;
+    cursor: pointer;
+}
+.filter_tbl_no tr:hover{
+    
+}

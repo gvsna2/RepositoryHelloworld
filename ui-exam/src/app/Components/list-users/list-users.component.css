@@ -1,0 +1,152 @@
+hr{
+    border-top: 1px solid #707070;
+    margin-top: 0px;
+}
+
+.list_user_sec h4{
+    color: #707070;
+    font-size: 24px;
+    /* font-weight: 600; */
+}
+.list_user_sec .btn-primary{
+    background-color: #3D70B2;
+}
+.user_card{
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
+    position:relative;
+}
+.user-icon{
+    width:54px;
+    height:54px;
+}
+.flex_width{
+    flex: 0 0 23%;
+}
+.redBorder{
+    border-bottom:2px solid #FA7070;
+}
+.blueBorder{
+    border-bottom:2px solid #3D70B2;
+}
+.greenBorder{
+    border-bottom:2px solid #47CC2D;
+}
+.hover_panel{
+    display:none;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
+    position: absolute;
+    background-color: #ffffff;
+    z-index: 99999;
+    width: 500px;
+    /* left: 100%;
+    top: 0%; */
+    left: 60%;
+    top: -60%;
+    padding: 25px 0px;
+}
+ 
+.hover_panel img{
+    width:118px;
+    height:118px;
+}
+#newUserModal .modal-header .close{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color: #707070;
+    color: #ffffff;
+    padding: 0px 5px;
+    margin:0px;
+    border-radius: 50%;
+}
+#newUserModal .modal-dialog{
+    max-width: 1000px;
+}
+.women_Stand{
+    width:146px;
+}
+#newUserModal .modal-title{
+    color:#3D70B2;
+}
+#newUserModal .btn-primary{
+    background-color:#3D70B2;
+    color:#ffffff;
+}
+.textExceed{
+    /* width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    white-space: nowrap; */
+    width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+#perm_modal{
+    display:none;
+}
+
+#editUserModal .modal-header .close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color: #707070;
+    color: #ffffff;
+    padding: 0px 5px;
+    margin: 0px;
+    border-radius: 50%;
+}
+
+#editUserModal .modal-dialog {
+    max-width: 1000px;
+}
+
+#editUserModal .modal-title {
+    color: #3D70B2;
+}
+
+#editUserModal .btn-primary {
+    background-color: #3D70B2;
+    color: #ffffff;
+}
+#permissionModal .modal-dialog{
+    max-width: 1000px;
+}
+#permissionModal .modal-header{
+    border:none;
+}
+.admin_role{
+    background-color: #12BCFF;
+    color: #ffffff;
+    text-align: center;
+    padding: 15px 20px;
+}
+.test_role{
+    background-color: #F39C12;
+    color: #ffffff;
+    text-align: center;
+    padding: 15px 20px;
+}
+.eval_role{
+    background-color: #2ECC71;
+    color: #ffffff;
+    text-align: center;
+    padding: 15px 20px;
+}
+.admin_role img,.test_role img,.eval_role img{
+    width: 74px;
+    height: 74px;
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 50%;
+}
+.updateSupRole{
+    color: #fff;
+    background-color: #19bbfc;
+    border-color: #19bbfc;
+    font-weight: bold;
+    padding: 10px 30px;
+}
+#permissionModal .d-flex{
+    height:192px;
+}

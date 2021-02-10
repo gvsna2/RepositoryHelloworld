@@ -1,0 +1,127 @@
+<block-ui>
+
+</block-ui>
+<div class="reports_sec pt-4 pb-4 pl-4 pr-4">
+    <div class="row">
+        <div class="col-sm-12 report_txt">
+            <h4>
+                <p>List of Test Masters</p>
+            </h4>
+            <hr class="m-0">
+        </div>
+    </div>
+    <div class="row filter_tbl boxShadow mt-4 ml-1 mr-1" *ngIf="testSetups && testSetups['listOfTestSetups'].length">
+        <table class="table mb-0">
+            <tr style="color: #ffffff;background-color: #425db5;" class="cursor_initial">
+                <th>S.No</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Owner</th>
+                <th>Created On</th>
+                <th></th>
+            </tr>
+            <tr *ngFor="let test of testSetups['listOfTestSetups'];let i=index" [routerLink]="['/test-setup/sections',test.testSetupId]">
+                <td>
+                    <span class=" pr-3">{{i+1}}.</span>
+                </td>
+                <td>{{test.testSetupTitle}}</td>
+                <td>{{test.testCategoryName}}</td>
+                <td>{{test.testOwner}}</td>
+                <td>{{test.createdOn | date :'short' }}</td>
+                <td>
+
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" (click)="stopProp($event)"
+                        class="vert_Btn">
+                        <span class="">
+                            <i class="material-icons">
+                                more_vert
+                            </i>
+                        </span>
+                    </button>
+                    <mat-menu #menu="matMenu" class="instance-menu">
+                        <button mat-menu-item (click)="showMaster(test)">
+                            <span>View</span>
+                        </button>
+                        <button [disabled]="test.isOwner != '1'" mat-menu-item (click)="stopProp($event);" [routerLink]="['/test-setup/edit',test.testSetupId]">
+                            <span>Edit</span>
+                        </button>
+                    </mat-menu>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="row filter_tbl boxShadow" *ngIf="testSetups && !testSetups['listOfTestSetups'].length">
+        <table class="table mb-0">
+            <tr style="color: #ffffff;background-color: #425db5;" class="cursor_initial">
+                <th>S.No</th>
+                <th>Title</th>
+                <th>Category</th>
+
+                <th>Created On</th>
+            </tr>
+            <tr class="text-center no_filter_tr">
+                <td class="errorTxt" colspan="4">{{testSetups.statusMessage}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="masterViewModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header b-0">
+                <!-- <h4 class="modal-title">Modal Header</h4> -->
+                <button type="button" class="close boxShadow" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body p-5" *ngIf="masterView">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p class="row">
+                            <span class="inst_title col-sm-3">Test Master Title </span>
+                            <span class="col-sm-9">: {{masterView.testSetupTitle}}</span>
+                        </p>
+                        <p class="row">
+                            <span class="inst_title col-sm-3">Category</span>
+                            <span class="col-sm-9">  : {{masterView.testCategoryName}}</span>
+                        </p>
+
+                    </div>
+                    <div class="col-sm-3">
+                    </div>
+                </div>
+               
+                <div class="row">
+                    <p class="col-sm-12 m-0 mt-4">
+                        <span class="inst_title">Sections : </span>
+                    </p>
+                </div>
+                <div class="row pt-4 sec-container pl-4" *ngIf="masterView && masterView['sectionsList'] &&  masterView['sectionsList'].length">
+
+                    <div class="card col-md-4 p-0 m-3" style="border-bottom:3px solid #41D6C3" *ngFor="let i=index;let section of  masterView['sectionsList']">
+                        <div class="card-body">
+                            <h5 class="card-title">{{section.sectionName}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">No. of Questions: {{section.totalNoOfQuestions}}</h6>
+                            <p class="card-text">Section Code:
+                                <span style="color:green">{{section.sectionCode}}</span>
+                            </p>
+
+                            <!-- <p class="card-text">Last modified: {{section.modifiedOn =='null' ? " " : section.modifiedOn | date }}</p> -->
+                            <p class="card-text mb-3" style="cursor: pointer" title={{section.hierarchy}} *ngIf="section.hierarchy && section.hierarchy.length>=40">{{section.hierarchy | slice:0:40}}..</p>
+                            <p class="card-text mb-3" *ngIf="section.hierarchy && section.hierarchy.length<40">{{section.hierarchy }}</p>
+                            <hr>
+
+                            <!-- <a href="#" class="card-link" style="float: right;" (click)="onSection($event,section.instanceConfigId);" data-toggle="modal" data-target="#exampleModalCenter">+ Add New Question</a> -->
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

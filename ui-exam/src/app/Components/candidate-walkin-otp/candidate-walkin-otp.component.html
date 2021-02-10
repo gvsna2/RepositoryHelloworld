@@ -1,0 +1,40 @@
+<block-ui>
+       
+    </block-ui>
+    <div class="login_section">
+        <div class="login-gradient">
+            <div class="coccon_title">
+                <img src="./../../../assets/images/ncd_finalized_logo.png" width="144px" height="50px" style="margin:0.28rem;padding-top:2px ;padding-bottom:2px ;" />
+            </div>
+            <div class="">
+                <div class="col-sm-4 pl-4 pr-4 pt-5 pb-5 form_center rounded">
+                    <div class="login_round_img boxShadow">
+                        <img src="./../../../assets//images/boy.png">
+                    </div>
+                    <form>
+                        <!-- <div class="form-group flname_inline pr-3">
+                            <label for="fname">First Name</label>
+                            <input type="text" class="form-control" id="fname" name="fname">
+                        </div>
+                        <div class="form-group flname_inline pl-3">
+                            <label for="lname">Last Name</label>
+                            <input type="text" class="form-control" id="lname" name="lname">
+                        </div> -->
+                        <div class="form-group mt-4">
+                            <label for="lname">Enter Unique Code (
+                                <small>ex. DIVYV28ZBFP0</small> )</label>
+                            <input type="text" class="form-control" id="otp" name="otp"
+                                [(ngModel)]="otp">
+                            <p class="text-right">
+                                <small>OTP is sent to your registered mobile email</small>
+                            </p>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary" 
+                                (click)="getCandidateDetails()">Proceed</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

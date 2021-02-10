@@ -1,0 +1,48 @@
+ /* div.custom {
+     color: royalblue;
+     border: 5px solid rgba(112, 111, 211, 1);
+     box-shadow: 0px 0px 0px 0px rgh(58, 57, 110);
+     animation: anim-shadow .3s forwards;
+ }
+ 
+ @keyframes anim-shadow {
+     100% {
+         box-shadow: 0px 0px 50px 20px rgba(112, 111, 211, 0);
+     }
+ } */
+ /* div.clickEffect {
+    position: fixed;
+    box-sizing: border-box;
+    border-style: solid;
+    border-color: #FFFFFF;
+    border-radius: 50%;
+    animation: clickEffect 0.4s ease-out;
+    z-index: 99999;
+}
+
+@keyframes clickEffect {
+    0% {
+        opacity: 1;
+        width: 0.5em;
+        height: 0.5em;
+        margin: -0.25em;
+        border-width: 0.5em;
+    }
+    100% {
+        opacity: 0.2;
+        width: 15em;
+        height: 15em;
+        margin: -7.5em;
+        border-width: 0.03em;
+    }
+} */
+ 
+ .active_card_reg {
+     border: 2px solid #f6c23e;
+     box-shadow: 0px 2px 6px #f6c23e;
+ }
+ 
+ .active_card {
+     border: 2px solid #1cc88a;
+     box-shadow: 0px 2px 6px #1cc88a;
+ }

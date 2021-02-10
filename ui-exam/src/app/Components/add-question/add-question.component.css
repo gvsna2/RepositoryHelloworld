@@ -1,0 +1,186 @@
+/* import ques */
+.global_search .input-group-addon{
+    border: 1px solid #ced4da;
+    border-left: none;
+    background-color: #ffffff;
+    padding: 0px 0px;
+}
+.alphabets_cat{
+    background-color:#ffffff;
+}
+.alpha_letters{
+    color:#2980B9;
+}
+.alphabets_cat h5{
+    display: inline-block;
+    margin: 0px;
+    padding: 20px 0px;
+    cursor: pointer;
+}
+.alphabets_cat span{
+    margin: 0px 10px;
+    padding: 0px;
+}
+.alpha_all h5{
+    border: 1px solid #707070;
+    color: #707070 !important;
+    padding: 0px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.categ_ques_tbl thead th{
+    border:none;
+    color:#000000;
+}
+.categ_ques_tbl td, .categ_ques_tbl th{
+    border:none;
+}
+.categ_ques_tbl table{
+    border-collapse: separate;
+    border-spacing: 0 15px;
+}
+.categ_ques_tbl tbody tr{
+    background-color: #ffffff;
+    padding-bottom: 20px;
+    cursor: pointer;
+}
+.categ_ques_tbl tbody tr:hover{
+    background-color:#7ED6DF !important;
+    box-shadow: 0 1px 5px #959595;
+    color:#ffffff;
+    transition-duration: 0.2s;
+}
+.sec_icon{
+    color:#707070;
+}
+.sub_cat_icon{
+    color:#2ECC71;
+}
+.categ_ques_tbl tbody tr:hover .sec_icon{
+    color:#ffffff;
+}
+.categ_ques_tbl tbody tr:hover .sub_cat_icon{
+    color:#ffffff;
+}
+.ques_cunt_circle{
+    font-weight:bold;
+    /* background-color: #41D6C3;
+    color: #ffffff;
+    padding: 3px 10px;
+    border-radius: 15px;
+    margin-left: 15px; */
+}
+.sel_all_che{
+    padding: 4px 13px;
+}
+.sec_tr{
+    background-color: #E2EBF2 !important;
+}
+.cat_h4{
+    color: #2980B9;
+    float: left;
+}
+.catpath_arrow{
+    margin:0px 10px;
+}
+.cat_h4 span{
+    font-size:20px;
+}
+.ques_sec_name{
+    color: #1ABC9C;
+}
+.ques_sec_hr{
+    border-top: 2px solid #707070;
+    width: 70%;
+}
+.import_ques_btn{
+    background-color: #2980B9;
+    border-color: #2980B9;
+    color: #ffffff;
+    padding: 5px 25px;
+    border-radius: 0px;
+}
+.ques_type_colr{
+    color:#2980B9;
+}
+.mod_ques_clr{
+    color:#000000;
+    word-break: break-all;
+}
+#quesViewModal .modal-dialog {
+    max-width: 1000px;
+}
+#quesViewModal .close{
+    background-color: #41D6C3;
+    padding: 0px 6px;
+    position: relative;
+    top: 10px;
+    right: 10px;
+    color: #ffffff;
+    border-radius: 17px;
+}
+.close_icon{
+    position: absolute;
+    color: #f44336;
+    right: -30px;
+    z-index: 9999;
+    top: 5px;
+    visibility: hidden;
+    transition-delay: 0.2s;
+}
+.close_icon i{
+    font-size:18px;
+    cursor: pointer;
+    font-weight:bold;
+}
+.add_new_sec{
+    top: 5px;
+    position: relative;
+    cursor: pointer;
+}
+.add_new_sec i{
+    color: #41D6C3;
+}
+#addSectionModal .modal-dialog {
+    max-width: 600px;
+}
+#UploadedQuesModal .modal-dialog{
+    max-width: 1050px;
+}
+.red_col{
+    color:#c0392b;
+}
+.green_col{
+    color:#2ecc71;
+}
+.yellow_col{
+    color:#f1c40f;
+}
+.back_to_sec button{
+    padding: 0px 10px 5px 0px;
+}
+.back_to_sec button i{
+    position: relative;
+    padding: 2px 4px;
+    top: 5px;
+}
+#globQuesModal .modal-dialog{
+    max-width:50%;
+}
+.cursor_not{
+    cursor: not-allowed;
+    pointer-events: none;
+}
+/* end */
+.quesCountSize{
+    font-size:20px;
+}
+.tot_count{
+    color:#fc7b03
+}
+.succ_count{
+    color:#20BF6B;
+}
+.exist_count{
+    color:#f70800;
+}

@@ -1,0 +1,17 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 p-0" *ngIf="authService.isLogin()">
+      <app-header></app-header>
+      
+    </div>
+  </div>  
+  <div class="row" [ngClass]="{'tot_bg':authService.isSetPass(),'set_pass_grad':!authService.isSetPass()}">
+    <div class="col-sm-2 p-0" *ngIf="authService.isLogin() && authService.isSetPass()">
+        <app-sidenav></app-sidenav>
+    </div>
+  <div [ngClass]="{'col-sm-10':authService.isLogin() && authService.isSetPass(),'col-sm-12':authService.isLogin() && !authService.isSetPass(),'col-sm-12 p-0':!authService.isLogin()}">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

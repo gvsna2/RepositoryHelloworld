@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark header_nav pt-0 pb-0">
+    <!-- Brand/logo -->
+    <!-- <a class="navbar-brand" href="">NO CHEATING DUDE</a> -->
+    <!-- <img src="./../../../assets/images/NCD-logo-small.png" width="131px" height="50px" style="margin: 0.28rem;" /> -->
+    <img src="./../../../assets/images/ncd_finalized_logo.png" width="180px" height="55px" style="margin:0.28rem;padding-top:2px ;padding-bottom:2px ;" />
+
+    <!-- Links -->
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item user_icon dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">{{getUsername()}}</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item">
+                    <span class="">Role &nbsp; : </span> <b>{{getRoleName()}}</b>
+                </a>
+                <a class="dropdown-item pointer" [routerLink]="['/settings']">
+                    <span class="">Profile</span>
+                </a>
+                <a class="dropdown-item pointer" [routerLink]="['/set-password']">
+                    <span class="">Change Password</span>
+                </a>
+                <a class="dropdown-item pointer" (click)="logout()">
+                    <i class="material-icons">
+            power_settings_new
+          </i>
+                    <span class="">Logout</span>
+                </a>
+            </div>
+        </li>
+        <li class="nav-item user_icon">
+
+            <img src="{{getUserImage()}} " class="boxShadow " style="padding:0px;">
+        </li>
+        <!-- <li class="nav-item ">
+        <a class="nav-link " href="# ">Link 3</a>
+      </li>  -->
+    </ul>
+</nav>

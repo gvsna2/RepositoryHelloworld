@@ -1,0 +1,46 @@
+.test_eval_txt b{
+    color:#3D70B2;
+}
+.eval_test_sec .btn-primary{
+    background-color:#3D70B2;
+    border-color:#3D70B2;
+    color:#ffffff;
+}
+.eval_test_sec img{
+    border: 1px solid #707070;
+    padding: 8px;
+    width: 42px;
+    border-radius: 50%;
+}
+.dflex_1,.dflex_2{
+    padding: 6px 6px;
+}
+.user_block{
+    background-color: #ffffff;
+    border-radius: 6px;
+}
+.red_hr{
+    border-top: 2px solid #FA7070;
+}
+.green_hr{
+    border-top: 2px solid #40BF37;
+}
+.blue_hr{
+    border-top: 2px solid #3D70B2;
+}
+.yellow_hr{
+    border-top: 2px solid #F0932B;
+}
+.eval_test_sec .arrow_back{
+    color: #707070;
+    position: relative;
+    top: 5px;
+    right: 5px;
+    padding-right: 5px;
+}
+.candid_mail{
+    width: 152px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

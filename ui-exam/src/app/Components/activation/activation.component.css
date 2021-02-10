@@ -1,0 +1,143 @@
+.tenant_reg_sec{
+    /* height:100vh;
+    background-image: url('./../../../assets/images/office_building.jpg');
+    background-size: cover; */
+}
+.tenant_reg_gradient{
+    /* background-color: #12BCFF; */
+    /* background-color: #d63732; */
+    background-color: #2ECC71;
+    /* background-image: linear-gradient(0.40turn,rgba(61, 112, 178, 0.89), rgba(65, 214, 195, 0.89),rgba(85, 150, 230, 0.89)); */
+    height: 100vh;
+}
+.coc_title{
+    color: #ffffff;
+    font-weight: 700;
+}
+.form_tenant_reg h3{
+    /* color:#ffffff; */
+    font-weight: 700;
+}
+.form_tenant_reg h4{
+    color:#ffffff;
+}
+.form_tenant_reg{
+    position: absolute;
+    /* text-align:center; */
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.form_tenant_reg .form-control{
+    /* width:46%; */
+    margin:0 auto;
+    padding:24px 20px;
+    /* border:none; */
+    box-shadow: none;
+}
+.form_tenant_reg .btn-primary{
+    padding: 0px;
+    height: 46px;
+    /* background-color:#41D6C3;
+    border-color: #41D6C3; */
+    background-color: #d63732;
+    border-color: #d63732;
+}
+.form_tenant_reg .form-group{
+    /* margin-bottom:2rem; */
+}
+.form_tenant_reg .d-flex{
+    width:46%;
+    margin:0 auto;
+    color:#fff;
+}
+.active_tab::after{
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 20px solid #ffffff;
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 44px;
+}
+.active_tab{
+    position: relative;
+    font-weight: 600;
+}
+
+/* new ui */
+.form_tenant_reg h3{
+    /* color:#ffffff; */
+    font-weight: 700;
+}
+.form_tenant_reg h4{
+    color:#ffffff;
+}
+.form_tenant_reg{
+    position: absolute;
+    /* text-align:center; */
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.form_tenant_reg .form-control{
+    /* width:46%; */
+    margin:0 auto;
+    padding:24px 20px;
+    border-color:#4B4B4B;
+    /* border:none; */
+    box-shadow: none;
+}
+.form_tenant_reg .btn-primary{
+    padding: 0px;
+    height: 46px;
+    /* background-color:#41D6C3;
+    border-color: #41D6C3; */
+    /* background-color:#12BCFF;
+    border-color:#12BCFF; */
+    /* background-color: #d63732;
+    border-color: #d63732; */
+    background-color: #2ECC71;
+    border-color: #2ECC71;
+}
+.form_tenant_reg .form-group{
+    /* margin-bottom:2rem; */
+}
+.form_tenant_reg .d-flex{
+    width:46%;
+    margin:0 auto;
+    color:#fff;
+}
+
+/*  new ui */
+.form_tenant_reg form{
+    width: 50%;
+    margin: 0 auto;
+}
+.form_tenant_reg{
+    background-color: #ffffff;
+    width: 700px;
+    color: #4b4b4b;
+    padding: 29px 0px;
+    box-shadow: 0 7px 16px #959595;
+}
+.form_tenant_reg label{
+    font-weight:600;
+}
+.signin_brdr{
+    /* border-top: 2px solid #d63732; */
+    border-top: 2px solid #2ECC71;
+    width: 50%;
+    margin: 6px auto;
+}
+.activate_text{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #ffffff;
+}

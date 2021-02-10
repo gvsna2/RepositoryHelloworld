@@ -1,0 +1,102 @@
+.dashboard_sec hr{
+    border-top: 1px solid #707070;
+    margin-top: 0px;
+}
+
+
+.dashboard_sec i{
+    position: relative;
+    top: 5px;
+    left: 5px;
+}
+.icon_dot{
+    font-size: 10px;
+    top: 0px !important;
+    left: 0px !important;
+}
+.yellow{
+    color:#FAD570;
+}
+.lightBlue{
+    color:#41D6C3
+}
+.red{
+    color:#FA7070;
+}
+.blue{
+    color:#3D70B2;
+}
+.orange{
+    color:#F0932B;
+}
+.green{
+    color:#47CC2D;
+}
+.borderleft1{
+    border-left: 3px solid #41D6C3;
+}
+.borderleft2{
+    border-left: 3px solid #FAD570;
+}
+.borderleft3{
+    border-left: 3px solid #FA7070;
+}
+.borderleft4{
+    border-left: 3px solid #3D70B2;
+}
+.borderleft5{
+    border-left: 3px solid #F0932B;
+}
+.darkBlack{
+    color:#2C2C2C;
+}
+.users_dash img{
+    width: 38px;
+    height: 38px;
+}
+.border_right_users{
+    border-right: 1px solid #dee2e7;
+}
+.sec_circ{
+    top: 0px !important;
+    left: 0px !important;
+    color:#FA7070;
+    font-size:10px;
+}
+.user_circ{
+    top: 0px !important;
+    left: 0px !important;
+    color:#47CC2D;
+    font-size:10px;
+}
+.not_found_Dash{
+    height: 195px;
+    vertical-align: middle;
+}
+.user_block,.height247{
+    height:247px;
+}
+#perm_modal{
+    display:none;
+}
+.ellips{
+    /* width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; */
+}
+.dash_th{
+    background-color: #e7e5e5;
+    color: #453f3f;
+}
+.loader_div{
+    position: absolute;
+    top: 60%;
+    left: 45%;
+    transform: translate(-50%,-50%);
+}
+.loader_div img{
+    /* width: 100px; */
+    /* height: 100px; */
+    height: 150px;
+}

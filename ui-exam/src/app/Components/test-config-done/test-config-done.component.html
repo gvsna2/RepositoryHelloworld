@@ -1,0 +1,372 @@
+<block-ui>
+
+</block-ui>
+<div class="container" *ngIf="response">
+   
+  <div class="card" style="margin:2rem;padding: 5rem">
+  <!-- <h5 style="text-align: center;font-weight: 700;padding-top: 2rem">Empty !</h5>
+  <p style="text-align:center">Add Sections & Categories</p> 
+  <img class="card-img" src="./../../../assets/images/Women working on laptop.png" alt="Category"> -->
+  <div class="row" style="text-align:center">
+      <div class="col-3">
+          <sup >Test Name</sup>
+          <p >{{testData.testConfigTitle}}</p>
+      </div>
+      <div class="col-3">
+          <sup >Total No. Of Questions</sup>
+          <p >{{testData.totalNumberOfTestConfigQuestions }}</p>
+      </div>
+      <div class="col-3">
+          <sup >Test Duration</sup>
+          <p >{{testData.testDuration}}</p>
+      </div>
+      <div class="col-3">
+          <sup >Complexity</sup>
+          <p >{{testData.testComplexityModeName}}</p>
+      </div>
+      </div>
+  <div class="row bg-faded">
+  <div class="col-8 mx-auto text-center" style="padding-top: 2rem;">
+  <!-- <p style="color:#40BF37;font-size: 20px;"> Your Test has been administered Successfully.</p> -->
+  <p *ngIf="response.testTypeId!=1" style="color:black;font-size: 15px"> Copy and share the link to participants or add participants to access the test.</p>
+ 
+  <form>
+  <div class="form-row" *ngIf="response.testTypeId!=1">
+  <div class="col-10">
+  <input style="color:#5596E6" type="text" class="form-control" id="myInput" value= {{response.testConfigLink}}>
+  </div>
+ 
+  <div class="col">
+  <button (click)="copyText()" class="btn btn-primary mb-2">Copy</button>
+  </div>
+  </div>
+  <div class="form-row">
+ 
+  <div class="col" style=" padding: 3rem;">
+  <button *ngIf="response.testTypeId==1" type="button" style="background: #41D6C3;border: 1px solid;" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModalCenter">Add Participants</button>
+ 
+
+  
+
+  
+
+</div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog " role="document">
+  <div class="modal-content">
+ 
+  <div class="modal-body">
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item col">
+  <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Add Participants</a>
+  </li>
+  <li class="nav-item col">
+  <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Bulk Upload</a>
+  </li>
+ 
+  </ul>
+  <div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+  <form id="addParticipantForm" #myForm="ngForm" (ngSubmit)="addparticipant(myForm.value)">
+  <div style="padding: 2rem 3rem; text-align: left;font-size: 14px;">
+  <div class="form-row">
+  <div class="form-group col-md-6">
+  <label for="firstName">First Name</label>
+  <input type="text" class="form-control" id="firstName" name="fName" ngModel placeholder="">
+  </div>
+  <div class="form-group col-md-6">
+  <label for="lastName">Last Name</label>
+  <input type="text" class="form-control" id="lastName" name="lName" ngModel placeholder="">
+  </div>
+  </div>
+  <div class="form-group">
+  <label for="email">Email</label>
+  <input type="email" class="form-control" id="email" name="email" ngModel placeholder="">
+  </div>
+
+  <div class="form-group">
+    <label for="phonenumber">Phone Number</label>
+    <input type="text" (keypress)="keyPress($event)" minlength=10 maxlength=10 class="form-control" id="text" name="phoneNumber" ngModel placeholder="">
+  </div>
+
+  <!-- <div class="form-group col-md-12">
+    <label for="dateofBirth" style="display:block">Date OF Birth</label> -->
+    <!-- <input type="date" class="form-control" id="text" name="dateofbirth" ngModel placeholder=""> -->
+    <!-- <mat-form-field class="col-sm-12">
+      <input matInput [matDatepicker]="picker"
+      id="startDate" name="dateofbirth" ngModel >
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field> -->
+  <!-- <input [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3" name="dateofbirth" ngModel>
+    <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+  </div> -->
+  
+
+  <div class="form-row">
+      <div class="form-group col-md-12">
+          <label for="dateofBirth" style="display:block">Date of Birth <span  style="color:mediumpurple;font-size: x-small">( Optional )</span></label>
+          <input class="form-control" [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3" name="dateofbirth" ngModel>
+          <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+         
+          </div>
+ 
+  <div class="form-group col-md-6">
+  <label for="lastName">Activation Time <br><span style="color:mediumpurple;font-size: x-small">(After Current Time)</span></label>
+  <input class="form-control" [owlDateTime]="dt1" name="testValidFrom" ngModel [owlDateTimeTrigger]="dt1">
+  <owl-date-time #dt1></owl-date-time>
+ 
+  </div>
+  <div class="form-group col-md-6">
+    <label for="lastName">Expiration Time<br><span style="color:mediumpurple;font-size: x-small">(Before {{testData.administeredTestExpirationTime | date :'short'}})</span></label>
+    <input class="form-control" [owlDateTime]="dt2" name="testValidTo" ngModel [owlDateTimeTrigger]="dt2">
+    <owl-date-time #dt2></owl-date-time>
+   
+    </div>
+  </div>
+  <div class="form-row">
+  <div class="form-group col-md-12">
+  <button class="btn btn-primary mb-2" style="float:right">Add</button>
+  </div>
+ 
+  </div>
+  <!-- <div class="alert alert-success" *ngIf="participantSuccess" role="alert">
+  {{statusMessage}}
+  </div> -->
+  <!-- <div class="alert alert-danger" *ngIf="participantFail" role="alert">
+  {{statusMessage}}
+  </div> -->
+  </div>
+ 
+  </form>
+
+</div>
+ 
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+  <br/>
+
+  
+    <!-- <input type="file" (change)="onSeletedBulkparticipantsFile($event)" /> -->
+    <!-- <div class="alert alert-success" *ngIf="bulkparticipantSuccess" role="alert">
+    {{statusMessage}}
+    </div>
+    <div class="alert alert-danger" *ngIf="bulkparticipantFail" role="alert">
+  {{statusMessage}}
+  </div> -->
+  <div class="form-row">
+      <div class="form-group col-md-12">
+      <label class="fileContainer">
+          <span *ngIf=!selectedFile >Upload Participants</span>
+          <span *ngIf=selectedFile >{{selectedFile.name}}</span>
+          <input type="file" (change)="onSeletedBulkparticipantsFile($event)" />
+      </label>
+
+
+      </div>
+    <div class="form-group col-md-12">
+    <button *ngIf="selectedFile" class="btn btn-primary mb-2" (click)="bulkParticipantUpload()" style="float:right">Upload</button>
+    
+  
+    </div>
+   
+    </div>
+    <div class="form-group col-md-12" *ngIf=uploadResponse >
+      
+      <p *ngFor="let participant of uploadResponse">
+        
+        <span *ngIf="participant.statusCode==0" style="color:indianred"> {{participant.statusMessage}} </span>
+        <span *ngIf="participant.statusCode==1" style="color:limegreen"> {{participant.statusMessage}} </span>
+        <span *ngIf="participant.statusCode==2" style="color:orangered"> {{participant.statusMessage}} </span>
+      
+      </p>
+    
+      </div>
+
+    <div class="mt-4 mb-4">
+      <button class="btn btn-link float-left">
+          <a [href]="templateLink" download> Download Template for Participants Bulk upload </a>
+      </button>
+  </div>
+  </div>
+ 
+  
+
+
+  </div>
+ 
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </form>
+ 
+  </div>
+  </div>
+ 
+  <!-- <div id="accordion" class="accordion">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <div class="row">
+        <div class="col-4">test name</div>
+        <div class="col-4">test name</div>
+        <div class="col-4">test name</div>
+        </div>
+        <p style="float: right;">
+          <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+           show more..
+          </button>
+        </p>
+      </div>
+  
+      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+        <div class="card-body">
+          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+        </div>
+      </div>
+    </div>
+    </div> -->
+    
+
+  <h4 *ngIf="response.testTypeId==1">Participants list</h4>
+  <div *ngIf="candidateList.length == 0 && response.testTypeId==1">
+    <hr>
+    <p style="text-align: center;"> No Candidate Details Found</p>
+
+    
+  </div>
+<!-- Modal -->
+  <div class="modal fade" id="EditParticipant" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Detials</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body" *ngIf="participant">
+     <!-- <h5>Update Detials</h5> -->
+     
+    <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <form id="addParticipantForm" >
+    <div style="padding: 2rem 3rem; text-align: left;font-size: 14px;">
+    <div class="form-row">
+    <div class="form-group col-md-12">
+    <label for="firstName">Name</label>
+    <input type="text" class="form-control" id="firstName" name="fName" disabled ngModel={{participant.candidateName}} placeholder="">
+    </div>
+    <!-- <div class="form-group col-md-6">
+    <label for="lastName">Last Name</label>
+    <input type="text" class="form-control" id="lastName" name="lName" ngModel placeholder="">
+    </div> -->
+    </div>
+    <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" class="form-control" id="email" name="email" (change)="participantMail=$event.target.value" ngModel={{participant.candidateMail}} placeholder="">
+    </div>
+  
+    <div class="form-group">
+      <label for="phonenumber">Phone Number</label>
+      <input type="text"   class="form-control" id="text" name="phoneNumber" disabled ngModel={{participant.candidateMobile}} placeholder="">
+    </div>
+  
+    <!-- <div class="form-group col-md-12">
+      <label for="dateofBirth" style="display:block">Date OF Birth</label> -->
+      <!-- <input type="date" class="form-control" id="text" name="dateofbirth" ngModel placeholder=""> -->
+      <!-- <mat-form-field class="col-sm-12">
+        <input matInput [matDatepicker]="picker"
+        id="startDate" name="dateofbirth" ngModel >
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field> -->
+    <!-- <input [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3" name="dateofbirth" ngModel>
+      <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+    </div> -->
+    
+  
+    <div class="form-row">
+        <!-- <div class="form-group col-md-12">
+            <label for="dateofBirth" style="display:block">Date of Birth</label>
+            <input class="form-control" name="dateofbirth" disabled ngModel={{participant.candidateMobile}}>
+            <owl-date-time [pickerType]="'calendar'" #dt6></owl-date-time>
+           
+            </div> -->
+   
+    <div class="form-group col-md-6">
+    <label for="lastName">Activation Time <br><span style="color:mediumpurple">(After Current Time)</span></label>
+    <input class="form-control" (dateTimeChange)="activationTime=$event.value" [owlDateTime]="dt5" name="testValidFrom" placeholder={{participant.testActivationTime}} [owlDateTimeTrigger]="dt5">
+    <owl-date-time #dt5></owl-date-time>
+   
+    </div>
+    <div class="form-group col-md-6">
+      <label for="lastName">Expiration Time<br><span style="color:mediumpurple">(Before {{testData.administeredTestExpirationTime | date :'short'}})</span></label>
+      <input class="form-control" [owlDateTime]="dt4" (dateTimeChange)="expireTime=$event.value" name="testValidTo" placeholder={{participant.testExpirationTime}} [owlDateTimeTrigger]="dt4">
+      <owl-date-time #dt4></owl-date-time>
+     
+      </div>
+    </div>
+    <div class="form-row">
+    <div class="form-group col-md-12">
+    <button class="btn btn-primary mb-2" (click)="updateCandidate()" style="float:right">Update</button>
+    </div>
+   
+    </div>
+    <!-- <div class="alert alert-success" *ngIf="participantSuccess" role="alert">
+    {{statusMessage}}
+    </div> -->
+    <!-- <div class="alert alert-danger" *ngIf="participantFail" role="alert">
+    {{statusMessage}}
+    </div> -->
+    </div>
+   
+    </form>
+  
+  </div>
+   
+    
+   
+    
+  
+  
+    </div>
+   
+    </div>
+    </div>
+    </div>
+    </div>
+  <div class="reports_sec  " *ngIf="candidateList.length>0 && response.testTypeId==1">
+  
+    <div class="row filter_tbl boxShadow mt-4 ml-1 mr-1">
+        <table class="table mb-0">
+            <tr>
+                <th>S.No</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Status</th>
+                
+            </tr>
+            <tr *ngFor="let candidate of candidateList; let i = index">
+                <td>{{i+1}}</td>
+                <td><span class="pr-3">{{candidate.candidateName}}</span></td>
+                <td>{{candidate.candidateMail}}</td>
+                <td>{{candidate.candidateMobile}}</td>
+                <td>{{candidate.testEvaluationStatus=='Pending'?'Evaluating':candidate.testStatus}}<span *ngIf="candidate.editStatus==1" style="cursor: pointer;" title="Edit" data-toggle="modal" data-target="#EditParticipant" (click)="participant=candidate;showPart(); " >  <i class="material-icons" style="font-size: 17px;padding-left: 0.5rem;color: #59d7c3;">edit </i></span>
+                  
+                  <span style="cursor: pointer;" *ngIf="candidate.editStatus==1 && !candidate.processing" title="Resend Email"  (click)="resendEmail(candidate)" >  <i class="material-icons" style="font-size: 17px;padding-left: 0.5rem;color: #128ee8;">near_me </i></span> 
+                  <span title="sending email" *ngIf="candidate.processing" class="saving" style="letter-spacing: 5px;
+                  color: #001454;
+                  
+                  "><span>.</span><span>.</span><span>.</span></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+  </div>
+  </div>
+ </div>
+ 

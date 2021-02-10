@@ -1,0 +1,164 @@
+<div class="pt-4 pb-5 pl-4 pr-4 manage_test_tabs">
+        <div class="row">
+                <div class="col-sm-12 report_txt">
+                    <h4>
+                        <p>List of Tests</p>
+                    </h4>
+                    <hr class="m-0">
+                </div>
+            </div>
+            <div class="row m-0">
+                    <input style="margin: 1rem;" type="text" placeholder="Search " class="form-control" [(ngModel)]="query">
+                <table class="table   boxShadow   white_bg" style="text-align:center;    margin: 0rem 1.1rem;" >
+                    <tr class="tbl_hdng">
+                        <th>S.No</th>
+                        <th>Test Title</th>
+                        <th>Complexity</th>
+                        <th>Test Duration</th>
+                        <th>Total Questions</th>
+                        <th>Pass ( % )</th>
+                        <th></th>
+                    </tr>
+                    <tbody *ngIf="activeTest.length"  >
+                        <tr *ngFor="let test of activeTest | search:'testTitle':query;let i=index"  >
+                            <td>{{i+1}}.</td>
+                            <td style="width: 35%;">
+                                {{test.testTitle}}
+                            </td>
+                            
+                            <td>
+                                {{test.testComplexity}}
+                            </td>
+
+                            <td>
+                                {{test.testDuration}}
+                            </td>
+
+                            <td>
+                                {{test.testTotalQuestions}}
+                            </td>
+                            <td>
+                                {{test.passPercentage}}
+                            </td>
+                            <td>
+                                    <button type="button"  [routerLink]="['/test-config',test.testConfigId,'done']" class="btn btn-success" style="
+                                    height: 30px;line-height: 17px;border-radius: 0px;width: 110px;font-weight: 600;font-size: 15px;">Reuse</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tr *ngIf="!activeTest.length" class="text-center errorTxt">
+                        <td colspan="6">No Tests Available</td>
+                    </tr>
+                </table>
+            </div>
+</div>
+
+
+<div class="pt-5 pb-5 pl-4 pr-4">
+    <!-- <div class="row">
+        <h4>Draft Tests</h4>
+        <table class="table m-4 boxShadow mt-4 mb-4 white_bg draft_table">
+            <tbody *ngIf="draftTest.length">
+                <tr>
+                    <th>Test Title</th>
+                    <th>Created On</th>
+                    <th>Question</th>
+                    <th>Pass ( % )</th>
+                    <th>Action</th>
+                </tr>
+                <tr *ngFor="let test of draftTest;let i=index" [routerLink]="['/test-config',test.testConfigId,'edit']" >
+                    <td>
+                        {{i+1}}. {{test.testTitle}}
+                    </td>
+                    <td *ngIf="test.createdOn !='null'">
+                        {{test.createdOn}}
+                    </td>
+                    <td *ngIf="test.createdOn =='null'">
+                        -
+                    </td>
+                    <td>
+                        {{test.testTotalQuestions}}
+                    </td>
+                    <td>
+                        {{test.passPercentage}}
+                    </td>
+                    <td>
+                        <span [matMenuTriggerFor]="menu" class="pointer">
+                            <i class="material-icons">
+                                more_vert
+                            </i>
+                        </span>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="deleteTestConfig(test)">
+                                <span>Delete</span>
+                            </button>
+                        </mat-menu>
+                    </td>
+                </tr>
+            </tbody>
+            <tr class="text-center errorTxt" *ngIf="!draftTest.length">
+                <td>No Tests Available</td>
+            </tr>
+        </table>
+    </div> -->
+
+    <!-- <div class="row">
+        <h4>Active Tests</h4>
+        <table class="table m-4 boxShadow mt-4 mb-4 white_bg">
+            <tr>
+                <th>Test Title</th>
+                <th>Created On</th>
+                <th>Question</th>
+                <th>Pass ( % )</th>
+            </tr>
+            <tbody *ngIf="activeTest.length">
+                <tr *ngFor="let test of activeTest;let i=index" [routerLink]="['/test-config',test.testConfigId,'done']" >
+
+                    <td>
+                        {{i+1}}. {{test.testTitle}}
+                    </td>
+                    <td *ngIf="test.createdOn !='null'">
+                        {{test.createdOn}}
+                    </td>
+                    <td *ngIf="test.createdOn =='null'">
+                        -
+                    </td>
+                    <td>
+                        {{test.testTotalQuestions}}
+                    </td>
+                    <td>
+                        {{test.passPercentage}}
+                    </td>
+                </tr>
+            </tbody>
+            <tr *ngIf="!activeTest.length" class="text-center errorTxt">
+                <td>No Tests Available</td>
+            </tr>
+        </table>
+    </div> -->
+
+    <!-- <div class="row">
+        <h4>Completed Tests</h4>
+        <table class="table m-4 boxShadow mt-4 mb-4 white_bg">
+            <thead>
+                <th>Test Title</th>
+                <th>Created On</th>
+                <th>Question</th>
+                <th>Pass ( % )</th>
+            </thead>
+            <tbody *ngIf="completedTest.length">
+                <tr *ngFor="let test of completedTest;let i=index">
+                    <td>
+                        {{i+1}}. {{test.testTitle}}
+                    </td>
+                    <td>{{test.createdOn | date:'mediumDate'}}</td>
+                    <td>{{test.testTotalQuestions}}</td>
+                    <td>{{test.passPercentage}}</td>
+                </tr>
+            </tbody>
+            <tr *ngIf="!completedTest.length" class="text-center errorTxt">
+                <td>No Tests Available</td>
+            </tr>
+        </table>
+    </div> -->
+</div>

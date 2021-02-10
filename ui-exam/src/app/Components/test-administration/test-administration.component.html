@@ -1,0 +1,796 @@
+<block-ui>
+
+</block-ui>
+<div class="settings_sec pt-4 pb-4 pr-5">
+    <div class="">
+            <h4>Administer Test</h4>
+            <hr>
+    </div>
+    <form  #testAdminForm="ngForm">
+
+    
+    <div class="row justify-content-center" style="background: white;padding: 0rem;border-radius: 5px;">
+             
+            <div *ngIf="!pageFlag" class="col-md-12" >
+                    <div   class="col-md-12" style="padding: 2rem 1rem;" >
+                                <label>
+                                                <h5>Basic Details</h5>
+                                        </label>
+                        <div class="col-md-12" style="border: 1px solid #bbafaf;border-radius: 5px;padding: 3rem 17rem;">
+                             
+                        <div class="form-group">
+                                                        <label for="Title">Test Instance Name </label>
+                                                        <input type="text" disabled class="form-control" id="testInstanceName" name="testInstanceName"
+                                                        #testInstanceName="ngModel" ngModel placeholder="">
+                                </div>
+                                <div class="form-group">
+                                                                <label for="Title">Alias Name <span style="font-size: smaller;color: mediumpurple;">(Optional)</span></label>
+                                                                <input type="text" class="form-control" id="testAdminName" name="testAdminName"
+                                                                                #testAdminName="ngModel" ngModel placeholder="">
+                                        </div>
+                                                           
+
+                                        <div class="form-group col-md-12" *ngIf="!isRecruiter && hasMACQQuestions" >
+                                                <div class="row">
+                                                    <div class="col-md-10 custom-control custom-switch">
+        
+                                                            <input type="checkbox" class="custom-control-input" [checked]="MCQsFlag"
+                                                            (change)="MCQsFlag = !MCQsFlag;onMCQsChanged();" id="customSwitch3">
+        
+                                                            <label class="custom-control-label" for="customSwitch3" >Pick Only MCQs and MAQs.
+                                                                    <popover-content #MCQPop title="" placement="bottom-left"
+                                                                            [animation]="true" style="box-shadow: 10px 10px 5px #aaaaaa;float: right;">
+                                                                            <span style="color: #646363;"> Select this
+                                                                                    option when you want to Administer test with Only MCQs and MAQs.</span>
+        
+                                                                    </popover-content>
+        
+                                                                    <span><i style="    font-size: 13px;color: #969696;top: 2px;"
+                                                                                    [popoverOnHover]="true" [popover]="MCQPop"
+                                                                                    class="material-icons">info</i></span></label>
+                                                    </div>
+                                                  
+                                        </div>
+                                            </div>
+
+                  <div class="form-group">
+                                <popover-content #testTypePop title="" placement="bottom-right" [animation]="true"
+                                style="box-shadow: 10px 10px 5px #aaaaaa;">
+                                <span style="color: #646363;"> Specify the type of test you want to
+                                        set- Scheduled or Walkin. A Scheduled test is one where you fix
+                                        a particular time and date within which the test will be made
+                                        available to candidates. A walkin test can be conducted any
+                                        time. Choose this if you want to test candidates when he/she
+                                        visits the workplace.</span>
+
+                        </popover-content>
+                                <label for="testType">Test Type <span><i style="    font-size: 13px;color: #969696;top: 2px;"
+                                        [popoverOnHover]="true" [popover]="testTypePop" class="material-icons">info</i></span>
+                                        <span *ngIf="testTypeDisabled"><i style="    font-size: 13px;color: mediumpurple;padding: 0.5rem;"
+                                                 class="material-icons" (click)="testTypeDisabled=false;" >edit</i></span>
+                                </label>
+                                   
+                                        <select class="form-control" id="testType" name="testTypeId" (change)="onTypeChanged($event);testTypeDisabled=true" (fousout)="testTypeDisabled=true" #testCategoryId="ngModel"
+                                        ngModel={{testType}}
+                                         [disabled]=testTypeDisabled >
+                                        <option disabled>Select Type</option>
+                                        <option value="2">Walk-In</option>
+                                        <option value="1"  >Scheduled</option>
+
+                                </select>
+                                 </div>
+
+            
+                                 <div class="form-group">
+                                                <popover-content #complexityPop title="" placement="bottom-right" [animation]="true"
+                                                style="box-shadow: 10px 10px 5px #aaaaaa;">
+                                                <span style="color: #646363;">Specify if this test is for beginners
+                                                        ie.basic, Intermediate or Advanced.</span>
+    
+                                        </popover-content>
+                                        <label for="Complexity">Test Complexity <span><i style="    font-size: 13px;color: #969696;top: 2px;"
+                                                                [popoverOnHover]="true" [popover]="complexityPop" class="material-icons">info</i></span>
+                                                                <span *ngIf="testComplexityDisabled" ><i style="    font-size: 13px;color: mediumpurple;padding: 0.5rem;"
+                                                                        class="material-icons" (click)="testComplexityDisabled=false;" >edit</i></span>
+                                                        </label>
+                                        <select *ngIf=complexityList (change)="onComplexityChanged(testComplexityId.control.value);" (focusout)="testComplexityDisabled=true" class="form-control" id="Complexity" name="testComplexityId"
+                                                #testComplexityId="ngModel" ngModel={{testComplexity}} [disabled]=testComplexityDisabled>
+                                                <option disabled>Select Complexity</option>
+                                                <option *ngFor="let item of complexityList" value={{item.testComplexityModeId}}>{{item.testComplexityModeName}}</option>
+                                               
+                                        </select>
+                        </div>                  
+    
+                                
+
+                                <div   *ngIf="complexityFlag">
+
+               
+                                                <div class="form-group" *ngIf="sectionsData.testComplexityId==5">
+                                                                <label for="Title">Progressive Increment</label>
+                                                                <input type="number" (change)="progressiveIncrement=$event.target.value" value={{progressiveIncrement}}
+                                                                class="form-control" id="progressiveIncrement"
+                                                                placeholder="">
+                                                 </div>
+                                                 <div class="form-group" *ngIf="sectionsData.testComplexityId==5">
+                                                        <label for="Title">Progressive Decrement</label>
+                                                        <input type="number" class="form-control" id="progressiveDecrement" value={{progressiveDecrement}}
+                                                        placeholder="" (change)="progressiveDecrement=$event.target.value">
+                                         </div>
+                
+                                        
+                                        
+                                           
+                                         <div class="form-group" >
+                                                <popover-content #toatalQuesPop title="" placement="bottom-right"
+                                                [animation]="true" style="box-shadow: 10px 10px 5px #aaaaaa;">
+                                                <span style="color: #646363;"> Specify the number of
+                                                        questions you want to have in your test.</span>
+
+                                        </popover-content>
+                                        <label for="Title">Number of Questions<span style="font-size: smaller;color: mediumpurple;"> (Availabe
+                                                Questions: {{sectionsData.totalNumberOfQuestions}}) </span>
+                                                <span><i style="    font-size: 13px;color: #969696;top: 2px;"
+                                                                [popoverOnHover]="true" [popover]="toatalQuesPop"
+                                                                class="material-icons">info</i></span>
+                                                                <span *ngIf="testQuestionsDisabled"><i style="    font-size: 13px;color: mediumpurple;padding: 0.5rem;"
+                                                                        class="material-icons" (click)="testQuestionsDisabled=false" >edit</i></span>
+                                                        </label>
+                                                                <input type="number" class="form-control"
+                                                                id="noOfQuestions" value={{totalQuestions}} (focusout)="testQuestionsDisabled=true" (input)="totalQuestionCheck($event.target.value)"
+                                                                placeholder="" [disabled]=testQuestionsDisabled>
+                                         </div>
+                                            <div class="row">
+                                                <div class="col-md-6 form-group" >
+                                                        <popover-content #testDurationPop title="" placement="bottom-right"
+                                                        [animation]="true" style="box-shadow: 10px 10px 5px #aaaaaa;">
+                                                        <span style="color: #646363;"> Set the time
+                                                                duration of the test.</span>
+        
+                                                </popover-content>
+                                                <label for="Title">Test Duration(Mins) <span><i style="    font-size: 13px;color: #969696;top: 2px;"
+                                                                        [popoverOnHover]="true"
+                                                                        [popover]="testDurationPop"
+                                                                        class="material-icons">info</i></span>
+                                                                        <span *ngIf="testDurationDisabled" ><i style="    font-size: 13px;color: mediumpurple;padding: 0.5rem;"
+                                                                                class="material-icons" (click)="testDurationDisabled=false" >edit</i></span>
+                                                                </label>
+                                                                        <input type="text" class="form-control" value={{testDuration}} (change)="testDuration=$event.target.value;" (focusout)="testDurationDisabled=true"
+                                                                        id="testDuration" placeholder="" [disabled]=testDurationDisabled>
+                                                 </div>
+                                       
+        
+                                                 <div class="col-md-6 form-group" >
+                                                        <popover-content #passPercentagePop title="" placement="bottom-right"
+                                                        [animation]="true" style="box-shadow: 10px 10px 5px #aaaaaa;">
+                                                        <span style="color: #646363;"> Specify the
+                                                                marks required to declare a candidate
+                                                                as passed. Mention as a percentage.</span>
+        
+                                                </popover-content>
+                                                <label for="Title">Pass Percentage <span><i style="    font-size: 13px;color: #969696;top: 2px;"
+                                                                        [popoverOnHover]="true"
+                                                                        [popover]="passPercentagePop"
+                                                                        class="material-icons">info</i></span>
+                                                                        <span *ngIf="testPercentageDisabled" ><i style="    font-size: 13px;color: mediumpurple;padding: 0.5rem;"
+                                                                                class="material-icons" (click)="testPercentageDisabled=false" >edit</i></span>
+                                                                </label>
+                                                                        <input type="number" class="form-control" value={{passpercentage}} (change)="passpercentage=$event.target.value" (focusout)="testPercentageDisabled=true"
+                                                                        id="passPercentage" placeholder="" [disabled]=testPercentageDisabled>
+                                                 </div>
+                                            </div>          
+                                         
+
+                                         
+
+                                         <div class="form-group" >
+                                                <popover-content #notifyPop title="" placement="bottom-right"
+                                                [animation]="true" style="box-shadow: 10px 10px 5px #aaaaaa;">
+                                                <span style="color: #646363;"> Add email addresses of
+                                                        those with whom results of the test has to be
+                                                        shared. Eg. evaluator, HR recruiter, candidate
+                                                        etc.</span>
+        
+                                        </popover-content>
+                                        <label for="Title">Notify results to ? (Email ID) <span><i
+                                                                style="    font-size: 13px;color: #969696;top: 2px;"
+                                                                [popoverOnHover]="true" [popover]="notifyPop"
+                                                                class="material-icons">info</i></span></label>
+
+                                                                <input type="email" class="form-control" id="notifyResultsMail"
+                                                                placeholder="" (change)="notifyEmail=$event.target.value"
+                                                                >
+                                         </div>
+
+                                         <div class="form-group" *ngIf="!isRecruiter && !MCQsFlag" >
+                                                <popover-content #evaluatorPop title="" placement="bottom-right"
+                                              [animation]="true" style="box-shadow: 10px 10px 5px #aaaaaa;">
+                                              <span style="color: #646363;"> Add additional evaluator
+                                                      names if required.</span>
+
+                                      </popover-content>
+                                      <label for="Complexity">Add Evaluator(Email ID) <span><i style="font-size: 13px;color: #969696;top: 2px;"
+                                                              [popoverOnHover]="true" [popover]="evaluatorPop"
+                                                              class="material-icons">info</i></span></label>
+
+                                                              <angular2-multiselect [data]="dropdownList" name="multi-select"
+                                                              style="width:50%" [(ngModel)]="selectedItems"
+                                                              [settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
+                                                              (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+                                                              (onDeSelectAll)="onDeSelectAll($event)"></angular2-multiselect>
+                                         </div>
+                                     
+                                
+                                
+                                  
+                              
+                              
+
+                                              <div class="form-group col-md-12">
+                                                  <div class="row">
+                                                      <div class="col-md-6 custom-control custom-switch">
+          
+                                                              <input type="checkbox" class="custom-control-input" checked id="customSwitch1">
+          
+                                                              <label class="custom-control-label" for="customSwitch1" >Image
+                                                                      Proctoring
+                                                                      <popover-content #imagePop title="" placement="bottom-left"
+                                                                              [animation]="true" style="box-shadow: 10px 10px 5px #aaaaaa;float: right;">
+                                                                              <span style="color: #646363;"> Select this
+                                                                                      option when you want invigilation
+                                                                                      access through webcam. Choosing this
+                                                                                      will allow the platform to take
+                                                                                      snapshots of the candidate
+                                                                                      intermittently while writing the test.
+                                                                                      This feature curbs and/or alerts test
+                                                                                      setters on any attempts at
+                                                                                      impersonation.</span>
+          
+                                                                      </popover-content>
+          
+                                                                      <span><i style="    font-size: 13px;color: #969696;top: 2px;"
+                                                                                      [popoverOnHover]="true" [popover]="imagePop"
+                                                                                      class="material-icons">info</i></span></label>
+                                                      </div>
+                                                      <div class="col-md-6 custom-control custom-switch">
+          
+                                                          <input type="checkbox" class="custom-control-input"     [checked]="advancedFlag"
+                                                          (change)="advancedFlag = !advancedFlag" id="customSwitch2">
+          
+                                                          <label class="custom-control-label" for="customSwitch2" style="float: right;"> Advanced
+                                                                  <popover-content #advancedPop title="" placement="bottom-left"
+                                                                          [animation]="true" style="box-shadow: 10px 10px 5px #aaaaaa;float: right;">
+                                                                          <span style="color: #646363;">Advanced Mode</span>
+          
+                                                                  </popover-content>
+          
+                                                                  <span><i style="    font-size: 13px;color: #969696;top: 2px;"
+                                                                                  [popoverOnHover]="true" [popover]="advancedPop"
+                                                                                  class="material-icons">info</i></span></label>
+                                                  </div>
+                                          </div>
+                                              </div>
+                                       
+                                 
+                           
+
+                                             
+
+                          </div>
+                        </div>
+                            
+                        
+                            
+                            
+                            
+
+                            <!-- <button type="button" class="btn btn-primary" style="background: #fff;color: #3D70B2;float: right;border: 1px solid #3D70B2;height: 30px;line-height: 17px;border-radius: 0px;width: 110px;font-weight: 600;font-size: 15px;"
+                                    (click)=confirmAdministertest(testAdminForm.value)>Next</button> -->
+
+
+                                    
+                                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog " role="document">
+                                        <div class="modal-content">
+                                       
+                                        <div class="modal-body">
+                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                        <li class="nav-item col">
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Add Individual Participants</a>
+                                        </li>
+                                        <li class="nav-item col">
+                                        <a class="nav-link" id="bulk-tab" data-toggle="tab" href="#bulk" role="tab" aria-controls="bulk" aria-selected="false">Bulk add</a>
+                                        </li>
+                                        <li class="nav-item col">
+                                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Add through Profile</a>
+                                            </li>
+                                       
+                                        </ul>
+                                        <div class="tab-content" id="myTabContent">
+                                        <div class="tab-pane fade show active" id="home" style="width: 60%;margin: auto;" role="tabpanel" aria-labelledby="home-tab">
+                                        <form id="addParticipantForm" #myForm="ngForm" (ngSubmit)="addparticipant(myForm.value)">
+                                        <div style="padding: 2rem 3rem; text-align: left;font-size: 14px;">
+                                        <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                        <label for="firstName">First Name</label>
+                                        <input type="text" class="form-control" id="firstName" name="candidateFirstName" ngModel placeholder="">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                        <label for="lastName">Last Name</label>
+                                        <input type="text" class="form-control" id="lastName" name="candidateLastName" ngModel placeholder="">
+                                        </div>
+                                        </div>
+                                        <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" id="email" name="candidateMail" ngModel placeholder="">
+                                        </div>
+                                      
+                                        <div class="form-group">
+                                          <label for="phonenumber">Phone Number</label>
+                                          <input type="text" (keypress)="keyPress($event)" minlength=10 maxlength=10 class="form-control" id="text" name="candidateMobile" ngModel placeholder="">
+                                        </div>
+                                      
+                                        <!-- <div class="form-group col-md-12">
+                                          <label for="dateofBirth" style="display:block">Date OF Birth</label> -->
+                                          <!-- <input type="date" class="form-control" id="text" name="dateofbirth" ngModel placeholder=""> -->
+                                          <!-- <mat-form-field class="col-sm-12">
+                                            <input matInput [matDatepicker]="picker"
+                                            id="startDate" name="dateofbirth" ngModel >
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field> -->
+                                        <!-- <input [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3" name="dateofbirth" ngModel>
+                                          <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+                                        </div> -->
+                                        
+                                      
+                                        <div class="form-row">
+                                            <!-- <div class="form-group col-md-12">
+                                                <label for="dateofBirth" style="display:block">Date of Birth</label>
+                                                <input class="form-control" [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3" name="dateofbirth" ngModel>
+                                                <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+                                               
+                                                </div> -->
+                                       
+                                        <div class="form-group col-md-6">
+                                        <label for="lastName">Activation Time <br><span style="color:mediumpurple">(After Current Time)</span></label>
+                                        <input class="form-control" [min]="todayDate"   [owlDateTime]="dt1" name="testActivationTime" ngModel [owlDateTimeTrigger]="dt1">
+                                        <owl-date-time #dt1></owl-date-time>
+                                       
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                          <label for="lastName">Expiration Time <br>.</label>
+                                          <input class="form-control" [owlDateTime]="dt2" name="testExpirationTime" ngModel [owlDateTimeTrigger]="dt2">
+                                          <owl-date-time #dt2></owl-date-time>
+                                         
+                                          </div>
+                                        </div>
+                                        <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                        <button class="btn btn-primary mb-2" style="float:right;">Add</button>
+                                        </div>
+                                       
+                                        </div>
+                                        <!-- <div class="alert alert-success" *ngIf="participantSuccess" role="alert">
+                                        {{statusMessage}}
+                                        </div> -->
+                                        <!-- <div class="alert alert-danger" *ngIf="participantFail" role="alert">
+                                        {{statusMessage}}
+                                        </div> -->
+                                        </div>
+                                       
+                                        </form>
+                                      
+                                      </div>
+                                       
+                                        <div class="tab-pane fade" id="bulk" role="tabpanel" aria-labelledby="bulk-tab">
+                                        <br/>
+                                      
+                                        
+                                          <!-- <input type="file" (change)="onSeletedBulkparticipantsFile($event)" /> -->
+                                          <!-- <div class="alert alert-success" *ngIf="bulkparticipantSuccess" role="alert">
+                                          {{statusMessage}}
+                                          </div>
+                                          <div class="alert alert-danger" *ngIf="bulkparticipantFail" role="alert">
+                                        {{statusMessage}}
+                                        </div> -->
+                                        <div class="form-row">
+                                            <div class="form-group col-md-12" *ngIf="uploadedCandidateList.length==0">
+                                            <label class="fileContainer"  >
+                                                <span >Upload Participants</span>
+                                                <!-- <span *ngIf=selectedFile >{{selectedFile.name}}</span> -->
+                                                <input id="file_input" type="file" (change)="onSeletedBulkparticipantsFile($event)" />
+                                            </label>
+                                      
+  
+                                            
+                                            </div>
+                                            <div *ngIf="uploadResponse">
+                                                <div class="reports_sec col-md-12 " style="padding: 2rem;padding-left: 5rem;" *ngIf="uploadedCandidateList.length>0">
+  
+                                                        <div class="row filter_tbl boxShadow mt-4 ml-1 mr-1">
+                                                            <table class="table mb-0">
+                                                                <tr>
+                                                                    <th>S.No</th>
+                                                                    <th>Name</th>
+                                                                    <th>Email</th>
+                                                                    <th>Phone Number</th>
+                                                                    <th>Activation</th>
+                                                                    <th>Expiration</th>
+                                                                    
+                                                                </tr>
+                                                                <tr *ngFor="let candidate of uploadedCandidateList; let i = index">
+                                                                    <td>{{i+1}}</td>
+                                                                    <td><span class="pr-3">{{candidate.candidateFirstName}}</span></td>
+                                                                    <td>{{candidate.candidateMail}}</td>
+                                                                    <td>{{candidate.candidateMobile}}</td>
+                                                                    <td>{{candidate.testActivationTime }}</td>
+                                                                    <td>{{candidate.testExpirationTime }}</td>
+                                                                    <!-- <td>{{candidate.testEvaluationStatus=='Pending'?'Evaluating':candidate.testStatus}}<span *ngIf="candidate.editStatus==1" title="Edit" data-toggle="modal" data-target="#EditParticipant" (click)="participant=candidate;showPart(); " >  <i class="material-icons" style="font-size: 17px;padding-left: 0.5rem;color: #59d7c3;">edit </i></span> </td> -->
+                                                                </tr>
+                                                            </table>
+
+                                                        </div>
+                                                        
+                                                      </div>
+                                                      <div style="    padding-left: 21rem;
+                                                      text-align: left;
+                                                      color: #cd5c5cd6;" *ngIf=isFailed>
+                                                         
+                                                                <p  *ngFor="let candidate of failedList">
+                                                                        {{candidate.statusMessage}}
+                                                                </p>
+                                                      </div>
+                                            </div>
+                                          <div class="form-group col-md-12">
+                                          <button *ngIf="uploadedCandidateList.length!=0" class="btn btn-primary mb-2" (click)="addUploadedParticipants()" style="float:right;margin: 4rem;">add</button>
+                                          
+                                        
+                                          </div>
+                                         
+                                          </div>
+                                           
+                                      
+                                          <div class="mt-4 mb-4">
+                                            <button class="btn btn-link float-left">
+                                                <a [href]="templateLink" download> Download Template for Participants Bulk upload </a>
+                                            </button>
+                                        </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                            <br/>
+                                          
+                                            
+                                              <!-- <input type="file" (change)="onSeletedBulkparticipantsFile($event)" /> -->
+                                              <!-- <div class="alert alert-success" *ngIf="bulkparticipantSuccess" role="alert">
+                                              {{statusMessage}}
+                                              </div>
+                                              <div class="alert alert-danger" *ngIf="bulkparticipantFail" role="alert">
+                                            {{statusMessage}}
+                                            </div> -->
+                                            <div class="form-row" style="padding: 2rem 12rem">
+                                                <!-- <div class="form-group col-md-12">
+                                                    <label for="dateofBirth" style="display:block">Date of Birth</label>
+                                                    <input class="form-control" [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3" name="dateofbirth" ngModel>
+                                                    <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+                                                   
+                                                    </div> -->
+                                           
+                                            <div class="form-group col-md-6">
+                                            <label for="lastName">Activation Time <br><span style="color:mediumpurple">(After Current Time)</span></label>
+                                            <input class="form-control" [min]="todayDate" [owlDateTime]="dt11" (dateTimeInput)="profileActTime=$event.value" name="testActivationTime" ngModel [owlDateTimeTrigger]="dt11">
+                                            <owl-date-time #dt11></owl-date-time>
+                                           
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                              <label for="lastName">Expiration Time <br>.</label>
+                                              <input class="form-control" [owlDateTime]="dt21" (dateTimeInput)="profileExpTime=$event.value" name="testExpirationTime" ngModel [owlDateTimeTrigger]="dt21">
+                                              <owl-date-time #dt21></owl-date-time>
+                                             
+                                              </div>
+                                            </div>
+                                            <div class="form-row" *ngIf="profileExpTime && profileActTime">
+                                                <div class="form-group col-md-12" *ngIf="!uploadProfileResponse" >
+                                                <label class="fileContainer">
+                                                    <span *ngIf=!selectedFile >Upload Profiles</span>
+                                                     
+                                                    <input type="file" (change)="uploadProfiles($event)" multiple />
+                                                </label>
+                                          
+                                          
+                                                </div>
+                                              <div class="form-group col-md-12">
+                                              <button *ngIf="selectedFile" class="btn btn-primary mb-2" (click)="bulkParticipantUpload()" style="float:right">Upload</button>
+                                              
+                                            
+                                              </div>
+                                             
+                                              </div>
+                                              <div *ngIf="uploadProfileResponse">
+                                                <div class="reports_sec col-md-12 " *ngIf="uploadedProfileCandidateList.length>0">
+  
+                                                        <div class="row filter_tbl boxShadow mt-4 ml-1 mr-1">
+                                                            <table class="table mb-0">
+                                                                <tr>
+                                                                    <th>Select</th>
+                                                                    <th>S.No</th>
+                                                                    <th>First Name</th>
+                                                                    <th>Last Name</th>
+                                                                    <th>Email</th>
+                                                                    <th>Phone Number</th>
+                                                                    <th>Profile Type</th>
+                                                                    
+                                                                    
+                                                                </tr>
+                                                                <tr *ngFor="let candidate of uploadedProfileCandidateList; let i = index">
+                                                                    <td><input type="checkbox" [(ngModel)]="candidate.selected" name="select" > </td>
+                                                                    <td>{{i+1}}</td>
+                                                                    <td><span class="pr-3">{{candidate.candidateFirstName}}</span></td>
+                                                                    <td> {{candidate.candidateLastName}}</td>
+                                                                    <td>{{candidate.candidateMail}}</td>
+                                                                    <td>{{candidate.candidateMobile}}</td>
+                                                                    <td>{{candidate.profileType}}</td>
+                                                                    
+                                                                    <!-- <td>{{candidate.testEvaluationStatus=='Pending'?'Evaluating':candidate.testStatus}}<span *ngIf="candidate.editStatus==1" title="Edit" data-toggle="modal" data-target="#EditParticipant" (click)="participant=candidate;showPart(); " >  <i class="material-icons" style="font-size: 17px;padding-left: 0.5rem;color: #59d7c3;">edit </i></span> </td> -->
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                        
+                                                      </div>
+                                          <button  class="btn btn-primary mb-2" (click)="addFromProfiles()" style="float:right;margin: 4rem;">add</button>
+
+                                            </div>
+                                               
+                                          
+                                               
+                                            </div>
+                                       
+                                        
+                                      
+                                      
+                                        </div>
+                                       
+                                        </div>
+                                        </div>
+                                        </div>
+                                        </div>
+                                </div>
+
+
+            </div>
+            
+            <div *ngIf=advancedFlag class="col-md-12 card" style="border: none;">
+                    <form class="row" #testConfigForm="ngForm">
+
+                            <div class="col-md-12" style="padding: 0rem 6rem;">
+
+                                  
+                                    <label style="margin-left: -12px;">
+                                            <h5>Select Sections </h5>
+                                    </label>
+
+                                    <div *ngIf='sectionsData.testComplexityId!=4'>
+                                            <div class="row" style="border: 1px solid #bbafaf;border-radius: 5px;padding: 0.5rem;">
+                                                    <div class="col-md-2" style="padding: 1rem" *ngFor="let item of sections;let i=index">
+                                                            
+                                                            <label *ngIf="item.sectionName.length<10"  class="container"><span>{{item.sectionName }}</span>
+                                                                    <input type="checkbox" [attr.checked]="item.isSectionActive==1 ? 'checked' : null"
+                                                                    (change)=selectSection(i);>
+                                                            <span class="checkmark"></span>
+                                                    </label>
+                                                            <label *ngIf="item.sectionName.length>=10" title={{item.sectionName}} class="container"><span>{{item.sectionName | slice:0:10}}..</span>
+                                                                    <input type="checkbox" [attr.checked]="item.isSectionActive==1 ? 'checked' : null"
+                                                                            (change)=selectSection(i);>
+                                                                    <span class="checkmark"></span>
+                                                            </label>
+                                                    </div>
+                                            </div>
+                                    </div>
+                                    <div *ngIf='sectionsData.testComplexityId==4'>
+                                            <div class="row" style="border: 1px solid #bbafaf;border-radius: 5px;padding: 0.5rem;">
+                                                    <div class="col-md-3" style="padding: 1rem" *ngFor="let item of sections;let i=index">
+                                                            <label *ngIf="item.sectionName.length<10" class="container"><span>{{item.sectionName }}-
+                                                                    {{item.testComplexityModeName}}({{item.totalNoOfQuestions}})</span>
+                                                                    <input type="checkbox" [attr.checked]="item.isSectionActive==1 ? 'checked' : null"
+                                                                    (change)=selectSection(i);>
+                                                            <span class="checkmark"></span>
+                                                    </label>
+                                                           
+                                                                    <label *ngIf="item.sectionName.length>=10" title={{item.sectionName}} class="container"><span>{{item.sectionName | slice:0:10}}..-
+                                                                            {{item.testComplexityModeName}}({{item.totalNoOfQuestions}})</span>
+                                                             
+                                                                    <input type="checkbox" [attr.checked]="item.isSectionActive==1 ? 'checked' : null"
+                                                                            (change)=selectSection(i);>
+                                                                    <span class="checkmark"></span>
+                                                            </label>
+                                                    </div>
+                                            </div>
+                                    </div>
+
+                                    <!-- <img style="padding: 2rem;padding-top: 6rem;" class="card-img-top" src="./../../../assets/images/women working-smiling1.png" alt="Category"> -->
+
+                            </div>
+
+                            <div class="col-md-12" style="padding: 2rem 5rem;" *ngIf="sectionActiveFlag">
+                                    <label>
+                                            <h5>Questions Per Sections  </h5>
+                                    </label>
+                                    <div style="    border: 1px solid #bbafaf;border-radius: 5px;padding: 2.5rem;">
+                                             
+                                            <div id="section_block" *ngIf="sectionActiveFlag">
+                                                    <div class="row">
+                                                            <div class="col-3 form-group">
+                                                                    <label style="text-decoration: underline">Section</label>
+                                                            </div>
+                                                            <div class="col-3 form-group">
+                                                                    <label style="text-decoration: underline">Code:</label>
+                                                            </div>
+                                                            <div class="col-3 form-group" *ngIf="sectionsData.testComplexityId!=4">
+                                                                    <label style="text-decoration: underline">Questions
+                                                                            Available:</label>
+                                                            </div>
+
+                                                            <div class="col-3 form-group">
+                                                                    <label style="text-decoration: underline">No.
+                                                                            of questions:</label>
+                                                            </div>
+                                                            <div class="col-3 form-group">
+                                                                    <label style="text-decoration: underline" *ngIf="sectionsData.testComplexityId==4">Complexity:</label>
+                                                            </div>
+                                                    </div>
+                                                    <div *ngFor="let item of sections;let i=index">
+                                                            <div class="row" *ngIf="item.isSectionActive==1" id="sec{{i}}">
+
+
+                                                                    <div class="col-3 form-group">
+
+                                                                            <label *ngIf='item.sectionName.length<=10'>{{item.sectionName}}</label>
+                                                                            <label *ngIf='item.sectionName.length>10'
+                                                                                    title={{item.sectionName}}>{{item.sectionName
+                                                                                    | slice:0:10}}..</label>
+                                                                            <!-- <input type="text" value={{item.testSectionName}} class="form-control" id="Title" placeholder=""> -->
+                                                                    </div>
+                                                                    <div class="col-3">
+                                                                            <label>{{item.sectionCode}}</label>
+                                                                    </div>
+
+                                                                    <div class="col-3" *ngIf="sectionsData.testComplexityId!=4">
+                                                                            <label>{{item.totalNoOfQuestions}}</label>
+                                                                    </div>
+
+                                                                    <div id="sections_input" class="col-3 form-group">
+                                                                            <!-- <label for="Title">Number (0 - {{item.totalNumberOfQuestions}})</label> -->
+                                                                            <input type="number" id="section{{i}}"
+                                                                                    class="form-control" (input)="sectionQuestionCheck($event,i)"
+                                                                                    id="Title" placeholder="">
+                                                                            <div class="invalid-feedback" style=" margin-top: 2rem;">
+                                                                                    Must be 0 to
+                                                                                    {{item.totalNoOfQuestions}}.
+                                                                            </div>
+                                                                    </div>
+                                                                    <div class="col-3" *ngIf="sectionsData.testComplexityId==4">
+
+                                                                            <label>{{item.testComplexityModeName}}</label>
+
+                                                                    </div>
+                                                            </div>
+                                                    </div>
+                                                    <div class="row">
+
+
+                                                            <div class="col-9 form-group">
+
+                                                                    <label>Total</label>
+                                                                    <!-- <input type="text" value={{item.testSectionName}} class="form-control" id="Title" placeholder=""> -->
+                                                            </div>
+
+                                                            <div id="sections_input" class="col-3 form-group">
+                                                                    <!-- <label for="Title">Number (0 - {{item.totalNumberOfQuestions}})</label> -->
+                                                                    <input disabled type="number"
+                                                                            id="totalSections" value={{totalSectionQuestions}}
+                                                                            class="form-control" placeholder="">
+                                                                    <div class="invalid-feedback" style=" margin-top: 2rem;">
+                                                                            Must be {{totalQuestions}}.
+                                                                    </div>
+                                                            </div>
+                                                    </div>
+                                            </div>
+
+
+                                    </div>
+
+                                    <!-- <div class="row justify-content-center"> <div class="col-8" style="margin-left: -5rem;font-size: 16px;margin-top: -0.9rem;"> <a href="#" class="card-link" style="float: right;">+ Add New Section</a></div> </div> -->
+                                    
+
+
+
+
+                            </div>
+
+
+
+                            <div class="col-md-12">
+                                    <div style="float: right;">
+                                            <!-- <button type="button" class="btn btn-primary" style="background: #fff;color: #3D70B2;margin-right:2rem; 
+    border: 1px solid #3D70B2;
+    height: 30px;
+    line-height: 17px;
+    border-radius: 0px;
+    width: 110px;
+    font-weight: 600;
+    font-size: 15px;" routerLink="sections">Preview</button> -->
+                                            <!-- <button type="button" class="btn btn-primary" style="background: #fff;color: #3D70B2;margin-right:2rem;
+    border: 1px solid #3D70B2;
+    height: 30px;
+    line-height: 17px;
+    border-radius: 0px;
+    width: 110px;
+    font-weight: 600;
+    font-size: 15px;" (click)="onSubmit(1);" >Draft</button> -->
+
+                                            
+                                    </div>
+
+                            </div>
+
+                    </form>
+
+
+
+                    
+
+
+            </div>
+            <div class="col-md-12" style="text-align: end;margin-right: 8rem;" *ngIf="complexityFlag">
+                <button *ngIf="testType==1" type="button"  style="background: #41D6C3;border: 1px solid;" (click)=refreshData(); class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModalCenter">Add Participants</button>
+                
+            </div >
+           
+            <div class="reports_sec col-md-12 " style="text-align: center;" *ngIf="testType==1 && candidateList.length>0">
+  
+                <div class="row filter_tbl boxShadow mt-4 ml-1 mr-1">
+                    <table class="table mb-0">
+                        <tr>
+                            <th>S.No</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Activation</th>
+                            <th>Expiration</th>
+                            
+                        </tr>
+                        <tr *ngFor="let candidate of candidateList; let i = index">
+                            <td>{{i+1}}</td>
+                            <td><span class="pr-3">{{candidate.candidateFirstName}}</span></td>
+                            <td>{{candidate.candidateMail}}</td>
+                            <td>{{candidate.candidateMobile}}</td>
+                            <td>{{candidate.testActivationTime | date:'medium'}}</td>
+                            <td>{{candidate.testExpirationTime | date:'medium'}}</td>
+                            <!-- <td>{{candidate.testEvaluationStatus=='Pending'?'Evaluating':candidate.testStatus}}<span *ngIf="candidate.editStatus==1" title="Edit" data-toggle="modal" data-target="#EditParticipant" (click)="participant=candidate;showPart(); " >  <i class="material-icons" style="font-size: 17px;padding-left: 0.5rem;color: #59d7c3;">edit </i></span> </td> -->
+                        </tr>
+                    </table>
+                </div>
+                
+                
+              </div>
+              <div class="col-md-12" style="text-align: center;" *ngIf="complexityFlag" >
+                <div *ngIf="advancedFlag" >
+                        <button *ngIf="sectionActiveFlag" type="button" class="btn btn-primary" style="background: #3D70B2;margin: 2rem;margin-right:5rem;border: 1px solid #3D70B2;height: 30px;line-height: 17px;border-radius: 0px;width: 110px;font-weight: 600;font-size: 15px;"
+                        (click)="administerTest(testAdminForm.value)"> Administer</button>
+                </div>
+                <div *ngIf="!advancedFlag">
+                        <button type="button" class="btn btn-primary" style="background: #3D70B2;margin: 2rem;margin-right:5rem;border: 1px solid #3D70B2;height: 30px;line-height: 17px;border-radius: 0px;width: 110px;font-weight: 600;font-size: 15px;"
+                        (click)="administerTest(testAdminForm.value)"> Administer</button>
+                </div>
+            </div>
+           
+
+
+
+
+            
+
+    </div>
+     </form>
+
+</div>

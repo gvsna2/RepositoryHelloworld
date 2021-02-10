@@ -1,0 +1,63 @@
+.settings_sec hr{
+    border-top: 1px solid #707070;
+    margin-top: 0px;
+}
+.test{
+    color:green;
+    cursor: pointer;
+}
+
+.autocomplete-container .not-found {
+    background: #6ace008c;
+}
+
+form{
+    padding: 2rem;
+    padding-bottom: 4rem;
+}
+input{
+    
+    border: 1px solid #707070;
+}
+select{
+
+    border: 1px solid #707070;
+}
+label{
+    font-size: 14px;
+}
+.card{
+    box-shadow: 2px 4px 5px #959595;
+}
+h4{
+        color: #707070;
+        font-size: 24px;
+        font-weight: 300;
+}
+.col-md-6 {
+    flex: 0 0 48%;
+    max-width: 50%;
+    margin: 3px;
+}
+
+.ng-autocomplete  {
+    width: 100%;
+}
+form .material-icons {
+    
+    margin-left: 0.2rem;
+}
+ 
+#questionModal .modal-dialog{
+    max-width: 1000px;
+}
+
+#questionModal .close span{
+    background-color: #41D6C3;
+    color: #fff;
+    padding: 2px 5px 0px 5px;
+    border-radius: 21px;
+}
+#questionModal .close span i{
+    font-size:20px;
+}

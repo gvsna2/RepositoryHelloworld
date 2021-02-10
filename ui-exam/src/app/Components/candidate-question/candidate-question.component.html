@@ -1,0 +1,90 @@
+<block-ui></block-ui>
+<div class="can_ques_sec pt-4 pb-4 pl-4 pr-4">
+    <div class="row">
+        <div class="col-sm-12 test_eval_txt">
+            <h4>
+                <i class="material-icons arrow_back pointer" (click)="gotoCandidates()">
+                    arrow_back
+                </i>
+                <b>Candidates</b> / Answers To Evaluate
+            </h4>
+            <hr class="m-0">
+        </div>
+    </div>
+    <div class="row mt-4 mb-4 ques_row boxShadow" *ngIf="questionData && questionData['listOfCandidatesQuestions']">
+        <div class="col-sm-12" *ngFor="let ques of questionData['listOfCandidatesQuestions'];let i=index">
+            <div class="d-flex mt-3 mb-3">
+                <div class="ml-2 mr-2">
+                    <b class="ques_no"> {{i+1}} </b>
+                </div>
+                <div class="ml-3 mr-3">
+                    <b>{{ques.question.qustionText}}</b>
+                </div>
+            </div>
+            <div class="d-flex mt-3 mb-3">
+                <div class=" ml-3 mr-3">
+                    <b>A.</b>
+                </div>
+                <div class=" ml-2 mr-3 correct_Ans">
+
+                    <!-- <div id="demo" class="collapse">
+                      <p class="pl-5"><b>Correct Answer</b></p>
+                      <div class="d-flex" *ngIf="ques.question.questionType !='CODE'">
+                          <div class="pl-3 pr-3"><b>A.</b></div>
+                          <div>{{ques.questionAnswer}}</div>
+                      </div>
+                      <div *ngIf="ques.question.questionType =='CODE'">
+                        <codemirror [(ngModel)]="ques.questionAnswer" [config]="config"></codemirror>
+                    </div>
+                    </div>
+
+                    <p data-toggle="collapse" data-target="#demo" class="pointer"> {{ques.candidateAnswer}}</p> -->
+                    <div class="correct_ans_div">
+                        <p class="pl-5">
+                            <b>Correct Answer</b>
+                        </p>
+                        <div class="d-flex" *ngIf="ques.question.questionTypeId !='4'">
+                            <div class="pl-3 pr-3">
+                                <b>A.</b>
+                            </div>
+                            <div>{{ques.questionAnswer}}</div>
+                        </div>
+                        <div *ngIf="ques.question.questionTypeId =='4'" class="pl-5 row">
+                            <pre>{{ques.questionAnswer}}</pre>
+                            <!-- <codemirror [(ngModel)]="ques.questionAnswer" [config]="config"></codemirror> -->
+                        </div>
+                    </div>
+                    <p class="mt-4">
+                            <b>Candidate Answer</b>
+                        </p>
+                    <p class="pointer mt-4" *ngIf="ques.question.questionTypeId =='4'"> 
+                        <!-- {{ques.candidateAnswer}} -->
+                        <codemirror [(ngModel)]="ques.candidateAnswer" [config]="config"></codemirror>
+                    </p>
+
+                    <p class="pointer mt-4" *ngIf="ques.question.questionTypeId !='4'"> 
+                            {{ques.candidateAnswer}} 
+                        </p>
+
+                    <!-- <div *ngIf="ques.question.questionType =='CODE'">
+                        <codemirror [(ngModel)]="ques.questionAnswer" [config]="config"></codemirror>
+                    </div> -->
+                </div>
+            </div>
+            <div class="ml-5 pl-2">
+                <p>is this correct answer?</p>
+                <button class="btn btn-success mr-4" (click)="evaluateAns(1,ques)">Yes</button>
+                <button class="btn btn-danger" (click)="evaluateAns(0,ques)">No</button>
+            </div>
+            <div>
+                <hr>
+            </div>
+
+        </div>
+    </div>
+    <!-- <div class="row">
+        <button class="btn btn-primary ml-auto">
+            Submit
+        </button>
+    </div> -->
+</div>

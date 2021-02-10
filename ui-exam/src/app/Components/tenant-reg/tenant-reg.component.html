@@ -1,0 +1,666 @@
+<block-ui>
+
+</block-ui>
+<div class="row m-0">
+    <div class="col-sm-6 tenant_lft_cont">
+        <div class="p-4">
+            <h2 class="coc_title">
+                <img src="./../../../assets/images/ncd_finalized_logo.png" width="275px" height="80px" style="margin:0.28rem;padding-top:2px ;padding-bottom:2px ;"
+                />
+            </h2>
+        </div>
+        <!-- <div class="tenant_caption p-4">
+            <h3 style="color: #f9e42f">Only Free Remote Candidate Evaluation Portal</h3>
+            <ul>
+                <li>Unlimited number of tests and users (no-restrictions)</li>
+                <li>Three simple steps to administer tests</li>
+                <li>Pick questions from user contributed global catalogue</li>
+                <li>No cheating - as candidates are monitored throughout the test</li>
+                <li> Administer tests with varied complexities</li>
+                <li>Share your tests with other users across your organization</li>
+                <li>Create a test & administer it multiple times.</li>
+                <li>Integrate No Cheating Dude with your ATS for seamless evaluation process</li>
+            </ul>
+            <b class="mt-4">
+                **All of these and more for absolutely no charge - FREE **
+            </b>
+        </div> -->
+        <div class="tenant_caption p-4">
+            <div id="demo" class="carousel slide" data-ride="carousel">
+
+
+
+                <!-- The slideshow -->
+                <div class="carousel-inner">
+                    <div class="carousel-item active text-center">
+                        <img src="./../../../assets/images/registration/1.png" alt="Los Angeles">
+                        <div class="row text-center carousel_txt">
+                            <h3 class="col-sm-12">Unlimited number of tests and users (no-restrictions).</h3>
+                            <!-- <p class="col-sm-12">Get notifications when candidate switch tabs while writing test.</p> -->
+                        </div>
+
+                    </div>
+                    <div class="carousel-item text-center">
+                        <img src="./../../../assets/images/registration/2.png" alt="Chicago">
+                        <div class="row text-center carousel_txt">
+                            <h3 class="col-sm-12">No cheating - as candidates are monitored throughout the test.</h3>
+                            <!-- <p class="col-sm-12">Administer tests with varied complexities.Create a test & administer it multiple times.</p> -->
+                        </div>
+                    </div>
+                    <div class="carousel-item text-center">
+                        <img src="./../../../assets/images/registration/3.png" alt="Chicago">
+                        <div class="row text-center carousel_txt">
+                            <h3 class="col-sm-12">Pick questions from user contributed global catalogue.</h3>
+                            <!-- <p class="col-sm-12">Administer tests with varied complexities.</p> -->
+                        </div>
+                    </div>
+                    <div class="carousel-item text-center">
+                        <img src="./../../../assets/images/registration/4.png" alt="Chicago">
+                        <div class="row text-center carousel_txt">
+                            <h3 class="col-sm-12">Three simple steps to administer tests</h3>
+                            <!-- <p class="col-sm-12">Pick questions from user contributed global catalogue.</p> -->
+                        </div>
+                    </div>
+                    <div class="carousel-item text-center">
+                        <img src="./../../../assets/images/registration/5.png" alt="Chicago">
+                        <div class="row text-center carousel_txt">
+                            <h3 class="col-sm-12">Create a test & administer it multiple times.</h3>
+                            <!-- <p class="col-sm-12">Pick questions from user contributed global catalogue.</p> -->
+                        </div>
+                    </div>
+                    <div class="carousel-item text-center">
+                        <img src="./../../../assets/images/registration/6.png" alt="Chicago">
+                        <div class="row text-center carousel_txt">
+                            <h3 class="col-sm-12">Integrate Nocheatingdude.com with your ATS for seamless evaluation process.</h3>
+                            <!-- <p class="col-sm-12">Pick questions from user contributed global catalogue.</p> -->
+                        </div>
+                    </div>
+                    <div class="carousel-item text-center">
+                        <img src="./../../../assets/images/registration/7.png" alt="Chicago">
+                        <div class="row text-center carousel_txt">
+                            <h3 class="col-sm-12">Share your tests with other users across your organization.</h3>
+                            <!-- <p class="col-sm-12">Pick questions from user contributed global catalogue.</p> -->
+                        </div>
+                    </div>
+                    <div class="carousel-item text-center">
+                        <img src="./../../../assets/images/registration/8.png" alt="Chicago">
+                        <div class="row text-center carousel_txt">
+                            <h3 class="col-sm-12">Administer tests with varied complexities.</h3>
+                            <!-- <p class="col-sm-12">Pick questions from user contributed global catalogue.</p> -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Left and right controls -->
+                <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </a>
+                <a class="carousel-control-next" href="#demo" data-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </a>
+
+                <!-- Indicators -->
+                <ul class="carousel-indicators">
+                    <li data-target="#demo" data-slide-to="0" class="active"></li>
+                    <li data-target="#demo" data-slide-to="1"></li>
+                    <li data-target="#demo" data-slide-to="2"></li>
+                    <li data-target="#demo" data-slide-to="3"></li>
+                    <li data-target="#demo" data-slide-to="4"></li>
+                    <li data-target="#demo" data-slide-to="5"></li>
+                    <li data-target="#demo" data-slide-to="6"></li>
+                    <li data-target="#demo" data-slide-to="7"></li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 white_bg">
+        <div class="tenant_right_signin" *ngIf="tenantSignin && !isForgot">
+            <h4 class="text-center signin_black">
+                <b>Login</b>
+            </h4>
+            <hr class="signin_brdr">
+            <form #loginForm="ngForm" (submit)="signin(loginForm.value)">
+                <div class="form-group">
+                    <label for="email">Email Id</label>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">
+                                person
+                            </i>
+                        </span>
+                        <input type="email" class="form-control" id="email" placeholder="Email" name="email" #email="ngModel" ngModel required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                    </div>
+                    <span class="errorTxt" *ngIf="email.touched && email.errors && email.errors.pattern">
+                        Please Enter Valid Email Id
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="email">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">
+                                vpn_key
+                            </i>
+                        </span>
+                        <input type="password" class="form-control" id="pwd" placeholder="Password" name="password" #password="ngModel" ngModel required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary form-control">
+                        <b>Log in</b>
+                    </button>
+                </div>
+                <p class="float-right">
+                    <button class="btn btn-link signin_black" (click)="forgotPass()">Forgot Password?</button>
+                </p>
+            </form>
+        </div>
+        <div class="tenant_right_signup" *ngIf="!tenantSignin && !isForgot">
+                <div *ngIf="!registerTypeSelected" >
+                    <div style="padding: 3rem">
+                            <h4 class="text-center signin_black" >
+                                    <span style="color:rgb(90, 204, 112);">I am <span *ngIf="currentState == 'initial'">a </span> <span *ngIf="currentState != 'initial'">an </span> </span> <span *ngIf="currentState == 'initial'" style="border-bottom: 2px solid #5dcc70;
+                                    padding-bottom: 3px;">Recruiter  </span><span   *ngIf="currentState == 'final'" style="border-bottom: 2px solid #5dcc70;
+    padding-bottom: 3px;">Employer </span>
+                                </h4>
+                    </div>
+                        
+                             
+                                    <div class="card row" style="position: absolute; height: 20vh;background: #f5f5f5;width: 25vw;margin-left: 3rem;border: none;
+                                    border-radius: 6px;
+                                    box-shadow: rgb(10, 10, 10) -4px 4px 8px -6px;">
+                                        <div class="row" style="    text-align: center;
+                                        z-index: 1000;
+                                        margin: 2.3rem;">
+                                                <div class="col-6" >
+                                                        <i *ngIf="currentState == 'initial'" (click)="changeState()" style="font-size: 50px;margin-left:-20px " class="material-icons">
+                                                                person
+                                                            </i>
+                                                            <i *ngIf="currentState == 'final'" (click)="changeState()" style="font-size: 45px;color:#888888;margin-left:-45px;margin-top:10px; " class="material-icons">
+                                                                person
+                                                            </i>
+                                                   </div>
+                                                   <div class="col-6">
+                                                        <i *ngIf="currentState == 'final'" (click)="changeState()" style="font-size: 50px;margin-left:20px" class="material-icons">
+                                                                apartment
+                                                            </i>
+                                                            <i  *ngIf="currentState == 'initial'" (click)="changeState()" style="font-size: 45px;color:#888888;margin-left:45px;margin-top:10px;" class="material-icons">
+                                                                apartment
+                                                            </i>
+                                                   </div> 
+                                        </div>  
+                                       
+                                        </div>
+                                        <div style="margin-right: 3rem;">
+                                                <div [@changeDivSize]=currentState  (click)="changeState()" class="card" style="height: 23vh;border:none;background:rgb(90, 204, 112);width: 11vw;margin-left: 4rem;margin-top: -0.75rem; box-shadow: #0a0a0a 3px 8px 10px -6px;border-radius: 8px;">
+                
+                                                    </div>
+                                        </div>
+
+                                        <div class="row"  style="padding-top: 2rem;width:100%;margin-left:2rem;color: #888888;font-size: 12px">
+                                            <div class="col-6">
+                                                <p> 
+                                                    <span style=" margin-left: -20px;position: absolute;">
+                                                            <i   style="color:rgb(90, 204, 112);font-size: 14px;  "   class="material-icons">
+                                                                    check_circle
+                                                                </i>
+                                                    </span> Test Adminstration</p>
+                                               
+                                                <p>
+                                                        <span style=" margin-left: -20px;position: absolute;">
+                                                                <i  style="color:rgb(90, 204, 112);font-size: 14px;  "   class="material-icons">
+                                                                        check_circle
+                                                                    </i>
+                                                        </span>
+                                                    Test report & analytics</p>
+                                                <p>
+                                                    
+                                                        <span style=" margin-left: -20px;position: absolute;">
+                                                                <i  style="color:rgb(90, 204, 112);font-size: 14px;  "   class="material-icons">
+                                                                        check_circle
+                                                                    </i>
+                                                        </span>
+                                                    MCQ & MAQ support</p>
+                                               
+                                                    <p>
+                                                        <span style=" margin-left: -20px;position: absolute;">
+                                                                <i  style="color:rgb(90, 204, 112);font-size: 14px;  "   class="material-icons">
+                                                                        check_circle
+                                                                    </i>
+                                                        </span>
+                                                    Test Instance catalogue access</p>
+                                                   
+                                            </div>
+                                            <div class="col-6">
+                                                    <p>
+                                                            <span style=" margin-left: -20px;position: absolute;">
+                                                                    <i  *ngIf="currentState == 'final'"  style="color:rgb(90, 204, 112);font-size: 14px;  "   class="material-icons">
+                                                                            check_circle
+                                                                        </i>
+                                                                        <i  *ngIf="currentState == 'initial'" style="color:indianred;font-size: 14px;  "   class="material-icons">
+                                                                                cancel
+                                                                            </i>
+                                                            </span>
+                                                        User Management</p>
+                                                <p>
+                                                        <span style=" margin-left: -20px;position: absolute;">
+                                                                <i *ngIf="currentState == 'final'"   style="color:rgb(90, 204, 112);font-size: 14px;  "   class="material-icons">
+                                                                        check_circle
+                                                                    </i>
+                                                                    <i  *ngIf="currentState == 'initial'" style="color:indianred;font-size: 14px;  "   class="material-icons">
+                                                                            cancel
+                                                                        </i>
+                                                        </span>
+                                                    Manual Evaluation</p>
+                                                <p>
+                                                        <span style=" margin-left: -20px;position: absolute;">
+                                                                <i *ngIf="currentState == 'final'"  style="color:rgb(90, 204, 112);font-size: 14px;  "   class="material-icons">
+                                                                        check_circle
+                                                                    </i>
+                                                                    <i  *ngIf="currentState == 'initial'"  style="color:indianred;font-size: 14px;  "   class="material-icons">
+                                                                            cancel
+                                                                        </i>
+                                                        </span>
+                                                    Test Master & Instances Creation</p>
+                                                <p>
+                                                        <span style=" margin-left: -20px;position: absolute;">
+                                                                <i  *ngIf="currentState == 'final'" style="color:rgb(90, 204, 112);font-size: 14px;  "   class="material-icons">
+                                                                        check_circle
+                                                                    </i>
+                                                                    <i  *ngIf="currentState == 'initial'" style="color:indianred;font-size: 14px;  "   class="material-icons">
+                                                                            cancel
+                                                                        </i>
+                                                        </span>
+                                                    Question catalogue access</p>
+
+                                                    <p>
+                                                        <span style=" margin-left: -20px;position: absolute;">
+                                                                <i *ngIf="currentState == 'final'"   style="color:rgb(90, 204, 112);font-size: 14px;  "   class="material-icons">
+                                                                        check_circle
+                                                                    </i>
+                                                                    <i  *ngIf="currentState == 'initial'" style="color:indianred;font-size: 14px;  "   class="material-icons">
+                                                                            cancel
+                                                                        </i>
+                                                        </span>
+                                                    Short Answer and Code support</p>
+
+                                                
+                                                <p>
+                                                        <span style=" margin-left: -20px;position: absolute;">
+                                                                <i  *ngIf="currentState == 'final'" style="color:rgb(90, 204, 112);font-size: 14px;  "   class="material-icons">
+                                                                        check_circle
+                                                                    </i>
+                                                                    <i  *ngIf="currentState == 'initial'" style="color:indianred;font-size: 14px;  "   class="material-icons">
+                                                                            cancel
+                                                                        </i>
+                                                        </span>
+                                                    Customer specific URL</p>
+
+                                                    <button type="button" (click)="registerTypeSelected=true" class="btn btn-primary" style="background: rgb(90, 204, 112);float:right;margin: 2rem;margin-right:0rem;border: 1px solid rgb(90, 204, 112);height: 30px;line-height: 17px;border-radius: 0px;width: 110px;font-weight: 600;font-size: 15px;"
+                                                    > Next</button>
+                                            </div>
+                                            
+                                        </div>
+                                       
+
+                                        
+                            
+                       
+
+
+
+                </div>  
+                
+
+          <div *ngIf="registerTypeSelected" >
+            <h4 class="text-center signin_black">
+                <b>Register</b>
+            </h4>
+            <hr class="signin_brdr">
+            <mat-horizontal-stepper [linear]="isLinear" #stepper>
+                <mat-step [stepControl]="firstFormGroup">
+                    <form [formGroup]="firstFormGroup">
+                        <!-- <ng-template matStepLabel>Fill out your name</ng-template> -->
+
+                        <div class="form-group">
+                            <label for="firstname">First Name</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="material-icons">
+                                        person
+                                    </i>
+                                </span>
+                                <input type="text" class="form-control" id="firstname" formControlName="userFirstName" required>
+                            </div>
+                            <p class="m-0">
+                                <span class="errorTxt" *ngIf="checkFirstName()">Must have atleast 3 characters</span>
+                            </p>
+
+                            <p class="m-0">
+                                <span class="errorTxt" *ngIf="firstFormGroup.controls.userFirstName.errors && firstFormGroup.controls.userFirstName.errors.pattern">
+                                    Numbers Not Allowed
+                                </span>
+                                <span class="errorTxt" *ngIf="(firstFormGroup.controls.userFirstName.touched && firstFormGroup.controls.userFirstName.errors && firstFormGroup.controls.userFirstName.errors.required) || (formOne && firstFormGroup.controls.userFirstName.errors && firstFormGroup.controls.userFirstName.errors.required)">
+                                    Please Enter First Name
+                                </span>
+                                <!-- <span class="errorTxt" *ngIf="formOne && firstFormGroup.controls.userFirstName.errors && firstFormGroup.controls.userFirstName.errors.required">
+                                    Please Enter First Name
+                                </span> -->
+                            </p>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname">Last Name</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="material-icons">
+                                        person
+                                    </i>
+                                </span>
+                                <input type="text" class="form-control" id="lastname" formControlName="userLastName" required>
+                            </div>
+                            <p class="m-0">
+                                <span class="errorTxt" *ngIf="firstFormGroup.controls.userLastName.errors && firstFormGroup.controls.userLastName.errors.pattern">
+                                    Numbers Not Allowed
+                                </span>
+                                <span class="errorTxt" *ngIf=" (firstFormGroup.controls.userLastName.touched && firstFormGroup.controls.userLastName.errors && firstFormGroup.controls.userLastName.errors.required) || (formOne && firstFormGroup.controls.userLastName.errors && firstFormGroup.controls.userLastName.errors.required)">
+                                    Please Enter Last Name
+                                </span>
+                                <!-- <span class="errorTxt" *ngIf=" formOne && firstFormGroup.controls.userLastName.errors && firstFormGroup.controls.userLastName.errors.required">
+                                    Please Enter Last Name
+                                </span> -->
+                            </p>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Id (Company Email)</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="material-icons">
+                                        email
+                                    </i>
+                                </span>
+                                <input type="text" class="form-control" name="emailTxt" [(ngModel)]="emailTxt" id="email" (focusout)="setDomain()" formControlName="companyMailId"
+                                    required>
+                            </div>
+                            <p class="m-0">
+                                <span class="errorTxt" *ngIf="checkEmail()">Please Enter Valid Email Id</span>
+                                <span class="errorTxt" *ngIf=" (firstFormGroup.controls.companyMailId.touched && firstFormGroup.controls.companyMailId.errors && firstFormGroup.controls.companyMailId.errors.required) || (formOne && firstFormGroup.controls.companyMailId.errors && firstFormGroup.controls.companyMailId.errors.required)">
+                                    Please Enter Email Id
+                                </span>
+                                <!-- <span class="errorTxt" *ngIf="formOne && firstFormGroup.controls.companyMailId.errors && firstFormGroup.controls.companyMailId.errors.required">
+                                    Please Enter Email Id
+                                </span> -->
+                            </p>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="material-icons">
+                                        phone
+                                    </i>
+                                </span>
+                                <input type="number" class="form-control" id="phone" formControlName="contactNum" required>
+                            </div>
+                            <p class="m-0">
+                                <span class="errorTxt" *ngIf=" (firstFormGroup.controls.contactNum.touched && firstFormGroup.controls.contactNum.errors && firstFormGroup.controls.contactNum.errors.required) || (formOne && firstFormGroup.controls.contactNum.errors && firstFormGroup.controls.contactNum.errors.required)">
+                                    Please Enter Contact Number
+                                </span>
+                                <!-- <span class="errorTxt" *ngIf="formOne && firstFormGroup.controls.contactNum.errors && firstFormGroup.controls.contactNum.errors.required">
+                                    Please Enter Contact Number
+                                </span> -->
+                            </p>
+                        </div>
+                        <div class="form-group p-0">
+                            <button mat-button matStepperNext class="btn btn-primary col-sm-12" (click)="formOneSubmit()">
+                                <b>Next</b>
+                            </button>
+                        </div>
+                    </form>
+                </mat-step>
+                <mat-step [stepControl]="secondFormGroup">
+                    <form [formGroup]="secondFormGroup">
+                        <!-- <ng-template matStepLabel>Fill out your address</ng-template> -->
+                        <div class="form-group">
+                            <label for="companyName">Company Name <span *ngIf="currentState=='initial'" style="color:mediumpurple;font-size: x-small">( Optional )</span></label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="material-icons">
+                                        work
+                                    </i>
+                                </span>
+                                <input type="text" class="form-control" id="companyName" formControlName="companyName" required>
+                            </div>
+                            <p class="m-0" *ngIf="currentState!='initial'" >
+                                <span class="errorTxt" *ngIf="secondFormGroup.controls.companyName.errors && secondFormGroup.controls.companyName.errors.pattern">
+                                    Numbers Not Allowed
+                                </span>
+                                <span class="errorTxt" *ngIf="(secondFormGroup.controls.companyName.touched && secondFormGroup.controls.companyName.errors && secondFormGroup.controls.companyName.errors.required) || (formTwo && secondFormGroup.controls.companyName.errors && secondFormGroup.controls.companyName.errors.required)">
+                                    Please Enter Company Name
+                                </span>
+                                <!-- <span class="errorTxt" *ngIf="formTwo && secondFormGroup.controls.companyName.errors && secondFormGroup.controls.companyName.errors.required">
+                                    Please Enter Company Name
+                                </span> -->
+                            </p>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="companyWebsite">Website <span *ngIf="currentState=='initial'" style="color:mediumpurple;font-size: x-small">( Optional )</span></label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="material-icons">
+                                        language
+                                    </i>
+                                </span>
+                                <input type="text" class="form-control" id="companyWebsite" formControlName="companyWebsite" required>
+                            </div>
+                            <p class="m-0" *ngIf="currentState!='initial'" >
+                                <span class="errorTxt" *ngIf="(secondFormGroup.controls.companyWebsite.touched && secondFormGroup.controls.companyWebsite.errors && secondFormGroup.controls.companyWebsite.errors.required) || (formTwo && secondFormGroup.controls.companyWebsite.errors && secondFormGroup.controls.companyWebsite.errors.required)">
+                                    Please Mention Company Website
+                                </span>
+                                <!-- <span class="errorTxt" *ngIf="formTwo && secondFormGroup.controls.companyWebsite.errors && secondFormGroup.controls.companyWebsite.errors.required">
+                                    Please Mention Company Website
+                                </span> -->
+                            </p>
+
+                        </div>
+                        <div class="form-group" *ngIf="arrayOFCountris.length>0">
+                            <label for="countryName">Country </label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="material-icons">
+                                        flag
+                                    </i>
+                                </span>
+                                <!-- <input type="text" class="form-control" id="countryName" formControlName="countryName" required> -->
+                                <select class="form-control" id="countryName" formControlName="countryName">
+                                    <option value="">Select Country</option>
+                                    <option *ngFor="let country of arrayOFCountris" [value]="country.countryName">{{country.countryName}}</option>
+                                </select>
+                            </div>
+                            <p class="m-0">
+                                <span class="errorTxt" *ngIf="(secondFormGroup.controls.countryName.touched && secondFormGroup.controls.countryName.errors && secondFormGroup.controls.countryName.errors.required) || (formTwo && secondFormGroup.controls.countryName.errors && secondFormGroup.controls.countryName.errors.required)">
+                                    Please Select Country
+                                </span>
+                                <!-- <span class="errorTxt" *ngIf="formTwo && secondFormGroup.controls.countryName.errors && secondFormGroup.controls.countryName.errors.required">
+                                    Please Select Country
+                                </span> -->
+                            </p>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <mat-checkbox class="terms_checkbox" formControlName="termsAndConditions">
+                                <span class="signin_black"> I Accept, </span>
+                                <a href="#">Terms & Conditions</a>
+                            </mat-checkbox>
+                            <p class="m-0">
+                                <span class="errorTxt" *ngIf="(secondFormGroup.controls.termsAndConditions.touched && secondFormGroup.controls.termsAndConditions.errors && secondFormGroup.controls.termsAndConditions.errors.required) || (formTwo  && secondFormGroup.controls.termsAndConditions.errors && secondFormGroup.controls.termsAndConditions.errors.required)">
+                                    Please Accept Terms & Conditions
+                                </span>
+                                <!-- <span class="errorTxt" *ngIf="formTwo  && secondFormGroup.controls.termsAndConditions.errors && secondFormGroup.controls.termsAndConditions.errors.required">
+                                    Please Accept Terms & Conditions
+                                </span> -->
+                            </p>
+
+                        </div>
+                        <div class="form-group p-0">
+                            <button class="btn btn-primary form-control col-sm-12" type="submit" (click)="registerTenant();formTwoSubmit()">
+                                <b>Register</b>
+                            </button>
+                        </div>
+
+                    </form>
+                </mat-step>
+            </mat-horizontal-stepper>
+          </div>
+           
+        </div>
+        <div class="tenant_right_signin" *ngIf="isForgot">
+            <h4 class="text-center signin_black">
+                <b>Forgot Password</b>
+            </h4>
+            <hr class="signin_brdr">
+            <form #forgotPass="ngForm" (submit)="forgotPassword(forgotPass)">
+                <div class="form-group">
+                    <label for="forgotEmail">Email Id</label>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">
+                                person
+                            </i>
+                        </span>
+                        <input type="email" class="form-control" id="forgotEmail" placeholder="Email" name="email" #email="ngModel" ngModel required
+                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                    </div>
+                    <span class="errorTxt" *ngIf="email.touched && email.errors && email.errors.pattern">
+                        Please Enter Valid Email Id
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-primary form-control">
+                        <b>Submit</b>
+                    </button>
+                </div>
+
+            </form>
+        </div>
+        <p class="registr_now">
+            <button class="btn btn-link" *ngIf="tenantSignin && !isForgot && domainNotExist" (click)="switchSignup();registerTypeSelected=false"> Not Yet Registered ? Register Now</button>
+            <button class="btn btn-link" *ngIf="!tenantSignin && !isForgot && domainNotExist" (click)="switchSignup()"> Already Registered ? Login</button>
+            <button class="btn btn-link" *ngIf="isForgot" (click)="switchSignup()"> Already Registered ? Login</button>
+        </p>
+    </div>
+
+</div>
+<!-- <section class="tenant_reg_sec">
+    <div class="tenant_reg_gradient" [ngClass]="{'heightvh': tabActive == 'signin' || tabActive == 'forgot'}">
+        <div class="pt-5 pl-5 pr-5 pb-0">
+            <h2 class="coc_title">COCOON</h2>
+        </div>
+        <div class="form_tenant_reg pb-5">
+            <h3 *ngIf="tabActive == 'signin'" class="pb-4">Sign in to your account</h3>
+            <h3 *ngIf="tabActive == 'signup'" class="pb-4">Register Now</h3>
+            <h3 *ngIf="tabActive == 'forgot'" class="pb-4">Forgot Password ?</h3>
+            <div class="d-flex">
+                <div [ngClass]="{'pt-2 pb-2 pr-5 pointer':true,'active_tab': tabActive == 'signin'}" (click)="activeTabs('signin')">Sign in</div>
+                <div [ngClass]="{'pt-2 pb-2 pr-5 pointer':true,'active_tab': tabActive == 'signup'}" (click)="activeTabs('signup')">Sign up</div>
+                <div class="pt-2 pb-2 pr-3 ml-auto pointer" *ngIf="!(tabActive == 'signup')"
+                 [ngClass]="{'pt-2 pb-2 pr-3 ml-auto pointer':true,'active_tab': tabActive == 'forgot'}"
+                    (click)="activeTabs('forgot')">Forgot</div>
+            </div>
+            <div *ngIf="tabActive == 'signin'" class="animated fadeInDown">
+                <form class="mt-4 mb-5 sigin_form" #loginForm="ngForm" (submit)="signin(loginForm.value)">
+                    <div class="form-group col-sm-6">
+                        <input type="email" class="form-control" id="email" placeholder="Email" name="email" #email="ngModel"
+                         ngModel required [ngClass]="{'red_border':email.touched && email.errors}"
+                         pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                         <span class="errorTxt" *ngIf="email.touched && email.errors && email.errors.pattern">
+                             Please Enter Valid Email Id
+                         </span>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <input type="password" class="form-control" id="pwd" placeholder="Password" name="password" #password="ngModel" ngModel required
+                            [ngClass]="{'red_border':password.touched && password.errors}">
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <button class="btn btn-primary form-control">Log in</button>
+                    </div>
+                </form>
+            </div>
+            <div *ngIf="tabActive == 'signup'" class="animated fadeInDown">
+                <form class="mt-4 mb-4 register_form" #registerForm="ngForm" (submit)="registerTenant(registerForm.value)">
+                    <div class="row">
+                        <div class="form-group col-sm-6 pr-2">
+                            <input type="text" class="form-control" placeholder="First Name" ngModel name="userFirstName" #userFirstName="ngModel"
+                             [ngClass]="{'red_border':userFirstName.touched && userFirstName.errors}" minlength="3"
+                                required>
+                                <span *ngIf="userFirstName.touched && userFirstName.errors && userFirstName.errors"
+                                    class="errorTxt">First Name Must have 3 characters</span>
+                        </div>
+                        <div class="form-group col-sm-6 pr-2">
+                            <input type="text" class="form-control" placeholder="Last Name" ngModel name="userLastName" #userLastName="ngModel" [ngClass]="{'red_border':userLastName.touched && userLastName.errors}"
+                                required>
+                        </div>
+                        <div class="form-group col-sm-6 pr-2">
+                            <input type="text" class="form-control" placeholder="Company Name" ngModel name="companyName" #companyName="ngModel" [ngClass]="{'red_border':companyName.touched && companyName.errors}"
+                                required>
+                        </div>
+                        <div class="form-group col-sm-6 pr-2">
+                            <input type="email" class="form-control" placeholder="Company MailID" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                            [(ngModel)]="emailTxt" (focusout)="setDomain()" name="companyMailId" #companyMailId="ngModel"
+                                [ngClass]="{'red_border':companyMailId.touched && companyMailId.errors}" required>
+                                <span *ngIf="companyMailId.touched && companyMailId.errors && companyMailId.errors.pattern"
+                                    class="errorTxt">Please Enter Valid Email Id</span>
+                        </div>
+                        <div class="form-group col-sm-6 pr-2">
+                            <input type="text" class="form-control" placeholder="Company Website" ngModel name="companyWebsite" #companyWebsite="ngModel"
+                                [ngClass]="{'red_border':companyWebsite.touched && companyWebsite.errors}" required>
+                        </div>
+                        <div class="form-group col-sm-6 pr-2">
+                            <input type="text" class="form-control" [disabled]="true"
+                             placeholder="Company Domain Name" [(ngModel)]="regDomain" name="companyDomainName" #companyDomainName="ngModel"
+                                [ngClass]="{'red_border':companyDomainName.touched && companyDomainName.errors}" required>
+                        </div>
+                        <div class="form-group col-sm-6 pr-2">
+                            <input type="text" class="form-control" placeholder="Country" ngModel name="countryName" #countryName="ngModel"
+                             [ngClass]="{'red_border':countryName.touched && countryName.errors}"
+                                required pattern="^[a-zA-Z]+$">
+                                <span class="errorTxt" *ngIf="countryName.touched && countryName.errors && countryName.errors.pattern">Numbers Should not be present in Country Name</span>
+                        </div>
+                        <div class="form-group col-sm-6 pr-2">
+                            <input type="number" class="form-control" placeholder="Contact No." ngModel name="contactNum" #contactNum="ngModel" [ngClass]="{'red_border':contactNum.touched && contactNum.errors}"
+                                required>
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="form-group col-sm-12">
+                            <mat-checkbox class="terms_checkbox" name="termsAndConditions" [(ngModel)]="checked"
+                              #termsAndConditions="ngModel" >
+                                I Accept, <a href="#">Terms & Conditions</a>
+                            </mat-checkbox>
+
+                        </div>
+                        <div class="form-group m-auto">
+                            <button class="btn btn-primary form-control" type="submit">Register</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div *ngIf="tabActive == 'forgot'" class="animated fadeInDown">
+                <form class="mt-4 mb-5 forgot_form" #forgotPass="ngForm" (submit)="forgotPassword(forgotPass)">
+                    <div class="form-group col-sm-6">
+                        <input type="email" class="form-control" placeholder="Email" name="email" #email="ngModel"
+                         ngModel [ngClass]="{'red_border':email.touched && email.errors}"
+                            required>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <button class="btn btn-primary form-control" type="submit">Confirm</button>
+                    </div>
+                </form>
+            </div>
+            <h4 class="animated slideInUp m-0" *ngIf="tabActive == 'signin'">India's one and only leading corporate online test platform.</h4>
+            <h4 class="animated slideInUp m-0" *ngIf="tabActive == 'signup'">India's one and only leading corporate online test platform.</h4>
+            <h4 class="animated slideInUp m-0" *ngIf="tabActive == 'forgot'">India's one and only leading corporate online test platform.</h4>
+        </div>
+    </div>
+</section> -->

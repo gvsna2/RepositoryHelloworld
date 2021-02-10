@@ -1,0 +1,452 @@
+<div class="settings_sec pt-4 pb-4 pr-5">
+        <div class="">
+                <h4>Administer Test</h4>
+                <hr>
+        </div>
+        <div class="row justify-content-center" style="background: white;padding: 3rem 0rem;border-radius: 5px;">
+                <div class="col-md-12">
+
+                </div>
+                <div *ngIf="!pageFlag" class="col-md-6 ">
+                        <form #testAdminForm="ngForm" style="padding: 3rem;">
+
+                                <div class="form-group">
+                                        <label for="Title">Name </label>
+                                        <input type="text" disabled class="form-control" id="testAdminAliasName" name="testAdminAliasName"
+                                                #testAdminAliasName="ngModel" ngModel placeholder="">
+
+                                        <!-- <select class="form-control" id="testType">
+        <option>Select Test Setup</option>
+        <option *ngFor="let item of listOfTestSetups" value={{item.testSetupId}}>{{item.testSetupTitle}}</option>
+        
+        
+        </select> -->
+                                </div>
+                                <div class="form-group">
+                                        <label for="Title">Alias Name <span style="font-size: smaller;color: mediumpurple;">(Optional)</span></label>
+                                        <input type="text" class="form-control" id="testAdminName" name="testAdminName"
+                                                #testAdminName="ngModel" ngModel placeholder="">
+
+                                        <!-- <select class="form-control" id="testType">
+        <option>Select Test Setup</option>
+        <option *ngFor="let item of listOfTestSetups" value={{item.testSetupId}}>{{item.testSetupTitle}}</option>
+        
+        
+        </select> -->
+                                </div>
+                                <div class="form-group">
+                                        <label for="Title">Test Instance Name </label>
+                                        <input type="text" disabled class="form-control" id="testInstanceName" name="testInstanceName"
+                                                #testInstanceName="ngModel" ngModel placeholder="">
+
+                                        <!-- <select class="form-control" id="testType">
+        <option>Select Test Setup</option>
+        <option *ngFor="let item of listOfTestSetups" value={{item.testSetupId}}>{{item.testSetupTitle}}</option>
+        
+        
+        </select> -->
+                                </div>
+                                <div class="form-group">
+                                        <popover-content #testTypePop title="" placement="bottom-right" [animation]="true"
+                                                style="box-shadow: 10px 10px 5px #aaaaaa;">
+                                                <span style="color: #646363;"> Specify the type of test you want to
+                                                        set- Scheduled or Walkin. A Scheduled test is one where you fix
+                                                        a particular time and date within which the test will be made
+                                                        available to candidates. A walkin test can be conducted any
+                                                        time. Choose this if you want to test candidates when he/she
+                                                        visits the workplace.</span>
+
+                                        </popover-content>
+                                        <label for="testType">Test Type <span><i style="    font-size: 13px;color: #969696;top: 2px;"
+                                                                [popoverOnHover]="true" [popover]="testTypePop" class="material-icons">info</i></span></label>
+                                        <select class="form-control" id="testType" name="testTypeId" #testCategoryId="ngModel"
+                                                ngModel>
+                                                <option disabled>Select Type</option>
+                                                <option value="2">Walk-In</option>
+                                                <option value="1">Scheduled</option>
+
+                                        </select>
+                                </div>
+
+
+                                <div class="form-group">
+                                        <popover-content #complexityPop title="" placement="bottom-right" [animation]="true"
+                                                style="box-shadow: 10px 10px 5px #aaaaaa;">
+                                                <span style="color: #646363;">Specify if this test is for beginners
+                                                        ie.basic, Intermediate or Advanced.</span>
+
+                                        </popover-content>
+                                        <label for="Complexity">Complexity <span><i style="    font-size: 13px;color: #969696;top: 2px;"
+                                                                [popoverOnHover]="true" [popover]="complexityPop" class="material-icons">info</i></span></label>
+                                        <select class="form-control" id="Complexity" name="testComplexityId"
+                                                #testComplexityId="ngModel" ngModel>
+                                                <option disabled>Select Complexity</option>
+                                                <option value="3">High</option>
+                                                <option value="2">Medium</option>
+                                                <option value="1">Low</option>
+                                                <option value="4">Mixed</option>
+                                                <option value="5">Progressive</option>
+                                        </select>
+                                </div>
+
+                                <div class="form-row">
+
+                                        <div class="form-group col-md-12">
+                                                <popover-content #testValidityPop title="" placement="bottom-right"
+                                                        [animation]="true" style="box-shadow: 10px 10px 5px #aaaaaa;">
+                                                        <span style="color: #646363;"> Test validity the time period
+                                                                during which the candidate can access the test. For eg.
+                                                                it can be available for two days during which the
+                                                                candidate can attempt the test at a time convenient to
+                                                                him or her.</span>
+
+                                                </popover-content>
+                                                <label for="lastName">Test Validity <span><i style="    font-size: 13px;color: #969696;top: 2px;"
+                                                                        [popoverOnHover]="true" [popover]="testValidityPop"
+                                                                        class="material-icons">info</i></span></label>
+                                                <input class="form-control" [owlDateTime]="dt1" name="testvalidity"
+                                                        ngModel [selectMode]="'range'" [owlDateTimeTrigger]="dt1">
+                                                <owl-date-time #dt1></owl-date-time>
+
+                                        </div>
+                                </div>
+                                <div class="form-row">
+
+                                        <div class="form-group col-md-12">
+
+                                                <div class="custom-control custom-switch">
+
+                                                        <input type="checkbox" class="custom-control-input" checked id="customSwitch1">
+
+                                                        <label class="custom-control-label" for="customSwitch1" style="float: right;">Image
+                                                                Proctoring
+                                                                <popover-content #imagePop title="" placement="bottom-left"
+                                                                        [animation]="true" style="box-shadow: 10px 10px 5px #aaaaaa;float: right;">
+                                                                        <span style="color: #646363;"> Select this
+                                                                                option when you want invigilation
+                                                                                access through webcam. Choosing this
+                                                                                will allow the platform to take
+                                                                                snapshots of the candidate
+                                                                                intermittently while writing the test.
+                                                                                This feature curbs and/or alerts test
+                                                                                setters on any attempts at
+                                                                                impersonation.</span>
+
+                                                                </popover-content>
+
+                                                                <span><i style="    font-size: 13px;color: #969696;top: 2px;"
+                                                                                [popoverOnHover]="true" [popover]="imagePop"
+                                                                                class="material-icons">info</i></span></label>
+                                                </div>
+
+                                        </div>
+                                </div>
+
+                                <button type="button" class="btn btn-primary" style="background: #fff;color: #3D70B2;float: right;border: 1px solid #3D70B2;height: 30px;line-height: 17px;border-radius: 0px;width: 110px;font-weight: 600;font-size: 15px;"
+                                        (click)=confirmAdministertest(testAdminForm.value)>Next</button>
+
+                        </form>
+
+
+                </div>
+
+                <div *ngIf=pageFlag class="col-md-12 card" style="border: none;">
+                        <form class="row" #testConfigForm="ngForm">
+
+                                <div class="col-md-12" style="padding: 0rem 6rem;">
+
+                                        <div style="margin-left: -12px;" class="form-group">
+                                                <label for="Title">Test Name </label>
+                                                <input style="width: 50%;" type="text" class="form-control" value={{sectionsData.testSetupTitle}}
+                                                        disabled>
+
+                                        </div>
+                                        <label style="margin-left: -12px;">
+                                                <h5>Select Sections </h5>
+                                        </label>
+
+                                        <div *ngIf='sectionsData.testComplexityId!=4'>
+                                                <div class="row" style="border: 1px solid #bbafaf;border-radius: 5px;padding: 0.5rem;">
+                                                        <div class="col-md-2" style="padding: 1rem" *ngFor="let item of sections;let i=index">
+                                                                
+                                                                <label *ngIf="item.sectionName.length<10"  class="container"><span>{{item.sectionName }}</span>
+                                                                        <input type="checkbox" [attr.checked]="item.isSectionActive==1 ? 'checked' : null"
+                                                                        (change)=selectSection(i);>
+                                                                <span class="checkmark"></span>
+                                                        </label>
+                                                                <label *ngIf="item.sectionName.length>=10" title={{item.sectionName}} class="container"><span>{{item.sectionName | slice:0:10}}..</span>
+                                                                        <input type="checkbox" [attr.checked]="item.isSectionActive==1 ? 'checked' : null"
+                                                                                (change)=selectSection(i);>
+                                                                        <span class="checkmark"></span>
+                                                                </label>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        <div *ngIf='sectionsData.testComplexityId==4'>
+                                                <div class="row" style="border: 1px solid #bbafaf;border-radius: 5px;padding: 0.5rem;">
+                                                        <div class="col-md-3" style="padding: 1rem" *ngFor="let item of sections;let i=index">
+                                                                <label *ngIf="item.sectionName.length<10" class="container"><span>{{item.sectionName }}-
+                                                                        {{item.testComplexityModeName}}({{item.totalNoOfQuestions}})</span>
+                                                                        <input type="checkbox" [attr.checked]="item.isSectionActive==1 ? 'checked' : null"
+                                                                        (change)=selectSection(i);>
+                                                                <span class="checkmark"></span>
+                                                        </label>
+                                                               
+                                                                        <label *ngIf="item.sectionName.length>=10" title={{item.sectionName}} class="container"><span>{{item.sectionName | slice:0:10}}..-
+                                                                                {{item.testComplexityModeName}}({{item.totalNoOfQuestions}})</span>
+                                                                 
+                                                                        <input type="checkbox" [attr.checked]="item.isSectionActive==1 ? 'checked' : null"
+                                                                                (change)=selectSection(i);>
+                                                                        <span class="checkmark"></span>
+                                                                </label>
+                                                        </div>
+                                                </div>
+                                        </div>
+
+                                        <!-- <img style="padding: 2rem;padding-top: 6rem;" class="card-img-top" src="./../../../assets/images/women working-smiling1.png" alt="Category"> -->
+
+                                </div>
+
+                                <div class="col-md-12" style="padding: 2rem 5rem;">
+                                        <label>
+                                                <h5>Question Setup</h5>
+                                        </label>
+                                        <div style="    border: 1px solid #bbafaf;border-radius: 5px;padding: 2.5rem;">
+                                                <div class="form-group">
+                                                        <popover-content #toatalQuesPop title="" placement="bottom-right"
+                                                                [animation]="true" style="box-shadow: 10px 10px 5px #aaaaaa;">
+                                                                <span style="color: #646363;"> Specify the number of
+                                                                        questions you want to have in your test.</span>
+
+                                                        </popover-content>
+                                                        <label for="Title">Mention Number of Questions (Availabe
+                                                                Questioons: {{sectionsData.totalNumberOfQuestions}})
+                                                                <span><i style="    font-size: 13px;color: #969696;top: 2px;"
+                                                                                [popoverOnHover]="true" [popover]="toatalQuesPop"
+                                                                                class="material-icons">info</i></span></label>
+                                                        <input [disabled]="!sectionActiveFlag" type="number" class="form-control"
+                                                                id="noOfQuestions" (input)="totalQuestionCheck($event.target.value)"
+                                                                placeholder="" style="width:50%">
+                                                        <div class="invalid-feedback">
+                                                                Please choose a value between 1 to
+                                                                {{sectionsData.totalNumberOfQuestions}}.
+                                                        </div>
+                                                </div>
+                                                <div id="section_block" *ngIf="sectionActiveFlag">
+                                                        <div class="row">
+                                                                <div class="col-3 form-group">
+                                                                        <label style="text-decoration: underline">Section</label>
+                                                                </div>
+                                                                <div class="col-3 form-group">
+                                                                        <label style="text-decoration: underline">Code:</label>
+                                                                </div>
+                                                                <div class="col-3 form-group" *ngIf="sectionsData.testComplexityId!=4">
+                                                                        <label style="text-decoration: underline">Questions
+                                                                                Available:</label>
+                                                                </div>
+
+                                                                <div class="col-3 form-group">
+                                                                        <label style="text-decoration: underline">No.
+                                                                                of questions:</label>
+                                                                </div>
+                                                                <div class="col-3 form-group">
+                                                                        <label style="text-decoration: underline" *ngIf="sectionsData.testComplexityId==4">Complexity:</label>
+                                                                </div>
+                                                        </div>
+                                                        <div *ngFor="let item of sections;let i=index">
+                                                                <div class="row" *ngIf="item.isSectionActive==1" id="sec{{i}}">
+
+
+                                                                        <div class="col-3 form-group">
+
+                                                                                <label *ngIf='item.sectionName.length<=10'>{{item.sectionName}}</label>
+                                                                                <label *ngIf='item.sectionName.length>10'
+                                                                                        title={{item.sectionName}}>{{item.sectionName
+                                                                                        | slice:0:10}}..</label>
+                                                                                <!-- <input type="text" value={{item.testSectionName}} class="form-control" id="Title" placeholder=""> -->
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                                <label>{{item.sectionCode}}</label>
+                                                                        </div>
+
+                                                                        <div class="col-3" *ngIf="sectionsData.testComplexityId!=4">
+                                                                                <label>{{item.totalNoOfQuestions}}</label>
+                                                                        </div>
+
+                                                                        <div id="sections_input" class="col-3 form-group">
+                                                                                <!-- <label for="Title">Number (0 - {{item.totalNumberOfQuestions}})</label> -->
+                                                                                <input type="number" id="section{{i}}"
+                                                                                        class="form-control" (input)="sectionQuestionCheck($event,i)"
+                                                                                        id="Title" placeholder="">
+                                                                                <div class="invalid-feedback" style=" margin-top: 2rem;">
+                                                                                        Must be 0 to
+                                                                                        {{item.totalNoOfQuestions}}.
+                                                                                </div>
+                                                                        </div>
+                                                                        <div class="col-3" *ngIf="sectionsData.testComplexityId==4">
+
+                                                                                <label>{{item.testComplexityModeName}}</label>
+
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                        <div class="row">
+
+
+                                                                <div class="col form-group">
+
+                                                                        <label>Total</label>
+                                                                        <!-- <input type="text" value={{item.testSectionName}} class="form-control" id="Title" placeholder=""> -->
+                                                                </div>
+
+                                                                <div id="sections_input" class="col form-group">
+                                                                        <!-- <label for="Title">Number (0 - {{item.totalNumberOfQuestions}})</label> -->
+                                                                        <input disabled style="width: 50%" type="number"
+                                                                                id="totalSections" value={{totalSectionQuestions}}
+                                                                                class="form-control" placeholder="">
+                                                                        <div class="invalid-feedback" style=" margin-top: 2rem;">
+                                                                                Must be {{totalQuestions}}.
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                </div>
+
+
+                                        </div>
+
+                                        <!-- <div class="row justify-content-center"> <div class="col-8" style="margin-left: -5rem;font-size: 16px;margin-top: -0.9rem;"> <a href="#" class="card-link" style="float: right;">+ Add New Section</a></div> </div> -->
+                                        <label style="padding-top:3rem">
+                                                <h5>Test Setup </h5>
+                                        </label>
+                                        <div style="    border: 1px solid #bbafaf;border-radius: 5px;padding: 2.5rem;">
+                                                <div class="row" *ngIf="sectionsData.testComplexityId==5">
+                                                        <div class="col-md-3 form-group">
+                                                                <label for="Title">Progressive Increment</label>
+                                                                <input type="number" (change)="progressiveIncrement=$event.target.value"
+                                                                        class="form-control" id="progressiveIncrement"
+                                                                        placeholder="">
+                                                        </div>
+                                                        <div class="col-md-3 form-group">
+                                                                <label for="Title">Progressive Decrement</label>
+                                                                <input type="number" class="form-control" id="progressiveDecrement"
+                                                                        placeholder="" (change)="progressiveDecrement=$event.target.value">
+                                                        </div>
+
+                                                </div>
+                                                <div class="row">
+                                                        <div class="col-md-3 form-group">
+                                                                <popover-content #testDurationPop title="" placement="bottom-right"
+                                                                        [animation]="true" style="box-shadow: 10px 10px 5px #aaaaaa;">
+                                                                        <span style="color: #646363;"> Set the time
+                                                                                duration of the test.</span>
+
+                                                                </popover-content>
+                                                                <label for="Title">Test Duration(Mins) <span><i style="    font-size: 13px;color: #969696;top: 2px;"
+                                                                                        [popoverOnHover]="true"
+                                                                                        [popover]="testDurationPop"
+                                                                                        class="material-icons">info</i></span></label>
+                                                                <input type="text" class="form-control" (change)="testDuration=$event.target.value"
+                                                                        id="testDuration" placeholder="">
+                                                        </div>
+                                                        <div class="col-md-3 form-group">
+                                                                <popover-content #passPercentagePop title="" placement="bottom-right"
+                                                                        [animation]="true" style="box-shadow: 10px 10px 5px #aaaaaa;">
+                                                                        <span style="color: #646363;"> Specify the
+                                                                                marks required to declare a candidate
+                                                                                as passed. Mention as a percentage.</span>
+
+                                                                </popover-content>
+                                                                <label for="Title">Pass Percentage <span><i style="    font-size: 13px;color: #969696;top: 2px;"
+                                                                                        [popoverOnHover]="true"
+                                                                                        [popover]="passPercentagePop"
+                                                                                        class="material-icons">info</i></span></label>
+                                                                <input type="number" class="form-control" (change)="passpercentage=$event.target.value"
+                                                                        id="passPercentage" placeholder="">
+                                                        </div>
+                                                </div>
+                                                <div class="form-group">
+                                                        <popover-content #notifyPop title="" placement="bottom-right"
+                                                                [animation]="true" style="box-shadow: 10px 10px 5px #aaaaaa;">
+                                                                <span style="color: #646363;"> Add email addresses of
+                                                                        those with whom results of the test has to be
+                                                                        shared. Eg. evaluator, HR recruiter, candidate
+                                                                        etc.</span>
+
+                                                        </popover-content>
+                                                        <label for="Title">Notify results to ? (Email ID) <span><i
+                                                                                style="    font-size: 13px;color: #969696;top: 2px;"
+                                                                                [popoverOnHover]="true" [popover]="notifyPop"
+                                                                                class="material-icons">info</i></span></label>
+                                                        <input type="email" class="form-control" id="notifyResultsMail"
+                                                                placeholder="" (change)="notifyEmail=$event.target.value"
+                                                                style="width:50%">
+                                                </div>
+                                                <div class="form-group" *ngIf="sectionsData.manualEvaluationStatus==1">
+                                                        <!-- <div class="form-group"> -->
+                                                        <popover-content #evaluatorPop title="" placement="bottom-right"
+                                                                [animation]="true" style="box-shadow: 10px 10px 5px #aaaaaa;">
+                                                                <span style="color: #646363;"> Add additional evaluator
+                                                                        names if required.</span>
+
+                                                        </popover-content>
+                                                        <label for="Complexity">Add Evaluator(Email ID) <span><i style="font-size: 13px;color: #969696;top: 2px;"
+                                                                                [popoverOnHover]="true" [popover]="evaluatorPop"
+                                                                                class="material-icons">info</i></span></label>
+                                                        <angular2-multiselect [data]="dropdownList" name="multi-select"
+                                                                style="width:50%" [(ngModel)]="selectedItems"
+                                                                [settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
+                                                                (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+                                                                (onDeSelectAll)="onDeSelectAll($event)"></angular2-multiselect>
+                                                </div>
+
+                                        </div>
+
+
+
+
+                                </div>
+
+
+
+                                <div class="col-md-12">
+                                        <div style="float: right;">
+                                                <!-- <button type="button" class="btn btn-primary" style="background: #fff;color: #3D70B2;margin-right:2rem; 
+        border: 1px solid #3D70B2;
+        height: 30px;
+        line-height: 17px;
+        border-radius: 0px;
+        width: 110px;
+        font-weight: 600;
+        font-size: 15px;" routerLink="sections">Preview</button> -->
+                                                <!-- <button type="button" class="btn btn-primary" style="background: #fff;color: #3D70B2;margin-right:2rem;
+        border: 1px solid #3D70B2;
+        height: 30px;
+        line-height: 17px;
+        border-radius: 0px;
+        width: 110px;
+        font-weight: 600;
+        font-size: 15px;" (click)="onSubmit(1);" >Draft</button> -->
+
+                                                <button type="button" class="btn btn-primary" style="background: #3D70B2;margin-right:5rem;border: 1px solid #3D70B2;height: 30px;line-height: 17px;border-radius: 0px;width: 110px;font-weight: 600;font-size: 15px;"
+                                                        (click)="administerTest()"> Administer</button>
+                                        </div>
+
+                                </div>
+
+                        </form>
+
+
+
+
+
+
+                </div>
+
+
+
+
+
+        </div>
+
+
+</div>

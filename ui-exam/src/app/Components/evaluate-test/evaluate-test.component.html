@@ -1,0 +1,74 @@
+<block-ui></block-ui>
+<div class="eval_Sec pt-4 pb-4 pl-4 pr-4">
+    <div class="row">
+        <div class="col-sm-12 test_eval_txt">
+                <popover-content #evaluatePop 
+                title=""
+                placement="right"
+                [animation]="true" 
+                 style="box-shadow: 10px 10px 5px #aaaaaa;">
+                <span style="color: #646363;">Select from the list the test you want to evaluate.</span>  
+                
+                </popover-content>
+            <h4>
+
+                <p>Tests To Evaluate <span><i style="    font-size: 13px;color: #969696;top: 2px;"  [popoverOnHover]="true" [popover]="evaluatePop" class="material-icons">info</i></span></p>
+            </h4>
+            <hr class="m-0">
+        </div>
+    </div>
+    <!-- <div class="row pt-4 pb-4">
+        <div class="offset-2 col-sm-6">
+            <input class="form-control">
+        </div>
+        <div class="search_icon">
+            <span class="pointer">
+                    <i class="material-icons">
+                        search
+                    </i>
+                </span>
+        </div>
+    </div> -->
+    <div class="row" style="padding-top:2rem">
+        <table class="table filter_tbl white_bg m-0" *ngIf="evalTestData && evalTestData['listOfEvaluatorTests'].length">
+            <thead>
+                <tr style="    color: #ffffff;
+                background-color: #425db5;">
+                    <th>Test Title</th>
+                    <th>Type</th>
+                    <th>Complexity</th>
+                    <th>Category</th>
+                    <th>No of Assignments</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="evalTestData && evalTestData['listOfEvaluatorTests'].length">
+                <tr *ngFor="let test of evalTestData['listOfEvaluatorTests']" (click)="getUsers(test.testConfigId)">
+                    <td>{{test.testTitle}}</td>
+                    <td>{{test.testType}}</td>
+                    <td>{{test.testComplexity}}</td>
+                    <td>{{test.testCategory}}</td>
+                    <td>{{test.numberOfEvalautionCandidates}}</td>
+                </tr>
+            </tbody>
+
+        </table>
+        <table class="table filter_tbl_no white_bg m-0" *ngIf="evalTestData && !evalTestData['listOfEvaluatorTests'].length">
+            <thead>
+                <tr style="color: #ffffff;
+                background-color: #425db5">
+                    <th>Test Title</th>
+                    <th>Type</th>
+                    <th>Complexity</th>
+                    <th>Category</th>
+                    <th>No of Assignments</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr class="text-center errorTxt">
+                    <td colspan="5">Tests Not Yet Assigned</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

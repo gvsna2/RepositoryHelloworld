@@ -1,0 +1,322 @@
+<block-ui>
+    
+  </block-ui>
+  
+  <div class="settings_sec pt-4 pb-4 pr-5">
+      <div class="">
+          <h4>
+            <p *ngIf=!editFlag >New Test Master</p>
+            <p *ngIf=editFlag  >Edit Test Master</p>
+
+            </h4>
+          <hr>
+      </div>
+    <div class="row" style="height: auto;">
+      <div class="col-md-6">
+          <!-- <h6>Test</h6> -->
+      </div>
+      <div class="col-md-12">
+        <div style="padding-top: 1rem;" *ngIf=categoryFlag style="float:right">
+  
+          <span class="blue" style="padding: 2rem;">
+              <i style="position: absolute;" class="material-icons">folder </i> <span style="color:rgb(168, 165, 165);padding-left: 2rem "  >(Category)</span> 
+           </span>
+           <span  style="padding: 2rem; color: seagreen">
+              <i style="position: absolute;" class="material-icons">folder </i> <span style="color:rgb(168, 165, 165);padding-left: 2rem " >(Sub-Category)</span>
+           </span>
+           <span  style="padding: 2rem; color: #3c3d3d ">
+              <i style="position: absolute;" class="material-icons">folder </i> <span style="color:rgb(168, 165, 165);padding-left: 2rem " >(Section)</span>
+           </span>
+        </div>
+      </div>
+      <div class="card col-md-6" style="height: auto;padding-bottom: 2rem">
+          <form class="row" #testSetupForm="ngForm" >
+                      <div class="col-md-12" style="padding: 2rem 1rem;">
+                      
+                  <div class="form-group">
+                      <popover-content #testMasterTitle 
+                      title=""
+                      placement="right"
+                      [animation]="true" 
+                       style="box-shadow: 10px 10px 5px #aaaaaa;">
+                      <span style="color: #646363;"> Enter the broad topic of the test.</span>  
+                      
+                      </popover-content>
+                    <label for="Title">Test Master Title <span><i style="    font-size: 13px;color: #969696;top: 2px;"  [popoverOnHover]="true" [popover]="testMasterTitle" class="material-icons">info</i></span></label>
+                    <input  [disabled]="testSetupId!=0" *ngIf=!editFlag type="text" class="form-control" id="Title" placeholder="" (change)="getCategory(testSetupForm.value)"
+                    name="testSetupTitle" #testSetupTitle="ngModel" ngModel 
+                    >
+                    <input *ngIf=editFlag type="text" class="form-control" disabled value={{testMasterEditTitle}}>
+                  </div>
+                  <!-- <div class="form-group">
+                    <label for="testType">Test Type</label>
+                    <select class="form-control" id="testType"
+                    name="testTypeId" #testCategoryId="ngModel" ngModel (change)="getCategory(testSetupForm.value)"
+                    >
+                      <option disabled>Select Type</option>
+                      <option value="2">Walk-In</option>
+                      <option value="1">Scheduled</option>
+                  
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="Complexity">Complexity Mode</label>
+                    <select class="form-control" id="Complexity" (change)="getCategory(testSetupForm.value)"
+                    
+                      name="testComplexityId" #testComplexityId="ngModel" ngModel>
+                      <option disabled>Select Complexity Mode</option>
+                      <option value="3">High</option>
+                      <option value="2">Medium</option>
+                      <option value="1">Low</option>
+                      <option value="4">Mixed</option>
+                      <option value="5">Progressive</option>
+                    </select>
+                  </div> -->
+                  <!-- <div class="form-group">
+                    <label for="Category">Category</label>
+                    <input type="text" class="form-control" id="Category" placeholder="">
+                  </div> -->
+                  <div class="form-group">
+                   <div class="row">
+                    <div class="col-12">
+                        <popover-content #categoryPop 
+                        title=""
+                        placement="right"
+                        [animation]="true" 
+                         style="box-shadow: 10px 10px 5px #aaaaaa;">
+                        <span style="color: #646363;"> Enter the subtopic of the test subject.</span>  
+                        
+                        </popover-content>
+                      <label for="Category">Category  <span><i style="    font-size: 13px;color: #969696;top: 2px;"  [popoverOnHover]="true" [popover]="categoryPop" class="material-icons">info</i></span> </label>
+                 
+                      <input *ngIf=editFlag type="text" class="form-control" disabled value={{categoryList[0].name}}>
+                      <div *ngIf=!editFlag class="ng-autocomplete" id="Category"  >
+                    <ng-autocomplete  #auto name="ng-autocomplete"
+                      [data]="data"
+                      [searchKeyword]="keyword"
+                      (selected)='selectEvent($event,testSetupForm.value);inputCleared()'
+                      (inputChanged)='onChangeSearch($event);inputCleared()'
+                      (inputFocused)="onFocused($event)"
+                      (inputCleared)="inputCleared()"
+                      [(ngModel)]="selectedName"
+                      [itemTemplate]="itemTemplate"
+                      
+                      [notFoundTemplate]="notFoundTemplate">                                 
+                    </ng-autocomplete>
+                     
+                    <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.name"></a>
+                    
+                    </ng-template>
+                  <!-- <ng-template #deftemp >
+                    <div class="test" (click)="addNewCategory();" [innerHTML]="notFound2"></div>
+                  </ng-template> -->
+                    <ng-template #notFoundTemplate let-notFound>
+                    <div class="test" (click)="addNewCategory();" [innerHTML]="notFound2"></div>
+                    </ng-template>
+                    </div>
+  
+                       <!-- The Modal -->
+        <div class="modal" id="myModal">
+          <div class="modal-dialog">
+              <div class="modal-content">
+  
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                      <h4 class="modal-title">Create Category</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+  
+                  <!-- Modal body -->
+                  <div class="modal-body">
+                      <form>
+  
+                           
+   
+  
+  
+  
+                          <div class="form-group">
+                              <label for="exampleFormControlInput1">Category Name</label>
+                              <input type="text" (input)="categoryName=$event.target.value" class="form-control" >
+                          </div>
+  
+                      </form>
+                  </div>
+  
+                  <!-- Modal footer -->
+                  <div class="modal-footer">
+                      <button type="button" (click)="addCategory()" class="btn btn-primary">Add Category</button>
+                  </div>
+  
+              </div>
+          </div>
+      </div>
+                    </div>
+                    <!-- <div class="col-1">
+                        <button type="button"  style="background: transparent;border: none;" class="hide"><i style="font-size: 25px;color:rgb(133, 214, 79);font-size: 30px;color: rgb(133, 214, 79);padding-top: 2.2rem;margin-left: -1rem;" title="Add" class="material-icons">add_circle </i></button>
+                    </div> -->
+                  </div>
+                   </div>
+              </div>
+               
+                  
+                   
+                 
+                </form>
+                 
+  </div>
+  
+  
+  <div class="col-md-6" style="border: 4px solid #5596E6;border-radius: 5px;" (click)="hideInput()">
+    
+    
+    
+      
+      
+      <form class="row"  >
+  
+                  <div *ngIf=!categoryFlag class="col-md-12" style="padding: 2rem 6rem;">
+                  
+                      <img  style="padding-top: 2rem;" class="card-img-top" src="./../../../assets/images/women working-smiling1.png" alt="Category">
+               <h5 style="text-align: center;font-weight: 700;padding-top: 2rem">Empty !</h5>
+               <p style="text-align:center">Add Sections & Categories</p>
+          </div>
+           
+          <div *ngIf=categoryFlag >
+            <tree-root
+            #tree
+            [nodes]="nodes"
+            [options]="options"
+            [focused]="true"
+            >
+            <ng-template #treeNodeTemplate let-node >
+           
+           <span *ngIf="node.data.type==1"   [class.blue]="true"><i style="font-size: 15px;" class="material-icons">folder </i> <span *ngIf="node.data.name.length <=15"  >{{ node.data.name }}</span> <span *ngIf="node.data.name.length > 15" title={{node.data.name}} >{{ node.data.name | slice:0:14 }}..</span><span class="hide" style="padding-left:2rem"> <i style="font-size: 15px;color:seagreen;border: 1px solid rgb(124, 124, 124);border-radius: 50%;padding: 0.25rem; " title="Add Sub Category" class="material-icons" (click)="$event.stopPropagation();flag=node.data.id;inputflag='sub'">create_new_folder </i><i  style="font-size: 14px;color:#3c3d3d;border: 1px solid rgb(124, 124, 124);border-radius: 50%;padding: 0.25rem; " (click)="$event.stopPropagation();flag=node.data.id;inputflag='sec'" title="Create New Section" class="material-icons">add_box </i> </span>
+      
+            <div  style="width:80%;height: 90%;position: absolute;" *ngIf="flag==node.data.id" class="input-group mb-3">
+              <input *ngIf="inputflag=='sub'" id="sub" type="text" (click)="$event.stopPropagation()" (keydown)=" $event.code =='Enter' ? addNode(tree,node,sub,2):handleKeyDown($event) "  (input)="sub=$event.target.value" class="form-control" style="border: none;border-radius: 70px;background: #fff;top: 12px;width: 200px;    z-index: 10000;left: -4px;" placeholder="Sub Category Name" aria-label="Sub Category Name" aria-describedby="basic-addon2">
+              <input *ngIf="inputflag=='sec'" id="sec" type="text" (click)="$event.stopPropagation()" (keydown)=" $event.code =='Enter' ? addNode(tree,node,sec,3):handleKeyDown($event) "  (input)="sec=$event.target.value" class="form-control" style="border: none;border-radius: 70px;background: #fff;top: 12px;width: 200px;    z-index: 10000;left: -4px;" placeholder="Section Name" aria-label="Section Name" aria-describedby="basic-addon2">
+             
+              <div class="input-group-append">
+                <button *ngIf="inputflag=='sub'" class="btn btn-outline-secondary" style="background-color: transparent;border:none;padding: 0rem;right: -50px;top: 15px;z-index: 10000;position: absolute;" type="button"><i style="font-size: 31px;;top: 5px;left: -74px;padding: 0rem 0.5rem;color: rgb(144, 218, 84);" (click)="$event.stopPropagation();addNode(tree,node,sub,2)" title="Add" class="material-icons">add_circle </i></button>
+                <button *ngIf="inputflag=='sec'" class="btn btn-outline-secondary" style="background-color: transparent;border:none;padding: 0rem;right: -50px;top: 15px;z-index: 10000;position: absolute;" type="button"><i style="font-size: 31px;top: 5px;left: -74px;padding: 0rem 0.5rem;color: rgb(144, 218, 84);" (click)="$event.stopPropagation();addNode(tree,node,sec,3)" title="Add" class="material-icons">add_circle </i></button>
+  
+              </div>
+              <div class="input-group-append">
+                <!-- <span style="position: absolute;border:none;padding: 0rem;z-index: 10000;left: -5px;"><i style="font-size: 15px;color: indianred" title="cancel" (click)="flag=0" class="material-icons">cancel </i></span> -->
+              </div>
+              
+            </div>
+           </span>
+           <span *ngIf="node.data.type==2"   [class.red]="true"><i style="font-size: 15px;" class="material-icons">folder </i>  <span *ngIf="node.data.name.length <=11"  >{{ node.data.name }}</span> <span *ngIf="node.data.name.length > 11" title={{node.data.name}} >{{ node.data.name | slice:0:10 }}..</span><span class="hide" style="padding-left:2rem"> <i style="font-size: 15px;color:seagreen;border: 1px solid rgb(124, 124, 124);border-radius: 50%;padding: 0.25rem;  " title="Add Sub Category" class="material-icons" (click)="$event.stopPropagation();flag=node.data.id;inputflag='sub'">create_new_folder </i><i  style="font-size: 14px;color:#3c3d3d;border: 1px solid rgb(124, 124, 124);border-radius: 50%;padding: 0.25rem; " (click)="$event.stopPropagation();flag=node.data.id;inputflag='sec'" title="Create New Section" class="material-icons">add_box </i><i style="font-size: 15px;color: indianred;border: 1px solid rgb(124, 124, 124);border-radius: 50%;padding: 0.25rem; " (click)="deleteNode(tree,node)" title="Remove from Test Master" class="material-icons">delete </i></span>
+           <div  style="width:80%;height: 90%;position: absolute" *ngIf="flag==node.data.id" class="input-group mb-3">
+            <input *ngIf="inputflag=='sub'" id="sub" type="text" (click)="$event.stopPropagation()" (keydown)="$event.code=='Enter' ? addNode(tree,node,sub,2):handleKeyDown($event) "  (input)="sub=$event.target.value" class="form-control" style="border: none;border-radius: 70px;background: #fff;top: 12px;width: 200px;    z-index: 10000;left: -4px;" placeholder="Sub Category Name" aria-label="Sub Category Name" aria-describedby="basic-addon2">
+            <input *ngIf="inputflag=='sec'" id="sec" type="text" (click)="$event.stopPropagation()" (keydown)="$event.code=='Enter' ? addNode(tree,node,sec,3):handleKeyDown($event) " (input)="sec=$event.target.value" class="form-control" style="border: none;border-radius: 70px;background: #fff;top: 12px;width: 200px;    z-index: 10000;left: -4px;" placeholder="Section Name" aria-label="Section Name" aria-describedby="basic-addon2">
+           
+            <div class="input-group-append">
+              <button *ngIf="inputflag=='sub'" class="btn btn-outline-secondary" style="background-color: transparent;border:none;padding: 0rem;right: -50px;top: 15px;z-index: 10000;position: absolute;" type="button"><i style="font-size: 31px;top: 5px;left: -74px;padding: 0rem 0.5rem;color: rgb(144, 218, 84);" (click)="$event.stopPropagation();addNode(tree,node,sub,2)" title="Add" class="material-icons">add_circle </i></button>
+              <button *ngIf="inputflag=='sec'" class="btn btn-outline-secondary" style="background-color: transparent;border:none;padding: 0rem;right: -50px;top: 15px;z-index: 10000;position: absolute;" type="button"><i style="font-size: 31px;top: 5px;left: -74px;padding: 0rem 0.5rem;color: rgb(144, 218, 84);" (click)="$event.stopPropagation();addNode(tree,node,sec,3)" title="Add" class="material-icons">add_circle </i></button>
+  
+            </div>
+            <div class="input-group-append">
+              <!-- <span style="position: absolute;border:none;padding: 0rem;z-index: 10000;left: -5px;"><i style="font-size: 15px;color: indianred" title="cancel" (click)="flag=0" class="material-icons">cancel </i></span> -->
+            </div>
+            
+          </div>
+           
+           <!-- <div style="width:80%;height: 90%;position: absolute;" *ngIf="flag==node.data.id" class="input-group mb-3">
+            <input *ngIf="inputflag=='sub'" id="sub" type="text" (change)="sub=$event.target.value" class="form-control" style="border: none" placeholder="Sub Category Name" aria-label="Sub Category Name" aria-describedby="basic-addon2">
+            <input *ngIf="inputflag=='sec'" id="sec" type="text" (change)="sec=$event.target.value" class="form-control" style="border: none" placeholder="Section Name" aria-label="Section Name" aria-describedby="basic-addon2">
+           
+            <div class="input-group-append" style="position: absolute;    right: -36px;">
+              <button *ngIf="inputflag=='sub'" class="btn btn-outline-secondary" style="background-color: white;border:none;padding: 0rem" type="button"><i style="font-size: 30px;padding: 0rem 0.5rem;color: rgb(144, 218, 84)" (click)="addNode(tree,node,sub,2)" title="Add" class="material-icons">add_circle </i></button>
+              <button *ngIf="inputflag=='sec'" class="btn btn-outline-secondary" style="background-color: white;border:none;padding: 0rem" type="button"><i style="font-size: 30px;padding: 0rem 0.5rem;color: rgb(144, 218, 84)" (click)="addNode(tree,node,sec,3)" title="Add" class="material-icons">add_circle </i></button>
+  
+            </div>
+            <div class="input-group-append" style="position: absolute;    right: -36px;">
+              <span style="position: absolute;border:none ;padding: 0rem"><i style="font-size: 15px;color: indianred" title="cancel" (click)="flag=0" class="material-icons">cancel </i></span>
+            </div>
+            
+          </div> -->
+          
+          </span>
+           <span *ngIf="node.data.type==3"  [class.green]="true"><i style="font-size: 15px;" class="material-icons">folder </i> <span *ngIf="node.data.name.length <=11"  >{{ node.data.name }}</span> <span *ngIf="node.data.name.length > 11" title={{node.data.name}} >{{ node.data.name | slice:0:10 }}..</span><span title="No. of Questions">({{node.data.count}})</span><span class="hide" style="padding-left:2rem"> <span style="    background: #CCA7FF;color: black;padding: 0.65rem; border-radius: 25px;" data-toggle="modal" data-target="#questionModal" (click)="sectionId=node.data.typeId" >Add Questions <span><i style="font-size: 15px;vertical-align: text-bottom;  "   title="Add Question" class="material-icons">add_circle </i> </span></span> 
+           
+           <popover-content #deleteSection 
+                      title=""
+                      placement="left"
+                      [animation]="true" 
+                       style="box-shadow: 10px 10px 5px #aaaaaa;">
+                      <span style="color: #646363; ">You cannot undo this.<br>Are you sure ?
+                      
+                        <button type="button" class="btn btn-primary" style="background: #b23d47c7;border: 1px solid #b23d47c7;height: 20px;line-height: 8px;border-radius: 0px;font-size: 12px;"   (click)="deleteNode(tree,node)"  >Delete</button>
+                      </span>  
+                     
+                      </popover-content>
+                      <!-- (click)="deleteNode(tree,node)" -->
+           <i style="font-size: 15px;color:indianred;border: 1px solid rgb(124, 124, 124);border-radius: 50%;padding: 0.25rem;  " [popoverDismissTimeout]="4000" [popoverOnHover]="false" [popover]="deleteSection"  title="Remove from Test Master" class="material-icons">delete </i></span></span>
+             
+          </ng-template>
+            </tree-root>
+            <div class="modal" id="questionModal">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+  
+                      <!-- Modal Header -->
+                       
+  
+                      <!-- Modal body -->
+                      <div class="modal-body" *ngIf=sectionId>
+                          <div class="row">
+                              <div class="col-sm-8 text-center">
+                                  <!-- <h4 class="blueColor">Add Questions</h4> -->
+                              </div>
+                              <div class="col-sm-4">
+                                  <button type="button" class="close" data-dismiss="modal">
+                                      <span class="boxShadow">
+                                          <i class="material-icons">
+                                              clear
+                                          </i>
+                                      </span>
+          
+                                  </button>
+                              </div>
+                              <!-- <div class="col-sm-12">
+                                  <hr>
+                              </div> -->
+                          </div>
+                          
+                        <!-- <app-add-question></app-add-question> -->
+                       <app-add-question [sectionId]=sectionId ></app-add-question>
+  
+  
+                      </div>
+  
+                  </div>
+              </div>
+            </div>
+          </div>
+              
+          
+              
+            </form>
+             
+  </div>
+  
+  <div class="col-md-12" style="    padding: 1rem 2rem;">
+    <button type="button" class="btn btn-primary" style="float: right;background: #3D70B2;
+    border: 1px solid #3D70B2;
+    height: 30px;
+    line-height: 17px;
+    border-radius: 0px;
+    /* width: 110px; */
+    font-weight: 600;
+    font-size: 15px;"  *ngIf="testSetupId!=0 && !editFlag" (click)="finishTest()"  >Create Test Master</button>
+  </div>
+  
+    </div>  
+    
+      
+  </div>
+  
