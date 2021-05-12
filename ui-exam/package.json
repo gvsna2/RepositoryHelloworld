@@ -39,7 +39,7 @@
     "jspdf": "^1.5.3",
     "jw-angular-pagination": "^1.1.0",
     "jw-angular-social-buttons": "^1.0.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "moment": "^2.24.0",
     "ng-block-ui": "^2.1.7",
     "ng-material-datetimepicker": "^1.19.2",
